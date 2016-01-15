@@ -1,0 +1,20 @@
+<%= simple_form_for(@work_assignment) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :start_date %>
+    <%= f.input :end_date %>
+    <%= f.input :paid %>
+    <%= f.input :work_day %>
+    <%= f.input :student_gradelevel %>
+    <%= f.input :earliest_start %>
+    <%= f.input :latest_start %>
+    <%= f.input :ideal_start %>
+    <%= f.association :student %>
+    <%= f.association :contact %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

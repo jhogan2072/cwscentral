@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  billing_address: MyString
+  city: MyString
+  state: MyString
+  zip: MyString
+  sponsor_since: MyString
+  sugarcrm_id: MyString
+
+two:
+  name: MyString
+  billing_address: MyString
+  city: MyString
+  state: MyString
+  zip: MyString
+  sponsor_since: MyString
+  sugarcrm_id: MyString

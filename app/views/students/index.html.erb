@@ -1,0 +1,138 @@
+<body ng-app="app" ng-controller="StudentController as studCtrl">
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <ul class="nav navbar-left navbar-nav">
+        <li><%= image_tag("logo2.png", size: "75x50") %></li>
+        <li><span style="font-size:x-large">NDCR Corporate Work Study</span></li>
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <div class="navbar-form navbar-right input-group">
+        <span class="input-group-addon" style="width:20px">
+          <span class="glyphicon glyphicon-search"></span>
+        </span>
+        <input type="text" class="form-control" ng-model="studCtrl.searchInput">
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to('Logout', destroy_user_session_path, :method => :delete, id: "logout_link") %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar" style="padding-top:0px">
+      <ul class="nav nav-sidebar">
+        <li>
+          <div style="font-weight: bold; font-size: 12pt; padding-top:5px; padding-bottom:10px; padding-left:20px; background-color: lightgrey">
+            Students
+            <button type="button" data-ng-click="studCtrl.showStudentModal()" class="btn btn-sm btn-primary pull-right" style="margin-right: 5px;line-height: 1.2">Add</button>
+          </div>
+        </li>
+        <li ng-repeat="student in studCtrl.students | filter:studCtrl.searchInput" ng-class="{'active':$index == studCtrl.selectedStudent}"
+            ng-click="studCtrl.setClickedStudent($index, student.full_name, student.id)">
+          <a href="#">{{student.full_name}}</a>
+
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 studCtrl">
+      <div class="animate-if" ng-class="{'alert alert-success':studCtrl.isSuccess == true, 'alert alert-danger':studCtrl.isSuccess == false}" ng-if="studCtrl.showResultAlert">
+        <button type="button" class="close" data-ng-click="studCtrl.alertShowHide('showResultAlert')">x</button>
+        {{studCtrl.alertText}}
+      </div>
+      <h2 class="sub-header">Work History
+        <button class="btn-file btn btn-primary" name="export">Export</button>
+      </h2>
+      <div class="table-responsive" ng-style="studCtrl.truncateStyle">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Organization</th>
+            <th>Paid/Unpaid</th>
+            <th>Work Day</th>
+            <th>Student Class</th>
+            <th style="text-align: center;">Grades</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="student_assignment in studCtrl.studentAssignments | filter:studCtrl.searchInput"
+
+              ng-class="{'selected':$index == studCtrl.selectedRow}"
+
+              ng-click="studCtrl.showOrganizationDetails($index, student_assignment.id)" id="{{student_assignment.id}}">
+            <td>{{ student_assignment.start_date }}</td>
+            <td>{{ student_assignment.end_date }}</td>
+            <td>{{ student_assignment.organization_name }}</td>
+            <td>{{ student_assignment.paid }}</td>
+            <td>{{ student_assignment.work_day }}</td>
+            <td>{{ student_assignment.student_gradelevel }}</td>
+            <td style="text-align: center;">
+              <button type="button" data-ng-click="studCtrl.showGradesModal()" class="btn btn-sm btn-primary" style="background-color: #eee; line-height: 1.2">
+                <%= image_tag("ellipsis.png", :alt => "Show Grades") %>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-responsive" style="padding-top:30px" ng-if="studCtrl.selectedRow != null">
+        <table class="table" style="margin-left: auto; margin-right: auto;">
+          <tbody ng-repeat="org_detail in studCtrl.orgDetails">
+          <tr>
+            <td style="font-weight: bold">Contact Name:</td>
+            <td>{{ org_detail.contact_name }}</td>
+            <td style="font-weight: bold">Email:</td>
+            <td>{{ org_detail.email }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Contact Title:</td>
+            <td>{{ org_detail.title }}</td>
+            <td style="font-weight: bold">Mobile Phone:</td>
+            <td>{{ org_detail.mobile }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Department:</td>
+            <td>{{ org_detail.contact_department }}</td>
+            <td style="font-weight: bold">Office Phone:</td>
+            <td>{{ org_detail.office_phone }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Address:</td>
+            <td>{{ org_detail.contact_address }}</td>
+            <td style="font-weight: bold">Fax:</td>
+            <td>{{ org_detail.fax }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">&nbsp;</td>
+            <td>{{ org_detail.contact_address }}</td>
+            <td style="font-weight: bold">Earliest Start:</td>
+            <td>{{ org_detail.earliest_start }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Contact Start Date:</td>
+            <td>{{ org_detail.contact_start_date }}</td>
+            <td style="font-weight: bold">Latest Start:</td>
+            <td>{{ org_detail.latest_start }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Sponsor Since:</td>
+            <td>{{ org_detail.contact_sponsor_since }}</td>
+            <td style="font-weight: bold">Ideal Start:</td>
+            <td>{{ org_detail.ideal_start }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>

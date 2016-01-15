@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_date: 2016-01-14
+  end_date: 2016-01-14
+  paid: false
+  work_day: MyString
+  student_gradelevel: 1
+  earliest_start: MyString
+  latest_start: MyString
+  ideal_start: MyString
+  student_id: 
+  contact_id:
+
+two:
+  start_date: 2016-01-14
+  end_date: 2016-01-14
+  paid: false
+  work_day: MyString
+  student_gradelevel: 1
+  earliest_start: MyString
+  latest_start: MyString
+  ideal_start: MyString
+  student_id: 
+  contact_id:
