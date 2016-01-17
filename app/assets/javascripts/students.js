@@ -1,19 +1,13 @@
-/**
- * Created by johnhogan on 6/2/15.
- */
 angular.module('app').controller("StudentController", function($http, $timeout, $location, $window, $cookies, ModalFormService, ModalDetailsService){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
     vm.assignment_student_class = "";
-    vm.backupRetainUntil = "";
-    vm.cancelEdit = cancelEdit;
     vm.createStudent = createStudent;
     vm.displayAlert = displayAlert;
     vm.getStudentAssignments = getStudentAssignments;
     vm.getGradeData = getGradeData;
     vm.getStudents = getStudents;
-    vm.isDateValid = isDateValid;
     vm.isSuccess = true;
     vm.logoutUser = logoutUser;
     vm.orgDetails = [];
@@ -40,12 +34,6 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
 
     function alertShowHide(isShown) {
         vm[isShown] = !vm[isShown];
-    }
-
-    function cancelEdit() {
-        vm.showHideButtons(false);
-        vm.stor_details[0]['retain_until'] = vm.backupRetainUntil;
-        vm.stor_details[0]['legal_hold'] = vm.backupLegalHold;
     }
 
     function createStudent(container_name) {
@@ -114,25 +102,6 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
         error(function(data, status, headers, config) {
             vm.displayAlert(false,"There was an unexpected error.  Could not retrieve students.");
         });
-    }
-
-    function isDateValid(date_string) {
-        var dateTime = new Date(date_string);
-        if (dateTime === null) return false;
-        var day = dateTime.getDate();
-        var month = dateTime.getMonth() + 1;
-        var year = dateTime.getFullYear();
-        var hours = dateTime.getHours();
-        var minutes = dateTime.getMinutes();
-        var seconds = dateTime.getSeconds();
-        var composedDate = new Date(year, month, day, hours, minutes, seconds);
-        return composedDate.getSeconds() === seconds &&
-            composedDate.getMinutes() === minutes &&
-            composedDate.getHours() === hours &&
-            composedDate.getDate() === day &&
-            composedDate.getMonth() === month &&
-            composedDate.getFullYear() === year;
-
     }
 
     function logoutUser() {

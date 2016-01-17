@@ -18,4 +18,6 @@
 //= require angular-animate
 //= require angular-cookies
 //= require angular-ui-bootstrap-tpls
+//= require moment
+//= require bootstrap-datetimepicker
 //= require_tree .

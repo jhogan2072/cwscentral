@@ -1,0 +1,62 @@
+<body ng-app="app" ng-controller="VanRouteController as vanRouteCtrl">
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+<%= render "shared/navbar", input_name: "vanRouteCtrl.searchInput" %>
+<%= simple_form_for(@van_route) do |f| %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar" style="padding-top:0px">
+      <ul class="nav nav-sidebar">
+        <li>
+          <div style="font-weight: bold; font-size: 12pt; padding-top:5px; padding-bottom:10px; padding-left:20px; background-color: lightgrey">
+            Choose a Day
+          </div>
+        </li>
+        <li>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-10" style="margin: 0 auto; float: none">
+                  <%= f.hidden_field :route_date %>
+                  <input type='hidden' class="form-control" id="sel_date"/>
+                  <div id="datetimepicker12"></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="col-md-5" style="margin: 0 auto; float: none">
+            <fieldset class="well">
+              <%= f.collection_radio_buttons :am_pm, [['AM', 'AM'] ,['PM', 'PM']], :first, :last, item_wrapper_class: :radio,
+                                         item_wrapper_tag: :div%>
+            </fieldset>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 vanRouteCtrl">
+      <div class="animate-if" ng-class="{'alert alert-success':vanRouteCtrl.isSuccess == true, 'alert alert-danger':vanRouteCtrl.isSuccess == false}" ng-if="vanRouteCtrl.showResultAlert">
+        <button type="button" class="close" data-ng-click="vanRouteCtrl.alertShowHide('showResultAlert')">x</button>
+        {{vanRouteCtrl.alertText}}
+      </div>
+      <h2 class="sub-header">Daily Route
+        <button class="btn-file btn btn-primary" name="export">Export</button>
+      </h2>
+    </div>
+  </div>
+</div>
+<% end%>
+<script type="text/javascript">
+  // When the document is ready
+  $(document).ready(function () {
+
+    $('#datetimepicker12').datetimepicker({
+      format: "MM/DD/YYYY",
+      inline: true
+    });
+
+  }).on('dp.change', function(e){
+    $('#sel_date').val(e.date.format('MM/DD/YYYY'))
+  });
+</script>
+</body>

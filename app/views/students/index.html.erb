@@ -2,28 +2,7 @@
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <ul class="nav navbar-left navbar-nav">
-        <li><%= image_tag("logo2.png", size: "75x50") %></li>
-        <li><span style="font-size:x-large">NDCR Corporate Work Study</span></li>
-      </ul>
-      <div class="clearfix"></div>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <div class="navbar-form navbar-right input-group">
-        <span class="input-group-addon" style="width:20px">
-          <span class="glyphicon glyphicon-search"></span>
-        </span>
-        <input type="text" class="form-control" ng-model="studCtrl.searchInput">
-        <ul class="nav navbar-nav navbar-right">
-          <li><%= link_to('Logout', destroy_user_session_path, :method => :delete, id: "logout_link") %></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
+<%= render "shared/navbar", input_name: "studCtrl.searchInput" %>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar" style="padding-top:0px">

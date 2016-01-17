@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160114231141) do
+ActiveRecord::Schema.define(version: 20160116135900) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,12 @@ ActiveRecord::Schema.define(version: 20160114231141) do
 
   add_index "contacts", ["organization_id"], name: "index_contacts_on_organization_id", using: :btree
 
+  create_table "drivers", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "organizations", force: :cascade do |t|
     t.string   "name"
     t.string   "billing_address"
@@ -50,6 +56,17 @@ ActiveRecord::Schema.define(version: 20160114231141) do
     t.datetime "updated_at",      null: false
   end
 
+  create_table "route_stops", force: :cascade do |t|
+    t.string   "stop_order"
+    t.integer  "van_route_id"
+    t.integer  "organization_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "route_stops", ["organization_id"], name: "index_route_stops_on_organization_id", using: :btree
+  add_index "route_stops", ["van_route_id"], name: "index_route_stops_on_van_route_id", using: :btree
+
   create_table "students", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -57,6 +74,11 @@ ActiveRecord::Schema.define(version: 20160114231141) do
     t.string   "powerschool_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "students_van_routes", id: false, force: :cascade do |t|
+    t.integer "van_route_id", null: false
+    t.integer "student_id",   null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -80,6 +102,29 @@ ActiveRecord::Schema.define(version: 20160114231141) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
+  create_table "van_routes", force: :cascade do |t|
+    t.date     "route_date"
+    t.string   "am_pm"
+    t.integer  "van_id"
+    t.integer  "driver_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "van_routes", ["driver_id"], name: "index_van_routes_on_driver_id", using: :btree
+  add_index "van_routes", ["van_id"], name: "index_van_routes_on_van_id", using: :btree
+
+  create_table "vans", force: :cascade do |t|
+    t.string   "name"
+    t.string   "plate_number"
+    t.string   "vin"
+    t.string   "make"
+    t.string   "model_year"
+    t.string   "last_oil_change"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
   create_table "work_assignments", force: :cascade do |t|
     t.date     "start_date"
     t.date     "end_date"
@@ -99,6 +144,10 @@ ActiveRecord::Schema.define(version: 20160114231141) do
   add_index "work_assignments", ["student_id"], name: "index_work_assignments_on_student_id", using: :btree
 
   add_foreign_key "contacts", "organizations"
+  add_foreign_key "route_stops", "organizations"
+  add_foreign_key "route_stops", "van_routes"
+  add_foreign_key "van_routes", "drivers"
+  add_foreign_key "van_routes", "vans"
   add_foreign_key "work_assignments", "contacts"
   add_foreign_key "work_assignments", "students"
 end
