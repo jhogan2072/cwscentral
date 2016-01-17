@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  plate_number: MyString
+  vin: MyString
+  make: MyString
+  model_year: MyString
+  last_oil_change: MyString
+
+two:
+  name: MyString
+  plate_number: MyString
+  vin: MyString
+  make: MyString
+  model_year: MyString
+  last_oil_change: MyString

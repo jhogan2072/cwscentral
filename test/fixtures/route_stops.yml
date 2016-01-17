@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stop_order: MyString
+  van_route_id: 
+  organization_id: 
+
+two:
+  stop_order: MyString
+  van_route_id: 
+  organization_id: 
