@@ -1,0 +1,5 @@
+<tr>
+  <td><%= f.input :stop_order, label: false%></td>
+  <td><%= f.association :organization, label_method: :name_and_address, value_method: :id, label: false%></td>
+  <td style="text-align: center; vertical-align: middle"><%= f.check_box :_destroy %></td>
+</tr>

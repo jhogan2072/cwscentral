@@ -27,6 +27,7 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.students = [];
     vm.studentSearchInput = '';
     vm.truncateStyle = {};
+    vm.list = ["one", "two", "three", "four", "five", "six"];
 
     getStudents();
 

@@ -47,6 +47,43 @@ body {
         border-right: 1px solid #eee;
     }
 }
+.nav-heading {
+    font-weight: bold;
+    font-size: 12pt;
+    margin-bottom: 10px;
+    padding-top:5px;
+    padding-bottom:10px;
+    padding-left:20px;
+    background-color: lightgrey
+}
+.the-legend {
+    border-style: none;
+    border-width: 0;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 0;
+}
+.the-fieldset {
+    border: 2px groove #444;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+    box-shadow:  0px 0px 0px 0px #000;
+}
+.van_route_am_pm {
+    float: right;
+    margin-left: 0px;
+    margin-right: 4px;
+    margin-top:2px;
+    margin-bottom:2px;
+}
+.van_route_name > label {
+    float:left;
+    line-height: 34px;
+    margin-right: 5px;
+}
+.van_route_name > input {
+    float:left;
+    width: 70%;
+}
 
 /* Sidebar navigation */
 .nav-sidebar {
@@ -152,6 +189,9 @@ div[contentEditable]:focus {
     background: white;
     cursor: inherit;
     display: block;
+}
+td > input[type=checkbox] {
+    margin-bottom: 15px;
 }
 .modal-header {
     background-color: #428bca;

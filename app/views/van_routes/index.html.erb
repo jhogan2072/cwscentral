@@ -1,7 +1,4 @@
 <body ng-app="app" ng-controller="VanRouteController as vanRouteCtrl">
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
-
 <%= render "shared/navbar", input_name: "vanRouteCtrl.searchInput" %>
 <%= simple_form_for(@van_route) do |f| %>
 <div class="container-fluid">
@@ -9,8 +6,9 @@
     <div class="col-sm-3 col-md-2 sidebar" style="padding-top:0px">
       <ul class="nav nav-sidebar">
         <li>
-          <div style="font-weight: bold; font-size: 12pt; padding-top:5px; padding-bottom:10px; padding-left:20px; background-color: lightgrey">
-            Choose a Day
+          <div style="font-weight: bold; font-size: 12pt; padding-left:20px; background-color: lightgrey; display: inline-block; width: 100%; line-height: 34px;">
+            Route Time and Day:
+            <%= f.input :am_pm, collection: ['PM','AM'], label: false, include_blank: false %>
           </div>
         </li>
         <li>
@@ -25,16 +23,32 @@
           </div>
         </li>
         <li>
-          <div class="col-md-5" style="margin: 0 auto; float: none">
-            <fieldset class="well">
-              <%= f.collection_radio_buttons :am_pm, [['AM', 'AM'] ,['PM', 'PM']], :first, :last, item_wrapper_class: :radio,
-                                         item_wrapper_tag: :div%>
+          <div class="nav-heading">
+            Route Details
+          </div>
+        </li>
+        <li>
+            <%= f.input :name, label: "Rt Name:", wrapper_html: { class: 'col-md-12', style: 'margin-bottom: 0'} %>
+        </li>
+        <li>
+          <div class="col-md-10" style="margin-left:15px">
+            <fieldset class="well" style="padding-top: 5px; padding-bottom: 5px"><legend class="the-legend">Van</legend>
+              <%= f.collection_radio_buttons :van_id, Van.all, :id, :name, item_wrapper_class: :radio,
+                                             item_wrapper_tag: :div %>
+            </fieldset>
+          </div>
+        </li>
+        <li>
+          <div class="col-md-10" style="margin-left:15px">
+            <fieldset class="well" style="padding-top: 5px; padding-bottom: 5px"><legend class="the-legend">Driver</legend>
+              <%= f.collection_radio_buttons :driver_id, Driver.all, :id, :name, item_wrapper_class: :radio,
+                                             item_wrapper_tag: :div %>
             </fieldset>
           </div>
         </li>
       </ul>
     </div>
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 vanRouteCtrl">
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <div class="animate-if" ng-class="{'alert alert-success':vanRouteCtrl.isSuccess == true, 'alert alert-danger':vanRouteCtrl.isSuccess == false}" ng-if="vanRouteCtrl.showResultAlert">
         <button type="button" class="close" data-ng-click="vanRouteCtrl.alertShowHide('showResultAlert')">x</button>
         {{vanRouteCtrl.alertText}}
@@ -42,6 +56,22 @@
       <h2 class="sub-header">Daily Route
         <button class="btn-file btn btn-primary" name="export">Export</button>
       </h2>
+      <%= f.association :students, label_method: :full_name, value_method: :id, wrapper_html: { class: 'col-md-2' }  %>
+      <fieldset>
+        <legend>Route Stops</legend>
+        <table class="detail_route_rows">
+          <tr>
+            <th class="col-md-1 text-center">Order</th>
+            <th class="col-md-6">Organization</th>
+            <th class="col-md-1" style="text-align: center; vertical-align: middle">Delete</th>
+          </tr>
+          <%= f.simple_fields_for :route_stops do |rs_form| %>
+              <%= render(:partial => "van_routes/route_stop", :locals => { :f => rs_form }) %>
+          <% end %>
+        </table>
+        <input type="button" value="Add New Stop" onclick="<%=  child_link_javascript(f, :route_stops, '.detail_route_rows')%>" />
+        <%= f.submit 'Save' %>&nbsp;
+      </fieldset>
     </div>
   </div>
 </div>
@@ -52,11 +82,14 @@
 
     $('#datetimepicker12').datetimepicker({
       format: "MM/DD/YYYY",
-      inline: true
+      inline: true,
+      defaultDate: new Date($('#van_route_route_date').val())
     });
 
   }).on('dp.change', function(e){
-    $('#sel_date').val(e.date.format('MM/DD/YYYY'))
+    $('#van_route_route_date_1i').val(e.date.format('YYYY'));
+    $('#van_route_route_date_2i').val(e.date.format('M'));
+    $('#van_route_route_date_3i').val(e.date.format('D'));
   });
 </script>
 </body>

@@ -12,12 +12,15 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui/mouse
+//= require jquery-ui/sortable
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require angular
 //= require angular-animate
 //= require angular-cookies
 //= require angular-ui-bootstrap-tpls
+//= require angular-ui-sortable
 //= require moment
 //= require bootstrap-datetimepicker
 //= require_tree .

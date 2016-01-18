@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20160116135900) do
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   create_table "van_routes", force: :cascade do |t|
+    t.string   "name"
     t.date     "route_date"
     t.string   "am_pm"
     t.integer  "van_id"
