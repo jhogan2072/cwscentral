@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Route Name:</strong>
+  <%= @van_route.name %>
+</p>
+<p>
+  <strong>Route Date:</strong>
+  <%= @van_route.route_date %>
+</p>
+<p>
+  <strong>AM/PM:</strong>
+  <%= @van_route.am_pm %>
+</p>
+<p>
+  <strong>Van ID:</strong>
+  <%= @van_route.van_id %>
+</p>
+<p>
+  <strong>Driver ID:</strong>
+  <%= @van_route.driver_id %>
+</p>
+
+<%= link_to 'Back', van_route_path %>
