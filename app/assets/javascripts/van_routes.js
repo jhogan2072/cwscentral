@@ -1,7 +1,7 @@
-angular.module('app').controller("VanRouteController", function($http, $timeout, $location, $window, $cookies, ModalFormService, ModalDetailsService){
+angular.module('app').controller("VanRouteController", function($http, $timeout, $location, $window){
     var vm = this;
     vm.alertShowHide = alertShowHide;
-    vm.alertText = "Hello, World";
+    vm.alertText = "Hello, Worlde";
     vm.displayAlert = displayAlert;
     vm.isSuccess = true;
     vm.logoutUser = logoutUser;
@@ -11,7 +11,7 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.showResultAlert = false;
     vm.truncateStyle = {};
     vm.list = ["one", "two", "three", "four", "five", "six"];
-    vm.routeDate = new Date();
+    vm.routeDate = "blah";
 
     ////////////
 
@@ -37,19 +37,4 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
         array.splice(index, 1);
     }
 
-})
-app.directive('cws_datetime', function() {
-    return {
-        restrict: 'A',
-        require : 'ngModel',
-        link: function(scope, element, attrs, ngModelCtrl) {
-            element.datetimepicker({
-                format: "MM/DD/YYYY",
-                inline: true
-            }).on('dp.change', function(e) {
-                ngModelCtrl.$setViewValue(e.date);
-                scope.$apply();
-            });
-        }
-    };
-});;
+});

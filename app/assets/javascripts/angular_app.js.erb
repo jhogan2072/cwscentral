@@ -1,7 +1,17 @@
 //= depend_on_asset "modal_form.html"
 //= depend_on_asset "modal_details.html"
 
-var app = angular.module('app', ['ui.bootstrap','ui.sortable','ngAnimate','ngCookies']);
+var app = angular.module('app', ['ui.bootstrap','ui.sortable','datetimepicker','ngAnimate','ngCookies'])
+    .config([
+      'datetimepickerProvider',
+      function (datetimepickerProvider) {
+        datetimepickerProvider.setOptions({
+          locale: 'en',
+          format: "MM/DD/YYYY",
+          inline: true
+        });
+      }
+    ]);
 app.service('ModalFormService', ['$modal',
     function ($modal) {
 

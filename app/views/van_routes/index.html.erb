@@ -7,11 +7,9 @@
             <li>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-md-10" style="margin: 0 auto; float: none">
-                    <%= hidden_field_tag :dp_route_date, @todays_date %>
-                    <input type="hidden" value={{routeDate}}/>
-                    <input type='hidden' class="form-control" id="sel_date"/>
-                    <div id="datetimepicker12" cws-datetime ng-model="routeDate"></div>
+                  <div class="col-md-10" style="margin: 0 auto; float: none" >
+                    <input type="hidden" name="dp_route_date" id="dp_route_date" value={{vanRouteCtrl.routeDate}}>
+                    <div ng-model="vanRouteCtrl.routeDate" datetimepicker datetimepicker-options="{defaultDate:'<%=@todays_date%>'}"></div>
                   </div>
                 </div>
               </div>
@@ -43,7 +41,6 @@
               <td class="col-md-1"><%= link_to image_tag("trash.png", size: "24x24"), van_route, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
             <% end %>
-          </div>
           </table>
         </div>
       </div>
