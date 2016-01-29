@@ -7,7 +7,7 @@
       <ul class="nav nav-sidebar">
         <li>
           <div style="font-weight: bold; font-size: 12pt; padding-left:20px; background-color: lightgrey; display: inline-block; width: 100%; line-height: 34px;">
-            Route Time and Day:
+            Time and Day:
             <%= f.input :am_pm, collection: ['PM','AM'], label: false, include_blank: false %>
           </div>
         </li>
@@ -24,11 +24,8 @@
         </li>
         <li>
           <div class="nav-heading">
-            Route Details
+            Van and Driver
           </div>
-        </li>
-        <li>
-            <%= f.input :name, label: "Rt Name:", wrapper_html: { class: 'col-md-12', style: 'margin-bottom: 0'} %>
         </li>
         <li>
           <div class="col-md-10" style="margin-left:15px">
@@ -53,11 +50,14 @@
         <button type="button" class="close" data-ng-click="vanRouteCtrl.alertShowHide('showResultAlert')">x</button>
         {{vanRouteCtrl.alertText}}
       </div>
-      <h2 class="sub-header">Daily Route
+      <h2 class="sub-header">New Van Route
         <button class="btn-file btn btn-primary" name="export">Export</button>
       </h2>
+      <div class="row">
+      <%= f.input :name, label: "Route Name:", wrapper_html: { class: 'col-md-4', style: 'display: block'} %>
+      </div>
       <%= f.association :students, label_method: :full_name, value_method: :id, wrapper_html: { class: 'col-md-2' }  %>
-      <fieldset>
+      <fieldset class="col-md-10">
         <legend>Route Stops</legend>
         <table class="detail_route_rows">
           <tr>

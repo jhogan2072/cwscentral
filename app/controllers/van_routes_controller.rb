@@ -4,7 +4,8 @@ before_action :set_van_route, only: [:show, :edit, :update, :destroy]
 # GET /van_routes
 # GET /van_routes.json
 def index
-  @van_routes = VanRoute.all
+  @todays_date = DateTime.now
+  @van_routes = VanRoute.all.where(:route_date => @todays_date)
 end
 
 # GET /van_routes/1
