@@ -12,11 +12,6 @@ def index
   end
 
   #@van_routes = VanRoute.all.where(:route_date => @todays_date)
-  respond_to do |format|
-    format.html
-    @van_routes = VanRoute.all.where(:route_date => @todays_date)
-
-  end
   respond_with VanRoute.all.where(:route_date => @todays_date)
 end
 
