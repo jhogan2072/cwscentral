@@ -1,5 +1,6 @@
 class VanRoutesController < ApplicationController
-before_action :set_van_route, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_van_route, only: [:show, :edit, :update, :destroy]
 respond_to :html, :json
 
 # GET /van_routes
@@ -12,7 +13,7 @@ def index
   end
 
   #@van_routes = VanRoute.all.where(:route_date => @todays_date)
-  respond_with VanRoute.all.where(:route_date => @todays_date)
+  respond_with VanRoute.joins(:driver).includes(:driver, :van).where(:route_date => @todays_date).to_json(:include => [:driver, :van])
 end
 
 # GET /van_routes/1
@@ -63,7 +64,8 @@ end
 # DELETE /van_routes/1
 # DELETE /van_routes/1.json
 def destroy
-  @van_route.destroy
+  myvar = @van_route
+#  @van_route.destroy
   respond_to do |format|
     format.html { redirect_to van_routes_url, notice: 'Van route was successfully destroyed.' }
     format.json { head :no_content }
@@ -84,6 +86,6 @@ end
 
 # Never trust parameters from the scary internet, only allow the white list through.
 def van_route_params
-  params.require(:van_route).permit(:name, :route_date, :am_pm, :van_id, :driver_id)
+  params.require(:van_route).permit(:id, :name, :route_date, :am_pm, :van_id, :driver_id)
 end
 end

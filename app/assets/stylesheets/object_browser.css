@@ -244,3 +244,6 @@ td > input[type=checkbox] {
     color:#fff;
     text-decoration: none;
 }
+.delete_object:hover {
+    cursor: pointer;
+}
