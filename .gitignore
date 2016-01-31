@@ -21,7 +21,8 @@
 *.zip
 
 # Ignore RubyMine project files
-/.idea/*
+.idea/*
+.idea/workspace.xml
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

@@ -17,6 +17,7 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require angular
+//= require angular-resource
 //= require angular-animate
 //= require angular-cookies
 //= require angular-ui-bootstrap-tpls

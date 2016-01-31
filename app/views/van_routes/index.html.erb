@@ -8,7 +8,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-10" style="margin: 0 auto; float: none" >
-                    <input type="hidden" name="dp_route_date" id="dp_route_date" value={{vanRouteCtrl.routeDate}}>
+                    <input type="hidden" name="dp_route_date" id="dp_route_date" value={{vanRouteCtrl.routeDate}} ng-change="vanRouteCtrl.getRoutes()">
                     <div ng-model="vanRouteCtrl.routeDate" datetimepicker datetimepicker-options="{defaultDate:'<%=@todays_date%>'}"></div>
                   </div>
                 </div>

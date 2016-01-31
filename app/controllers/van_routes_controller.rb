@@ -1,11 +1,23 @@
 class VanRoutesController < ApplicationController
 before_action :set_van_route, only: [:show, :edit, :update, :destroy]
+respond_to :html, :json
 
 # GET /van_routes
 # GET /van_routes.json
 def index
-  @todays_date = DateTime.now
-  @van_routes = VanRoute.all.where(:route_date => @todays_date)
+  if params[:route_date]
+    @todays_date = params["route_date"]
+  else
+    @todays_date = DateTime.now
+  end
+
+  #@van_routes = VanRoute.all.where(:route_date => @todays_date)
+  respond_to do |format|
+    format.html
+    @van_routes = VanRoute.all.where(:route_date => @todays_date)
+
+  end
+  respond_with VanRoute.all.where(:route_date => @todays_date)
 end
 
 # GET /van_routes/1
