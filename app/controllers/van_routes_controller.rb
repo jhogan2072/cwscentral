@@ -23,12 +23,13 @@ end
 
 # GET /van_routes/new
 def new
-  @van_route = VanRoute.new(route_date: DateTime.now.utc, am_pm: 'AM', van_id: Van.first.id, driver_id: Driver.first.id)
+  @van_route = VanRoute.new(route_date: DateTime.now, am_pm: 'AM', van_id: Van.first.id, driver_id: Driver.first.id)
   @van_route.route_stops.build
 end
 
 # GET /van_routes/1/edit
 def edit
+  @van_route.route_date = Time.zone.parse(@van_route.route_date.beginning_of_day().to_s)
 end
 
 # POST /van_routes
@@ -85,6 +86,6 @@ end
 
 # Never trust parameters from the scary internet, only allow the white list through.
 def van_route_params
-  params.require(:van_route).permit(:id, :name, :route_date, :am_pm, :van_id, :driver_id)
+  params.require(:van_route).permit(:id, :name, :route_date, :am_pm, :van_id, :driver_id, {:student_ids => []}, route_stops_attributes: [:id, :stop_order, :organization_id])
 end
 end
