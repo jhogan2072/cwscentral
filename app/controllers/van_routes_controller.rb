@@ -64,8 +64,7 @@ end
 # DELETE /van_routes/1
 # DELETE /van_routes/1.json
 def destroy
-  myvar = @van_route
-#  @van_route.destroy
+  @van_route.destroy
   respond_to do |format|
     format.html { redirect_to van_routes_url, notice: 'Van route was successfully destroyed.' }
     format.json { head :no_content }
