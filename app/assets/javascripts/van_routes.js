@@ -7,6 +7,7 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.displayAlert = displayAlert;
     vm.isSuccess = true;
     vm.logoutUser = logoutUser;
+    vm.page = 'routes';
     vm.removeElement = removeElement;
     vm.searchInput = '';
     vm.selectedRow = null;

@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+
+  root 'students#index'
   resources :organizations
   resources :contacts
+  resources :vans
+  resources :van_routes
 
   devise_for :users
 
@@ -10,14 +14,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :van_routes
-
   resources :work_assignments do
     member do
       get :org, :defaults => { :format => :json }
     end
   end
-  root 'students#index'
 
   resources :exports do
     collection do

@@ -1,5 +1,5 @@
-<body ng-app="app" ng-controller="VanRouteController as vanRouteCtrl">
-<%= render "shared/navbar", input_name: "vanRouteCtrl.searchInput" %>
+<body ng-app="app" ng-controller="VanRouteController as ctrl">
+<%= render "shared/navbar", input_name: "ctrl.searchInput" %>
 <%= simple_form_for(@van_route) do |f| %>
     <div class="container-fluid">
       <div class="row">
@@ -47,11 +47,11 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <% if flash[:notice] %>
-              <div data-ng-init="vanRouteCtrl.displayAlert(true, '<%= flash[:notice] %>')"></div>
+              <div data-ng-init="ctrl.displayAlert(true, '<%= flash[:notice] %>')"></div>
           <% end %>
-          <div class="animate-if" ng-class="{'alert alert-success':vanRouteCtrl.isSuccess == true, 'alert alert-danger':vanRouteCtrl.isSuccess == false}" ng-if="vanRouteCtrl.showResultAlert">
-            <button type="button" class="close" data-ng-click="vanRouteCtrl.alertShowHide('showResultAlert')">x</button>
-            {{vanRouteCtrl.alertText}}
+          <div class="animate-if" ng-class="{'alert alert-success':ctrl.isSuccess == true, 'alert alert-danger':ctrl.isSuccess == false}" ng-if="ctrl.showResultAlert">
+            <button type="button" class="close" data-ng-click="ctrl.alertShowHide('showResultAlert')">x</button>
+            {{ctrl.alertText}}
           </div>
           <h2 class="sub-header">New Van Route
             <button class="btn-file btn btn-primary" name="export">Export</button>

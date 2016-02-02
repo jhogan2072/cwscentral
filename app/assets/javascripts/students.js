@@ -11,6 +11,7 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     vm.isSuccess = true;
     vm.logoutUser = logoutUser;
     vm.orgDetails = [];
+    vm.page = 'students';
     vm.removeElement = removeElement;
     vm.searchInput = '';
     vm.selectedRow = null;

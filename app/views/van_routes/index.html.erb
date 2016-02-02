@@ -1,5 +1,5 @@
-<body ng-app="app" ng-controller="VanRouteController as vanRouteCtrl">
-<%= render "shared/navbar", input_name: "vanRouteCtrl.searchInput" %>
+<body ng-app="app" ng-controller="VanRouteController as ctrl">
+<%= render "shared/navbar", input_name: "ctrl.searchInput" %>
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" style="padding-top:0px">
@@ -8,8 +8,8 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-10" style="margin: 0 auto; float: none" >
-                    <input type="hidden" name="dp_route_date" id="dp_route_date" value={{vanRouteCtrl.routeDate}}">
-                    <div ng-model="vanRouteCtrl.routeDate" datetimepicker datetimepicker-options="{defaultDate:'<%=@todays_date%>'}" ng-change="vanRouteCtrl.getRoutes()"></div>
+                    <input type="hidden" name="dp_route_date" id="dp_route_date" value={{ctrl.routeDate}}">
+                    <div ng-model="ctrl.routeDate" datetimepicker datetimepicker-options="{defaultDate:'<%=@todays_date%>'}" ng-change="ctrl.getRoutes()"></div>
                   </div>
                 </div>
               </div>
@@ -17,9 +17,9 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <div class="animate-if" ng-class="{'alert alert-success':vanRouteCtrl.isSuccess == true, 'alert alert-danger':vanRouteCtrl.isSuccess == false}" ng-if="vanRouteCtrl.showResultAlert">
-            <button type="button" class="close" data-ng-click="vanRouteCtrl.alertShowHide('showResultAlert')">x</button>
-            {{vanRouteCtrl.alertText}}
+          <div class="animate-if" ng-class="{'alert alert-success':ctrl.isSuccess == true, 'alert alert-danger':ctrl.isSuccess == false}" ng-if="ctrl.showResultAlert">
+            <button type="button" class="close" data-ng-click="ctrl.alertShowHide('showResultAlert')">x</button>
+            {{ctrl.alertText}}
           </div>
           <h2 class="sub-header">Daily Route
             <button class="btn-file btn btn-primary" name="export">Export</button>
@@ -32,14 +32,14 @@
               <th class="col-md-3">Van</th>
               <th class="col-md-1">Delete</th>
             </tr>
-            <tr ng-repeat="van_route in vanRouteCtrl.dailyRoutes">
+            <tr ng-repeat="van_route in ctrl.dailyRoutes">
               <td class="col-md-2">{{ van_route.am_pm }}</td>
               <td class="col-md-3"><a href="/van_routes/{{van_route.id}}/edit" target="_self">{{van_route.name}}</a></td>
               <td class="col-md-3">{{ van_route.driver.name }}</td>
               <td class="col-md-3">{{ van_route.van.name }}</td>
               <td class="col-md-1" style="text-align:center"><img ng-src="<%=image_path("trash.png")%>" width="18" height="18"
                                    ng-really-message="Are you sure you want to delete this object?"
-                                   ng-really-click="vanRouteCtrl.deleteRoute($index, van_route.id);" class="delete_object">
+                                   ng-really-click="ctrl.deleteRoute($index, van_route.id);" class="delete_object">
               </td>
             </tr>
           </table>
