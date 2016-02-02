@@ -16,7 +16,6 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.VanRoute = $resource("/van_routes.json");
     vm.getRoutes = getRoutes;
 
-
     ////////////
 
     function alertShowHide(isShown) {

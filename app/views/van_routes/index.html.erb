@@ -34,7 +34,7 @@
             </tr>
             <tr ng-repeat="van_route in vanRouteCtrl.dailyRoutes">
               <td class="col-md-2">{{ van_route.am_pm }}</td>
-              <td class="col-md-3"><a href="/van_routes/{{van_route.id}}/edit">{{van_route.name}}</a></td>
+              <td class="col-md-3"><a href="/van_routes/{{van_route.id}}/edit" target="_self">{{van_route.name}}</a></td>
               <td class="col-md-3">{{ van_route.driver.name }}</td>
               <td class="col-md-3">{{ van_route.van.name }}</td>
               <td class="col-md-1" style="text-align:center"><img ng-src="<%=image_path("trash.png")%>" width="18" height="18"

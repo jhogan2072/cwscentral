@@ -53,7 +53,7 @@ end
 def update
   respond_to do |format|
     if @van_route.update(van_route_params)
-      format.html { redirect_to @van_route, notice: 'Van route was successfully updated.' }
+      format.html { redirect_to edit_van_route_url, notice: 'Van route was successfully updated.' }
       format.json { render :show, status: :ok, location: @van_route }
     else
       format.html { render :edit }
