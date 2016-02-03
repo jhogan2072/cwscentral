@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/johnhogan/PycharmProjects/ebay_search/find.py", line 2, in <module>
+    from ebaysdk.finding import Connection
+ImportError: No module named ebaysdk.finding
