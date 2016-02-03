@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :organizations
   resources :contacts
   resources :vans
+  resources :drivers
   resources :van_routes
 
   devise_for :users
