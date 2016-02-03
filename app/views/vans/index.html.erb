@@ -1,36 +1,44 @@
-<p id="notice"><%= notice %></p>
+<body ng-app="app" ng-controller="VanController as ctrl">
+<%= render "shared/navbar", input_name: "ctrl.searchInput" %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header">Vans
+        <button class="btn-file btn btn-primary" name="export">Export</button>
+      </h2>
+      <div class="table-responsive" ng-style="ctrl.truncateStyle">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Plate Number</th>
+            <th>VIN</th>
+            <th>Make</th>
+            <th>Model Year</th>
+            <th>Last Oil Change</th>
+            <th colspan="2"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @vans.each do |van| %>
+              <tr>
+                <td><%= van.name %></td>
+                <td><%= van.plate_number %></td>
+                <td><%= van.vin %></td>
+                <td><%= van.make %></td>
+                <td><%= van.model_year %></td>
+                <td><%= van.last_oil_change %></td>
+                <td><%= link_to 'Edit', edit_van_path(van) %></td>
+                <td><%= link_to 'Delete', van, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <%= link_to 'New Van', new_van_path %>
+      </div>
+    </div>
+  </div>
+</div>
 
-<h1>Listing Vans</h1>
-<table>
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Plate Number</th>
-    <th>VIN</th>
-    <th>Make</th>
-    <th>Model Year</th>
-    <th>Last Oil Change</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @vans.each do |van| %>
-      <tr>
-        <td><%= van.name %></td>
-        <td><%= van.plate_number %></td>
-        <td><%= van.vin %></td>
-        <td><%= van.make %></td>
-        <td><%= van.model_year %></td>
-        <td><%= van.last_oil_change %></td>
-        <td><%= link_to 'Show', van %></td>
-        <td><%= link_to 'Edit', edit_van_path(van) %></td>
-        <td><%= link_to 'Destroy', van, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Van', new_van_path %>
+</body>
