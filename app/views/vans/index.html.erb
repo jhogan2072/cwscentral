@@ -29,16 +29,15 @@
                 <td><%= van.make %></td>
                 <td><%= van.model_year %></td>
                 <td><%= van.last_oil_change %></td>
-                <td><%= link_to 'Edit', edit_van_path(van) %></td>
+                <td><%= link_to 'Edit', edit_van_path(van), target: "_self" %></td>
                 <td><%= link_to 'Delete', van, method: :delete, data: { confirm: 'Are you sure?' } %></td>
               </tr>
           <% end %>
           </tbody>
         </table>
-        <%= link_to 'New Van', new_van_path %>
+        <%= link_to 'New Van', new_van_path, target: "_self" %>
       </div>
     </div>
   </div>
 </div>
-
 </body>
