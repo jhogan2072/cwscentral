@@ -14,6 +14,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :organizations do
+    member do
+      get :work, :defaults => { :format => :json }
+    end
+  end
+
   resources :work_assignments do
     member do
       get :org, :defaults => { :format => :json }

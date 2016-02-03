@@ -14,6 +14,10 @@ class WorkAssignment < ActiveRecord::Base
     contact.organization.name
   end
 
+  def student_name
+    student.full_name
+  end
+
   def billing_address
     contact.organization.billing_address
   end
@@ -70,7 +74,7 @@ class WorkAssignment < ActiveRecord::Base
     if student_id != -1
       joins(contact: :organization).includes(contact: :organization).where("student_id = ?", student_id)
     else
-      where("organization_id = ?", organization_id)
+      joins(contact: :student).includes(contact: :student).where("organization_id = ?", organization_id)
     end
   end
 

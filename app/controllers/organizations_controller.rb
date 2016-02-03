@@ -61,6 +61,14 @@ class OrganizationsController < ApplicationController
     end
   end
 
+  def work
+    #retrieve an organizations student work history
+    @assignments = WorkAssignment.search(organization_id=params[:id])
+    if @assignments.length == 0
+      render json: :no_content, status: 404
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_organization

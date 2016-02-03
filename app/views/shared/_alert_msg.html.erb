@@ -1,0 +1,4 @@
+<div class="animate-if" ng-class="{'alert alert-success':ctrl.isSuccess == true, 'alert alert-danger':ctrl.isSuccess == false}" ng-if="ctrl.showResultAlert">
+  <button type="button" class="close" data-ng-click="ctrl.alertShowHide('showResultAlert')">x</button>
+  {{ctrl.alertText}}
+</div>

@@ -98,7 +98,6 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
             angular.forEach(data, function(student) {
                 vm.students.push(student);
             });
-            vm.student = vm.students[0];
         }).
         error(function(data, status, headers, config) {
             vm.displayAlert(false,"There was an unexpected error.  Could not retrieve students.");

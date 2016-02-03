@@ -17,10 +17,7 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <div class="animate-if" ng-class="{'alert alert-success':ctrl.isSuccess == true, 'alert alert-danger':ctrl.isSuccess == false}" ng-if="ctrl.showResultAlert">
-            <button type="button" class="close" data-ng-click="ctrl.alertShowHide('showResultAlert')">x</button>
-            {{ctrl.alertText}}
-          </div>
+          <%= render "shared/alert_msg" %>
           <h2 class="sub-header">Daily Route
             <button class="btn-file btn btn-primary" name="export">Export</button>
           </h2>

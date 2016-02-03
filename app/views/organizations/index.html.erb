@@ -1,34 +1,111 @@
-<p id="notice"><%= notice %></p>
+<body ng-app="app" ng-controller="OrgController as ctrl">
+<%= render "shared/navbar", input_name: "ctrl.searchInput" %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar" style="padding-top:0px">
+      <ul class="nav nav-sidebar">
+        <li>
+          <div style="font-weight: bold; font-size: 12pt; padding-top:5px; padding-bottom:10px; padding-left:20px; background-color: lightgrey">
+            Organizations
+            <button type="button" data-ng-click="ctrl.showOrgModal()" class="btn btn-sm btn-primary pull-right" style="margin-right: 5px;line-height: 1.2">Add</button>
+          </div>
+        </li>
+        <li ng-repeat="org in ctrl.orgs | filter:ctrl.searchInput" ng-class="{'active':$index == ctrl.selectedOrg}"
+            ng-click="ctrl.setClickedOrg($index, org.full_name, org.id)">
+          <a href="#">{{org.name}}</a>
 
-<h1>Listing Organizations</h1>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header">Student Work History
+        <button class="btn-file btn btn-primary" name="export">Export</button>
+      </h2>
+      <div class="table-responsive" ng-style="ctrl.truncateStyle">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Student Name</th>
+            <th>Paid/Unpaid</th>
+            <th>Work Day</th>
+            <th>Student Class</th>
+            <th style="text-align: center;">Grades</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="student_assignment in ctrl.studentAssignments | filter:ctrl.searchInput"
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Sugarcrm</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+              ng-class="{'selected':$index == ctrl.selectedRow}"
 
-  <tbody>
-    <% @organizations.each do |organization| %>
-      <tr>
-        <td><%= organization.name %></td>
-        <td><%= organization.billing_address %></td>
-        <td><%= organization.city %></td>
-        <td><%= organization.state %></td>
-        <td><%= organization.zip %></td>
-        <td><%= organization.sponsor_since %></td>
-        <td><%= organization.sugarcrm_id %></td>
-        <td><%= link_to 'Show', organization %></td>
-        <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
-        <td><%= link_to 'Destroy', organization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+              ng-click="ctrl.showOrganizationDetails($index, student_assignment.id)" id="{{student_assignment.id}}">
+            <td>{{ student_assignment.start_date }}</td>
+            <td>{{ student_assignment.end_date }}</td>
+            <td>{{ student_assignment.student_name }}</td>
+            <td>{{ student_assignment.paid }}</td>
+            <td>{{ student_assignment.work_day }}</td>
+            <td>{{ student_assignment.student_gradelevel }}</td>
+            <td style="text-align: center;">
+              <button type="button" data-ng-click="ctrl.showGradesModal()" class="btn btn-sm btn-primary" style="background-color: #eee; line-height: 1.2">
+                <%= image_tag("ellipsis.png", :alt => "Show Grades") %>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-responsive" style="padding-top:30px" ng-if="ctrl.selectedRow != null">
+        <table class="table" style="margin-left: auto; margin-right: auto;">
+          <tbody ng-repeat="org_detail in ctrl.orgDetails">
+          <tr>
+            <td style="font-weight: bold">Contact Name:</td>
+            <td>{{ org_detail.contact_name }}</td>
+            <td style="font-weight: bold">Email:</td>
+            <td>{{ org_detail.email }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Contact Title:</td>
+            <td>{{ org_detail.title }}</td>
+            <td style="font-weight: bold">Mobile Phone:</td>
+            <td>{{ org_detail.mobile }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Department:</td>
+            <td>{{ org_detail.contact_department }}</td>
+            <td style="font-weight: bold">Office Phone:</td>
+            <td>{{ org_detail.office_phone }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Address:</td>
+            <td>{{ org_detail.contact_address }}</td>
+            <td style="font-weight: bold">Fax:</td>
+            <td>{{ org_detail.fax }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">&nbsp;</td>
+            <td>{{ org_detail.contact_address }}</td>
+            <td style="font-weight: bold">Earliest Start:</td>
+            <td>{{ org_detail.earliest_start }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Contact Start Date:</td>
+            <td>{{ org_detail.contact_start_date }}</td>
+            <td style="font-weight: bold">Latest Start:</td>
+            <td>{{ org_detail.latest_start }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Sponsor Since:</td>
+            <td>{{ org_detail.contact_sponsor_since }}</td>
+            <td style="font-weight: bold">Ideal Start:</td>
+            <td>{{ org_detail.ideal_start }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
-<br>
-
-<%= link_to 'New Organization', new_organization_path %>
+</body>
