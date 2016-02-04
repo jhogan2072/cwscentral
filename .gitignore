@@ -23,6 +23,7 @@
 # Ignore RubyMine project files
 .idea/*
 .idea/workspace.xml
+.idea/cwscentral.iml
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
