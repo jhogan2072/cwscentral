@@ -7,7 +7,7 @@
             <li>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-md-10" style="margin: 0 auto; float: none" >
+                  <div class="col-md-12" style="margin: 0 auto; float: none" >
                     <input type="hidden" name="dp_route_date" id="dp_route_date" value={{ctrl.routeDate}}">
                     <div ng-model="ctrl.routeDate" datetimepicker datetimepicker-options="{defaultDate:'<%=@todays_date%>'}" ng-change="ctrl.getRoutes()"></div>
                   </div>
@@ -18,10 +18,33 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <%= render "shared/alert_msg" %>
-          <h2 class="sub-header">Daily Route
-            <button class="btn-file btn btn-primary" name="export">Export</button>
+          <h2 class="sub-header">Daily Routes
+            <button class="btn-file btn btn-primary" name="export" ng-if="ctrl.dailyRoutes.length > 0">Export</button>
           </h2>
-          <table>
+          <div class="jumbotron" ng-if="ctrl.dailyRoutes.length==0" style="background-color: transparent; text-align: center">
+            <h2>Looks like there are no routes defined yet for today!</h2>
+            <p class="lead">To copy routes from the most recent previous school day, just click the Copy Routes
+              button.  To copy from a different day, click in the date box below to choose a different date. To
+              add routes from scratch, choose New Route from the Routes menu at the top of the page.
+            </p>
+            <p class="col-sm-6" style="text-align:right"><a class="btn btn-lg btn-success" href="#" role="button">Copy Routes</a></p>
+            <div class="col-sm-3 form-group" style="height: 46px; position: relative">
+              <div class="input-group" style="position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  height: 30px;
+                  width: 100%;
+                  margin: -15px 0 0 -50%;">
+                <input type="text" id="dt1" class="form-control input-sm" style="font-size: 14px"
+
+                       datetimepicker
+                       datetimepicker-options="{defaultDate:'<%=@previous_school_day%>', inline: false}"
+                       ng-model="ctrl.copyFromDate"/>
+                <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+              </div>
+            </div>
+          </div>
+          <table ng-if="ctrl.dailyRoutes.length > 0">
             <tr>
               <th class="col-md-2">AM/PM</th>
               <th class="col-md-3">Name</th>

@@ -11,6 +11,7 @@ def index
   else
     @todays_date = DateTime.now
   end
+  @previous_school_day = 1.business_days.before(@todays_date.to_date)
 
   #@van_routes = VanRoute.all.where(:route_date => @todays_date)
   respond_with VanRoute.joins(:driver).includes(:driver, :van).where(:route_date => @todays_date).to_json(:include => [:driver, :van])

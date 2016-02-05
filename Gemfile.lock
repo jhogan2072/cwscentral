@@ -51,6 +51,9 @@ GEM
     bootstrap3-datetimepicker-rails (4.14.30)
       momentjs-rails (>= 2.8.1)
     builder (3.2.2)
+    business_time (0.7.4)
+      activesupport (>= 3.1.0)
+      tzinfo
     byebug (8.2.1)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
@@ -186,6 +189,7 @@ DEPENDENCIES
   bootstrap-sass
   bootstrap3-datetimepicker-rails (~> 4.14.30)
   bundler
+  business_time
   byebug
   devise
   jbuilder (~> 2.0)
