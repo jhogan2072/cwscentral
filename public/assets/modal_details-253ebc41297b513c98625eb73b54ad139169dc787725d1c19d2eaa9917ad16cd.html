@@ -1,0 +1,18 @@
+<div class="modal-header"> 
+    <a href="#" class="close" data-ng-click="modalOptions.close()">x</a> 
+    <h4 class="modal-title">{{modalOptions.headerText}}</h4> 
+</div> 
+<div class="modal-body"> 
+    <span>{{modalOptions.bodyText}}</span> 
+    <table> 
+        <tr ng-repeat="table_header in modalOptions.tableHeaders"> 
+            <th>{{table_header}}</th>
+        </tr>
+        <tr ng-repeat="table_cell in modalOptions.tableData"> 
+            <td>{{mydata.value}}</td>
+        </tr>
+    </table>
+</div> 
+<div class="modal-footer"> 
+    <button type="button" class="btn" data-ng-click="modalOptions.close()">{{modalOptions.closeButtonText}}</button>
+</div>

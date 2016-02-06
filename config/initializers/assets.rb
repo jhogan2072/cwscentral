@@ -9,5 +9,13 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
+# Rails.application.config.assets.precompile += %w( angular-bootstrap-datetimepicker-directive.js )
+# Rails.application.config.assets.precompile += %w( drivers.js )
+# Rails.application.config.assets.precompile += %w( misc.js )
+# Rails.application.config.assets.precompile += %w( organization.js )
+# Rails.application.config.assets.precompile += %w( students.js )
+# Rails.application.config.assets.precompile += %w( van_routes.js )
+# Rails.application.config.assets.precompile += %w( vans.js )
+# Rails.application.config.assets.precompile += %w( work_assignments.js )
 Rails.application.config.assets.precompile += %w( object_browser.css )
 Rails.application.config.assets.precompile += %w( login.css )
