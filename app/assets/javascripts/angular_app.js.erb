@@ -12,6 +12,15 @@ var app = angular.module('app', ['ui.bootstrap','ui.sortable','datetimepicker','
         });
       }
     ]);
+app.factory('VanRouteService', ['$resource', VanRouteService]);
+
+function VanRouteService($resource) {
+  return $resource('/van_routes/:collectionRoute:id.json', null,
+      {
+        'copy': {method: 'GET', isArray: true, params: {collectionRoute: 'copy'}}
+      });
+}
+
 app.directive('ngReallyClick', [function() {
   return {
     restrict: 'A',

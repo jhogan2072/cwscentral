@@ -1,8 +1,9 @@
-angular.module('app').controller("VanRouteController", function($http, $timeout, $location, $window, $resource){
+angular.module('app').controller("VanRouteController", function($http, $timeout, $location, $window, VanRouteService){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "";
     vm.copyFromDate = "";
+    vm.copyRoutes = copyRoutes;
     vm.dailyRoutes = {};
     vm.deleteRoute = deleteRoute;
     vm.displayAlert = displayAlert;
@@ -11,11 +12,9 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.page = 'routes';
     vm.removeElement = removeElement;
     vm.searchInput = '';
-    vm.selectedRow = null;
     vm.showResultAlert = false;
-    vm.truncateStyle = {};
     vm.routeDate = "";
-    vm.VanRoute = $resource("/van_routes/:id.json");
+//    vm.VanRoute = $resource("/van_routes/:id.json");
     vm.getRoutes = getRoutes;
 
     Number.prototype.mod = function(n) {
@@ -41,9 +40,23 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
         vm[isShown] = !vm[isShown];
     }
 
+    function copyRoutes() {
+        VanRouteService.copy({
+            copy_from: vm.copyFromDate, copy_to: vm.routeDate
+        },function(data) {
+            // success handler
+            angular.forEach(data, function(route) {
+                vm.dailyRoutes.push(route);
+            });
+            vm.displayAlert(true, "Routes copied.")
+        }, function(response) {
+            vm.displayAlert(false, "There was an error copying routes.  The HTTP return code was " + response.status);
+        });
+    }
+
     function deleteRoute(indexObjToDelete, routeId) {
         //var deleteAction = $resource("/van_routes/:id.json", {id: routeId});
-        vm.VanRoute.delete({id: routeId});
+        VanRouteService.delete({id: routeId});
         //Alert that the object was successfully deleted and delete the row
         vm.removeElement(vm.dailyRoutes, indexObjToDelete);
         vm.displayAlert(true,"The object was successfully deleted.");
@@ -57,13 +70,16 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     }
 
     function getRoutes () {
-        vm.dailyRoutes = vm.VanRoute.query({route_date: vm.routeDate});
-        var prev_date = new Date(vm.routeDate);
-        prev_date.addBusDays(-1);
-        var a = moment(prev_date);
-        var date_string = a.format("DD-MMM-YYYY");
-        vm.copyFromDate = date_string;
-        $('#dt1').val(date_string).change();
+        vm.dailyRoutes = VanRouteService.query({route_date: vm.routeDate});
+        if (vm.dailyRoutes.length == 0)
+        {
+            var prev_date = new Date(vm.routeDate);
+            prev_date.addBusDays(-1);
+            var a = moment(prev_date);
+            var date_string = a.format("DD-MMM-YYYY");
+            vm.copyFromDate = date_string;
+            $('#dt1').val(date_string).change();
+        }
     }
 
     function logoutUser() {

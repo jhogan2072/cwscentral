@@ -82,11 +82,9 @@ end
 def copy
   copy_from = params[:copy_from]
   copy_to = params[:copy_to]
-  VanRoute.copy_route(copy_from, copy_to)
-  respond_to do |format|
-    format.html { redirect_to :back, notice: 'Van routes successfully copied.', target: "_self" }
-    format.json { head :no_content }
-  end
+  new_routes = VanRoute.copy_route(copy_from, copy_to)
+
+  respond_with VanRoute.joins(:driver).includes(:driver, :van).where(:route_date => copy_to).to_json(:include => [:driver, :van])
 end
 
 private
