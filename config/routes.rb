@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   resources :contacts
   resources :vans, :except => [:show]
   resources :drivers, :except => [:show]
-  resources :van_routes
 
   devise_for :users
 
@@ -18,6 +17,12 @@ Rails.application.routes.draw do
   resources :organizations do
     member do
       get :work, :defaults => { :format => :json }
+    end
+  end
+
+  resources :van_routes do
+    collection do
+      get :copy
     end
   end
 

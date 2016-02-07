@@ -46,9 +46,6 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <% if flash[:notice] %>
-              <div data-ng-init="ctrl.displayAlert(true, '<%= flash[:notice] %>')"></div>
-          <% end %>
           <%= render "shared/alert_msg" %>
           <h2 class="sub-header">New Van Route
             <button class="btn-file btn btn-primary" name="export">Export</button>
@@ -81,15 +78,13 @@
   $(document).ready(function () {
 
     $('#datetimepicker12').datetimepicker({
-      format: "MM/DD/YYYY",
+      format: "DD-MMM-YYYY",
       inline: true,
       defaultDate: new Date($('#van_route_route_date').val())
     });
 
   }).on('dp.change', function(e){
-    $('#van_route_route_date_1i').val(e.date.format('YYYY'));
-    $('#van_route_route_date_2i').val(e.date.format('M'));
-    $('#van_route_route_date_3i').val(e.date.format('D'));
+    $('#van_route_route_date').val(e.date.format('DD-MMM-YYYY'));
   });
 </script>
 </body>

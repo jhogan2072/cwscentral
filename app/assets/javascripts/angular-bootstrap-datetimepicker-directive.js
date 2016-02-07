@@ -4,7 +4,7 @@ angular
   .module('datetimepicker', [])
 
   .provider('datetimepicker', function () {
-    var default_options = {};
+    var default_options = {format: 'DD-MMM-YYYY'};
 
     this.setOptions = function (options) {
       default_options = options;
@@ -42,7 +42,7 @@ angular
               if (ngModelCtrl) {
                 $timeout(function () {
                     if (options.inline) {
-                        e.target.value = e.date.format('MM/DD/YYYY');
+                        e.target.value = e.date.format('DD-MMM-YYYY');
                     }
                   ngModelCtrl.$setViewValue(e.target.value);
                 });

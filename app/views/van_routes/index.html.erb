@@ -27,7 +27,7 @@
               button.  To copy from a different day, click in the date box below to choose a different date. To
               add routes from scratch, choose New Route from the Routes menu at the top of the page.
             </p>
-            <p class="col-sm-6" style="text-align:right"><a class="btn btn-lg btn-success" href="#" role="button">Copy Routes</a></p>
+            <p class="col-sm-6" style="text-align:right"><a class="btn btn-lg btn-success" href="/van_routes/copy?copy_from={{ctrl.copyFromDate}}&amp;copy_to={{ctrl.routeDate}}" role="button">Copy Routes</a></p>
             <div class="col-sm-3 form-group" style="height: 46px; position: relative">
               <div class="input-group" style="position: absolute;
                   top: 50%;
@@ -38,7 +38,7 @@
                 <input type="text" id="dt1" class="form-control input-sm" style="font-size: 14px"
 
                        datetimepicker
-                       datetimepicker-options="{defaultDate:'<%=@previous_school_day%>', inline: false}"
+                       datetimepicker-options="{defaultDate:'<%=@previous_school_day%>', inline: false, format: 'DD-MMM-YYYY'}"
                        ng-model="ctrl.copyFromDate"/>
                 <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
               </div>
