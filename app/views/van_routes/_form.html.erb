@@ -51,10 +51,13 @@
             <button class="btn-file btn btn-primary" name="export">Export</button>
           </h2>
           <div class="row">
-            <%= f.input :name, label: "Route Name:", wrapper_html: { class: 'col-md-3', style: 'display: block'} %>
+            <%= f.input :name, label: "Route Name:", wrapper_html: { class: 'col-md-3', style: 'display: block'},
+                        :label_html => { :class => "col-md-5" }, input_html: { class: 'col-md-3' }%>
+            <%= f.association :students, label_method: :full_name, value_method: :id, label: 'Students:',
+                              wrapper_html: { class: 'col-md-9' },
+                              input_html: { class: 'chosen-select'}, :label_html => { :class => "col-md-1" }  %>
           </div>
           <div class="row">
-          <%= f.association :students, label_method: :full_name, value_method: :id, wrapper_html: { class: 'col-md-2' }  %>
           <fieldset class="col-md-10">
             <legend>Route Stops</legend>
             <table class="detail_route_rows">
@@ -78,7 +81,10 @@
 <script type="text/javascript">
   // When the document is ready
   $(document).ready(function () {
-
+    $('select[id*="van_route_student_ids"]').wrapAll('<div class="col-md-7">');
+    $(function () {
+      $('.chosen-select').chosen();
+    });
     $('#datetimepicker12').datetimepicker({
       format: "DD-MMM-YYYY",
       inline: true,

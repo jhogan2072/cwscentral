@@ -82,7 +82,12 @@ body {
 }
 .van_route_name > input {
     float:left;
-    width: 70%;
+    width: 50%;
+}
+.van_route_students > label {
+    float:left;
+    line-height: 34px;
+    margin-right: 5px;
 }
 
 /* Sidebar navigation */
