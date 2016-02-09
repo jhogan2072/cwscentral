@@ -17,8 +17,16 @@ class WorkAssignmentsController < ApplicationController
     @work_assignment = WorkAssignment.new
   end
 
+  def add
+    student_id = params[:student_id]
+    @student = Student.find(student_id)
+    @work_assignment = WorkAssignment.new
+    @work_assignment.student = @student
+  end
+
   # GET /work_assignments/1/edit
   def edit
+    @student = @work_assignment.student
   end
 
   # POST /work_assignments
@@ -28,8 +36,8 @@ class WorkAssignmentsController < ApplicationController
 
     respond_to do |format|
       if @work_assignment.save
-        format.html { redirect_to @work_assignment, notice: 'Work assignment was successfully created.' }
-        format.json { render :show, status: :created, location: @work_assignment }
+        format.html { redirect_to students_path, notice: 'Work assignment was successfully created.' }
+        format.json { head :no_content, status: :created }
       else
         format.html { render :new }
         format.json { render json: @work_assignment.errors, status: :unprocessable_entity }
@@ -56,7 +64,7 @@ class WorkAssignmentsController < ApplicationController
   def destroy
     @work_assignment.destroy
     respond_to do |format|
-      format.html { redirect_to work_assignments_url, notice: 'Work assignment was successfully destroyed.' }
+      format.html { redirect_to organizations_url, status: 303, notice: 'Work assignment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

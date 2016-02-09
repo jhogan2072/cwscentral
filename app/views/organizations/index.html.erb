@@ -20,9 +20,17 @@
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <%= render "shared/alert_msg" %>
       <h2 class="sub-header">Student Work History
-        <button class="btn-file btn btn-primary" name="export">Export</button>
+        <button class="btn-file btn btn-primary" name="export" ng-if="ctrl.selectedOrg != -1">Export</button>
       </h2>
-      <div class="table-responsive" ng-style="ctrl.truncateStyle">
+      <div class="jumbotron" ng-if="ctrl.selectedOrg == -1" style="background-color: transparent; text-align: center; padding-top:24px;">
+        <h2>Select an Organization</h2>
+        <p class="lead">To see an organization's student work history and organization details, select an organization
+          from the list on the left.  The work history will appear at the top of the page, and the organizational
+          details below.  To edit student work history, use the students view by either clicking on a students name or
+          selecting Students from the top menu.
+        </p>
+      </div>
+      <div class="table-responsive" ng-style="ctrl.truncateStyle" ng-if="ctrl.selectedOrg != -1">
         <table class="table table-striped">
           <thead>
           <tr>
@@ -33,6 +41,8 @@
             <th>Work Day</th>
             <th>Student Class</th>
             <th style="text-align: center;">Grades</th>
+            <th>Edit</th>
+            <th>Delete</th>
           </tr>
           </thead>
           <tbody>
@@ -52,6 +62,11 @@
                 <%= image_tag("ellipsis.png", :alt => "Show Grades") %>
               </button>
             </td>
+            <td><a href="/work_assignments/{{student_assignment.id}}/edit" target="_self"
+                   ng-class="{'white-link': ctrl.selectedRow != null}">Edit</a></td>
+            <td ng-click="$event.stopPropagation();"><img ng-src="<%=image_path("trash.png")%>" width="18" height="18"
+                     ng-really-message="Are you sure you want to delete this assignment?"
+                     ng-really-click="ctrl.deleteAssignment($index, student_assignment.id);" class="delete_object"></td>
           </tr>
           </tbody>
         </table>

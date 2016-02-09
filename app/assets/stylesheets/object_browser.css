@@ -89,7 +89,9 @@ body {
     line-height: 34px;
     margin-right: 5px;
 }
-
+a:link.white-link, a:visited.white-link {
+    color: white;
+}
 /* Sidebar navigation */
 .nav-sidebar {
     margin-right: -21px; /* 20px padding + 1px border */

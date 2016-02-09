@@ -127,7 +127,7 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     }
 
     function showOrganizationDetails(indexSelectedObject, assignment_id) {
-        vm.truncateStyle = {height: '400px', 'overflow-y': 'scroll'};
+        vm.truncateStyle = {height: '200px', 'overflow-y': 'scroll'};
         vm.selectedRow = indexSelectedObject;
         var orgDetailsURL = '/work_assignments/' + assignment_id + '/org';
 		$http.get(orgDetailsURL).

@@ -1,6 +1,1 @@
-<h1>Editing Work Assignment</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @work_assignment %> |
-<%= link_to 'Back', work_assignments_path %>
+<%= render 'form', header_text: "Edit Work Assignment for " + @student.full_name %>

@@ -15,10 +15,16 @@ var app = angular.module('app', ['ui.bootstrap','ui.sortable','datetimepicker','
 app.factory('VanRouteService', ['$resource', VanRouteService]);
 
 function VanRouteService($resource) {
-  return $resource('/van_routes/:collectionRoute:id.json', null,
+  return $resource('/van_routes/:collectionRoute/:id.json', null,
       {
         'copy': {method: 'GET', isArray: true, params: {collectionRoute: 'copy'}}
       });
+}
+
+app.factory('WorkAssignmentService', ['$resource', WorkAssignmentService]);
+
+function WorkAssignmentService($resource) {
+  return $resource('/work_assignments/:id.json');
 }
 
 app.directive('ngReallyClick', [function() {

@@ -25,7 +25,7 @@
             <h2>Looks like there are no routes defined yet for today!</h2>
             <p class="lead">To copy routes from the most recent previous school day, just click the Copy Routes
               button.  To copy from a different day, click in the date box below to choose a different date. To
-              add routes from scratch, choose New Route from the Routes menu at the top of the page.
+              add routes from scratch, click the New Route button at the lower left of the page.
             </p>
             <p class="col-sm-6" style="text-align:right"><a class="btn btn-lg btn-success" href="" role="button" ng-click="ctrl.copyRoutes()">Copy Routes</a></p>
             <div class="col-sm-3 form-group" style="height: 46px; position: relative">
@@ -63,6 +63,7 @@
               </td>
             </tr>
           </table>
+          <p style="margin-top: 20px"><%= link_to "New Route",  new_van_route_path, class: "btn btn btn-primary", target: "_self" %></p>
         </div>
       </div>
     </div>

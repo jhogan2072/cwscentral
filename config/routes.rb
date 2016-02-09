@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   root 'students#index'
   resources :organizations
   resources :contacts
-  resources :vans, :except => [:show]
-  resources :drivers, :except => [:show]
+  resources :vans, except: [:show]
+  resources :drivers, except: [:show]
 
   devise_for :users
 
@@ -26,9 +26,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :work_assignments do
+  resources :work_assignments, except: [:index, :show, :new] do
     member do
       get :org, :defaults => { :format => :json }
+    end
+    collection do
+      get :add
     end
   end
 

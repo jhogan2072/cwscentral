@@ -14,7 +14,7 @@
             <li>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-md-10" style="margin: 0 auto; float: none">
+                  <div class="col-md-12" style="margin: 0 auto; float: none">
                     <%= f.hidden_field :route_date %>
                     <input type='hidden' class="form-control" id="sel_date"/>
                     <div id="datetimepicker12"></div>
@@ -51,11 +51,11 @@
             <button class="btn-file btn btn-primary" name="export">Export</button>
           </h2>
           <div class="row">
-            <%= f.input :name, label: "Route Name:", wrapper_html: { class: 'col-md-3', style: 'display: block'},
+            <%= f.input :name, label: "Route Name:", wrapper_html: { class: 'col-md-4', style: 'display: block'},
                         :label_html => { :class => "col-md-5" }, input_html: { class: 'col-md-3' }%>
             <%= f.association :students, label_method: :full_name, value_method: :id, label: 'Students:',
-                              wrapper_html: { class: 'col-md-9' },
-                              input_html: { class: 'chosen-select'}, :label_html => { :class => "col-md-1" }  %>
+                              wrapper_html: { class: 'col-md-8' },
+                              input_html: { class: 'chosen-select'}, :label_html => { :class => "col-md-2" }  %>
           </div>
           <div class="row">
           <fieldset class="col-md-10">
@@ -70,8 +70,10 @@
                   <%= render(:partial => "van_routes/route_stop", :locals => { :f => rs_form }) %>
               <% end %>
             </table>
-            <input type="button" value="Add New Stop" onclick="<%=  child_link_javascript(f, :route_stops, '.detail_route_rows')%>" />
-            <%= f.submit 'Save' %>&nbsp;
+            <p style="display:block">
+            <input type="button" value="Add New Stop" class="btn btn-primary" onclick="<%=  child_link_javascript(f, :route_stops, '.detail_route_rows')%>" />
+            <%= f.submit 'Save', class: "btn btn-primary" %>&nbsp;
+            </p>
           </fieldset>
           </div>
         </div>

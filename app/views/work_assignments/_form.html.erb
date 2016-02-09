@@ -1,20 +1,41 @@
-<%= simple_form_for(@work_assignment) do |f| %>
-  <%= f.error_notification %>
+<body ng-app="app" ng-controller="WAController as ctrl">
+<%= render "shared/navbar", input_name: "ctrl.searchInput" %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header"><%= header_text %></h2>
+      <%= simple_form_for(@work_assignment) do |f| %>
+          <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :start_date %>
-    <%= f.input :end_date %>
-    <%= f.input :paid %>
-    <%= f.input :work_day %>
-    <%= f.input :student_gradelevel %>
-    <%= f.input :earliest_start %>
-    <%= f.input :latest_start %>
-    <%= f.input :ideal_start %>
-    <%= f.association :student %>
-    <%= f.association :contact %>
-  </div>
+          <div class="form-inputs container-fluid">
+            <div class="row">
+              <div class="col-md-3">
+              <%= f.input :start_date %>
+              <%= f.input :end_date %>
+              <%= f.input :paid %>
+              </div>
+              <div class="col-md-3">
+              <%= f.input :work_day %>
+              <%= f.input :student_gradelevel, label: "Grade Level" %>
+              <%= f.hidden_field :student_id ,value: @student.id %>
+              </div>
+              <div class="col-md-3">
+              <%= f.input :earliest_start %>
+              <%= f.input :latest_start %>
+              <%= f.input :ideal_start %>
+              </div>
+              <div class="col-md-3">
+              <%= f.association :contact %>
+              </div>
+            </div>
+          </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+          <div class="form-actions">
+            <%= f.button :submit, class: "btn btn-primary" %>
+          </div>
+      <% end %>
+    </div>
   </div>
-<% end %>
+</div>
+</body>
