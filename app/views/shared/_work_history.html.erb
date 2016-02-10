@@ -1,0 +1,47 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Start Date</th>
+    <th>End Date</th>
+    <% if (is_student) %>
+      <th>Organization Name</th>
+    <% else %>
+      <th>Student Name</th>
+    <% end %>
+    <th>Paid/Unpaid</th>
+    <th>Work Day</th>
+    <th>Student Class</th>
+    <th style="text-align: center;">Grades</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="student_assignment in ctrl.studentAssignments | filter:ctrl.searchInput"
+
+      ng-class="{'selected':$index == ctrl.selectedRow}"
+
+      ng-click="ctrl.showOrganizationDetails($index, student_assignment.id)" id="{{student_assignment.id}}">
+    <td>{{ student_assignment.start_date }}</td>
+    <td>{{ student_assignment.end_date }}</td>
+    <% if (is_student) %>
+      <td>{{ student_assignment.organization_name }}</td>
+    <% else %>
+      <td>{{ student_assignment.student_name }}</td>
+    <% end %>
+    <td>{{ student_assignment.paid }}</td>
+    <td>{{ student_assignment.work_day }}</td>
+    <td>{{ student_assignment.student_gradelevel }}</td>
+    <td style="text-align: center;">
+      <button type="button" data-ng-click="ctrl.showGradesModal()" class="btn btn-sm btn-primary" style="background-color: #eee; line-height: 1.2">
+        <%= image_tag("ellipsis.png", :alt => "Show Grades") %>
+      </button>
+    </td>
+    <td><a href="/work_assignments/{{student_assignment.id}}/edit" target="_self"
+           ng-class="{'white-link': ctrl.selectedRow != null}">Edit</a></td>
+    <td ng-click="$event.stopPropagation();"><img ng-src="<%=image_path("trash.png")%>" width="18" height="18"
+                                                  ng-really-message="Are you sure you want to delete this assignment?"
+                                                  ng-really-click="ctrl.deleteAssignment($index, student_assignment.id);" class="delete_object"></td>
+  </tr>
+  </tbody>
+</table>

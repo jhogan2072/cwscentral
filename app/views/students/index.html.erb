@@ -34,41 +34,7 @@
         </p>
       </div>
       <div class="table-responsive" ng-style="ctrl.truncateStyle" ng-if="ctrl.selectedStudent != -1">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Organization</th>
-            <th>Paid/Unpaid</th>
-            <th>Work Day</th>
-            <th>Student Class</th>
-            <th style="text-align: center;">Grades</th>
-            <th>Edit</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr ng-repeat="student_assignment in ctrl.studentAssignments | filter:ctrl.searchInput"
-
-              ng-class="{'selected':$index == ctrl.selectedRow}"
-
-              ng-click="ctrl.showOrganizationDetails($index, student_assignment.id)" id="{{student_assignment.id}}">
-            <td>{{ student_assignment.start_date }}</td>
-            <td>{{ student_assignment.end_date }}</td>
-            <td>{{ student_assignment.organization_name }}</td>
-            <td>{{ student_assignment.paid }}</td>
-            <td>{{ student_assignment.work_day }}</td>
-            <td>{{ student_assignment.student_gradelevel }}</td>
-            <td style="text-align: center;">
-              <button type="button" data-ng-click="ctrl.showGradesModal()" class="btn btn-xs btn-default">
-                <%= image_tag("ellipsis.png", :alt => "Show Grades") %>
-              </button>
-            </td>
-            <td><a href="/work_assignments/{{student_assignment.id}}/edit" target="_self"
-                   ng-class="{'white-link': ctrl.selectedRow != null}">Edit</a></td>
-          </tr>
-          </tbody>
-        </table>
+        <%= render 'shared/work_history', is_student: true %>
       </div>
       <div class="table-responsive" style="padding-top:30px" ng-if="ctrl.selectedRow != null">
         <table class="table" style="margin-left: auto; margin-right: auto;">

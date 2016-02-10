@@ -4,6 +4,7 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     vm.alertText = "Hello, World";
     vm.assignment_student_class = "";
     vm.createStudent = createStudent;
+    vm.deleteAssignment = deleteAssignment;
     vm.displayAlert = displayAlert;
     vm.getStudentAssignments = getStudentAssignments;
     vm.getGradeData = getGradeData;
@@ -55,6 +56,17 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
             } else {
                 vm.displayAlert(false,"There was an unexpected error.  The student was not created.");
             }
+        });
+    }
+
+    function deleteAssignment(indexObjToDelete, assignmentId) {
+        WorkAssignmentService.delete({id: assignmentId},function(data) {
+            // success handler
+            //Alert that the object was successfully deleted and delete the row
+            vm.removeElement(vm.studentAssignments, indexObjToDelete);
+            vm.displayAlert(true,"The assignment was successfully deleted.");
+        }, function(response) {
+            vm.displayAlert(false, "There was an error deleting the assignment.  The HTTP return code was " + response.status);
         });
     }
 

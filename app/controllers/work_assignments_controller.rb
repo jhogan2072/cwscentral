@@ -50,8 +50,8 @@ class WorkAssignmentsController < ApplicationController
   def update
     respond_to do |format|
       if @work_assignment.update(work_assignment_params)
-        format.html { redirect_to @work_assignment, notice: 'Work assignment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @work_assignment }
+        format.html { redirect_to students_path, notice: 'Work assignment was successfully created.' }
+        format.json { head :no_content, status: :created }
       else
         format.html { render :edit }
         format.json { render json: @work_assignment.errors, status: :unprocessable_entity }

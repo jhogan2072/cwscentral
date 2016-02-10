@@ -8,6 +8,7 @@ angular.module('app').controller("WAController", function($http, $timeout, $loca
     vm.page = 'students';
     vm.searchInput = '';
     vm.showResultAlert = false;
+    vm.time_pattern = '^([0]?[1-9]|1[0-2]):([0-5]\\d)\\s?(AM|PM|am|pm)?$';
 
     ////////////
 
