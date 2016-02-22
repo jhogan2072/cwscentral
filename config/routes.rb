@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root 'students#index'
+  root 'van_routes#index'
   resources :organizations
   resources :contacts
   resources :vans, except: [:show]
@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   end
 
   resources :van_routes do
+    member do
+      get :export, defaults: { :format => :xls }
+    end
     collection do
       get :copy
     end
@@ -32,6 +35,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :add
+      get :export
     end
   end
 

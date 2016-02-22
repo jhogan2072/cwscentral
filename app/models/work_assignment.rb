@@ -78,5 +78,13 @@ class WorkAssignment < ActiveRecord::Base
     end
   end
 
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+      all.each do |work_assignment|
+        csv << work_assignment.attributes.values_at(*column_names)
+      end
+    end
+  end
 end
 

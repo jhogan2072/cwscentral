@@ -63,7 +63,9 @@
               </td>
             </tr>
           </table>
-          <p style="margin-top: 20px"><%= link_to "New Route",  new_van_route_path, class: "btn btn btn-primary", target: "_self" %></p>
+          <p style="margin-top: 20px">
+            <a class="btn btn btn-primary" target="_self" href="/van_routes/new?route_date={{ctrl.routeDate}}">New Route</a>
+          </p>
         </div>
       </div>
     </div>

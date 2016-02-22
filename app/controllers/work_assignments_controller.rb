@@ -75,6 +75,18 @@ class WorkAssignmentsController < ApplicationController
     @assignment_array = Array.new(1, @work_assignment)
   end
 
+  def export
+    if params[:student_id]
+      @work_assignments = WorkAssignment.search(student_id=params[:student_id])
+    elsif params[:organization_id]
+      @work_assignments = WorkAssignment.search(organization_id=params[:organization_id])
+    end
+    respond_to do |format|
+      format.html
+      format.csv { send_data @work_assignments.to_csv }
+      format.xls # { send_data @work_assignments.to_csv(col_sep: "\t") }
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_work_assignment

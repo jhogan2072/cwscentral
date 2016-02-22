@@ -4,6 +4,7 @@ class VanRoute < ActiveRecord::Base
   has_many :route_stops, dependent: :destroy
   has_and_belongs_to_many :students
   accepts_nested_attributes_for :route_stops, :allow_destroy => true
+  default_scope { order('van_routes.name') }
 
   def clone_with_associations(copy_to_date)
     new_van_route = self.dup
