@@ -67,6 +67,14 @@ ActiveRecord::Schema.define(version: 20160116135900) do
   add_index "route_stops", ["organization_id"], name: "index_route_stops_on_organization_id", using: :btree
   add_index "route_stops", ["van_route_id"], name: "index_route_stops_on_van_route_id", using: :btree
 
+  create_table "route_stops_students", id: false, force: :cascade do |t|
+    t.integer "route_stop_id", null: false
+    t.integer "student_id",    null: false
+  end
+
+  add_index "route_stops_students", ["route_stop_id", "student_id"], name: "index_route_stops_students_on_route_stop_id_and_student_id", using: :btree
+  add_index "route_stops_students", ["student_id", "route_stop_id"], name: "index_route_stops_students_on_student_id_and_route_stop_id", using: :btree
+
   create_table "students", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -74,11 +82,6 @@ ActiveRecord::Schema.define(version: 20160116135900) do
     t.string   "powerschool_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-  end
-
-  create_table "students_van_routes", id: false, force: :cascade do |t|
-    t.integer "van_route_id", null: false
-    t.integer "student_id",   null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,5 +1,9 @@
 <tr>
   <td class="col-md-1"><%= f.input :stop_order, label: false%></td>
   <td class="col-md-6"><%= f.association :organization, label_method: :name_and_address, value_method: :id, label: false%></td>
+  <td class="col-md-4"><%= f.association :students, label_method: :full_name, value_method: :id, label: 'Students:',
+                                                     wrapper_html: { class: 'col-md-8' },
+                                                     input_html: { class: 'chosen-select'}, :label_html => { :class => "col-md-2" }  %>
+  </td>
   <td style="text-align: center; vertical-align: middle"><%= f.check_box :_destroy %></td>
 </tr>

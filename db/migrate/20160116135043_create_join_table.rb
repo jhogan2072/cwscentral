@@ -1,8 +1,8 @@
 class CreateJoinTable < ActiveRecord::Migration
   def change
-    create_join_table :van_routes, :students do |t|
-      # t.index [:van_route_id, :student_id]
-      # t.index [:student_id, :van_route_id]
+    create_join_table :route_stops, :students do |t|
+       t.index [:route_stop_id, :student_id]
+       t.index [:student_id, :route_stop_id]
     end
   end
 end

@@ -2,7 +2,6 @@ class VanRoute < ActiveRecord::Base
   belongs_to :van
   belongs_to :driver
   has_many :route_stops, dependent: :destroy
-  has_and_belongs_to_many :students
   accepts_nested_attributes_for :route_stops, :allow_destroy => true
   default_scope { order('van_routes.name') }
 
@@ -12,11 +11,11 @@ class VanRoute < ActiveRecord::Base
 
     self.route_stops.each do |route_stop|
       new_route_stop = route_stop.clone
+      new_route_stop.students = route_stop.students
       new_route_stop.save
       new_van_route.route_stops << new_route_stop
     end
 
-    new_van_route.students = self.students
     new_van_route.save
   end
 

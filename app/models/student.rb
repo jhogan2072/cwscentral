@@ -1,6 +1,6 @@
 class Student < ActiveRecord::Base
   has_many :work_assignments, dependent: :destroy
-  has_and_belongs_to_many :van_routes
+  has_and_belongs_to_many :route_stops
 
   # Getter
   def full_name

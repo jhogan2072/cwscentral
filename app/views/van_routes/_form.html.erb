@@ -55,9 +55,6 @@
           <div class="row">
             <%= f.input :name, label: "Route Name:", wrapper_html: { class: 'col-md-4', style: 'display: block'},
                         :label_html => { :class => "col-md-5" }, input_html: { class: 'col-md-3' }%>
-            <%= f.association :students, label_method: :full_name, value_method: :id, label: 'Students:',
-                              wrapper_html: { class: 'col-md-8' },
-                              input_html: { class: 'chosen-select'}, :label_html => { :class => "col-md-2" }  %>
           </div>
           <div class="row">
           <fieldset class="col-md-10">
