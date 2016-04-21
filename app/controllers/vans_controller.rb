@@ -29,8 +29,8 @@ class VansController < ApplicationController
 
     respond_to do |format|
       if @van.save
-        format.html { redirect_to @van, notice: 'Van was successfully created.' }
-        format.json { render :show, status: :created, location: @van }
+        format.html { redirect_to action: "index", notice: 'Van was successfully created.' }
+        format.json { render :index, status: :created }
       else
         format.html { render :new }
         format.json { render json: @van.errors, status: :unprocessable_entity }
@@ -43,8 +43,8 @@ class VansController < ApplicationController
   def update
     respond_to do |format|
       if @van.update(van_params)
-        format.html { redirect_to @van, notice: 'Van was successfully updated.' }
-        format.json { render :show, status: :ok, location: @van }
+        format.html { redirect_to action: "index", notice: 'Van was successfully updated.' }
+        format.json { render :index, status: :ok }
       else
         format.html { render :edit }
         format.json { render json: @van.errors, status: :unprocessable_entity }
