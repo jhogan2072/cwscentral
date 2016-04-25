@@ -56,7 +56,7 @@
           </h2>
           <div class="row">
             <%= f.input :name, label: "Route Name:", wrapper_html: { class: 'col-md-4', style: 'display: block'},
-                        :label_html => { :class => "col-md-5" }, input_html: { class: 'col-md-3' }%>
+                        :label_html => { :class => "col-md-5" }, input_html: {placeholder: 'Enter a route name', class: 'col-md-3' }%>
           </div>
           <div class="row">
           <fieldset class="col-md-10">
@@ -65,6 +65,7 @@
               <tr>
                 <th class="col-md-1 text-center">Order</th>
                 <th class="col-md-6">Organization</th>
+                <th class="col-md-4">Students</th>
                 <th class="col-md-1" style="text-align: center; vertical-align: middle">Delete</th>
               </tr>
               <%= f.simple_fields_for :route_stops do |rs_form| %>

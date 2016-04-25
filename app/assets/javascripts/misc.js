@@ -5,6 +5,7 @@ function insert_fields(link, method, content, css_class) {
         $(content.replace(regexp, new_id)).insertBefore(css_class + " tr:last");
     else
         $(content.replace(regexp, new_id)).insertAfter(css_class + " tr:last");
+    $('.chosen-select').chosen();
 }
 
 function remove_fields(link) {
