@@ -7,6 +7,16 @@ class PlacementsController < ApplicationController
     @placements = Placement.all
   end
 
+  def organizations
+    @organizations = Organization.all
+    respond_to do |format|
+
+      format.html # organization_placements.html.erb
+      format.json { render 'organizations.json.jbuilder': @organizations }
+
+    end
+  end
+
   # GET /placements/1
   # GET /placements/1.json
   def show

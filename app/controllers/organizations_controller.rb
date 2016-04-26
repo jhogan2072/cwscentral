@@ -9,16 +9,6 @@ class OrganizationsController < ApplicationController
     @organizations = Organization.all
   end
 
-  def organization_placements
-    @organizations = Organization.all
-    respond_to do |format|
-
-      format.html # organization_placements.html.erb
-      format.json { render 'organization_placements.json.jbuilder': @organizations }
-
-    end
-  end
-
   # GET /organizations/1
   # GET /organizations/1.json
   def show
@@ -73,7 +63,7 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  def work
+  def placements
     #retrieve an organizations student work history
     @placements = Placement.search(organization_id=params[:id])
     if @placements.length == 0

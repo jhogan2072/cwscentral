@@ -85,7 +85,7 @@ angular.module('app').controller("OrgController", function($http, $timeout, $loc
 
     function getStudentPlacements(organizationId){
         // Retrieve the work history for this student.
-        var detailsURL = '/organizations/' + organizationId + '/work/';
+        var detailsURL = '/organizations/' + organizationId + '/placements/';
         $http.get(detailsURL).
         success(function(data){
             vm.studentPlacements = [];
@@ -105,7 +105,7 @@ angular.module('app').controller("OrgController", function($http, $timeout, $loc
     }
 
     function getOrganizations() {
-        $http.get('/organizations/organization_placements.json').
+        $http.get('/placements/organizations.json').
         success(function(data, status, headers, config) {
             // this callback will be called asynchronously
             // when the response is available

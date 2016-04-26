@@ -18,10 +18,7 @@ Rails.application.routes.draw do
 
   resources :organizations do
     member do
-      get :work, :defaults => { :format => :json }
-    end
-    collection do
-      get :organization_placements
+      get :placements, :defaults => { :format => :json }
     end
   end
 
@@ -39,6 +36,8 @@ Rails.application.routes.draw do
       get :org, :defaults => { :format => :json }
     end
     collection do
+      get :students
+      get :organizations
       get :add
       get :export
     end
