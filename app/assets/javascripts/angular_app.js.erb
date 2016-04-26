@@ -12,6 +12,18 @@ var app = angular.module('app', ['ui.bootstrap','ui.sortable','datetimepicker','
         });
       }
     ]);
+
+app.factory('testFactory', function() {
+  return {
+    sayHello: function (text) {
+      return "Factory says \"Hello " + text + "\"";
+    },
+    sayGoodbye: function (text) {
+      return "Factory says \"Goodbye " + text + "\"";
+    }
+  }
+});
+
 app.factory('VanRouteService', ['$resource', VanRouteService]);
 
 function VanRouteService($resource) {

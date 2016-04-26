@@ -4,7 +4,6 @@ angular.module('app').controller("OrgController", function($http, $timeout, $loc
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
-    vm.placement_student_class = "";
     vm.createOrganization = createOrganization;
     vm.deletePlacement = deletePlacement;
     vm.displayAlert = displayAlert;
@@ -62,7 +61,7 @@ angular.module('app').controller("OrgController", function($http, $timeout, $loc
     }
 
     function deletePlacement(indexObjToDelete, placementId) {
-        WorkPlacementService.delete({id: placementId},function(data) {
+        PlacementService.delete({id: placementId},function(data) {
             // success handler
             //Alert that the object was successfully deleted and delete the row
             vm.removeElement(vm.studentPlacements, indexObjToDelete);
