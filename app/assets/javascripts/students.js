@@ -2,11 +2,11 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
-    vm.assignment_student_class = "";
+    vm.placement_student_class = "";
     vm.createStudent = createStudent;
-    vm.deleteAssignment = deleteAssignment;
+    vm.deletePlacement = deletePlacement;
     vm.displayAlert = displayAlert;
-    vm.getStudentAssignments = getStudentAssignments;
+    vm.getStudentPlacements = getStudentPlacements;
     vm.getGradeData = getGradeData;
     vm.getStudents = getStudents;
     vm.isSuccess = true;
@@ -22,7 +22,7 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     vm.showGradesModal = showGradesModal;
     vm.showStudentModal = showStudentModal;
     vm.showResultAlert = false;
-    vm.studentAssignments = [];
+    vm.studentPlacements = [];
     vm.studentCount = 0;
     vm.studentFullName = "";
     vm.studentId = -1;
@@ -59,14 +59,14 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
         });
     }
 
-    function deleteAssignment(indexObjToDelete, assignmentId) {
-        WorkAssignmentService.delete({id: assignmentId},function(data) {
+    function deletePlacement(indexObjToDelete, placementId) {
+        WorkPlacementService.delete({id: placementId},function(data) {
             // success handler
             //Alert that the object was successfully deleted and delete the row
-            vm.removeElement(vm.studentAssignments, indexObjToDelete);
-            vm.displayAlert(true,"The assignment was successfully deleted.");
+            vm.removeElement(vm.studentPlacements, indexObjToDelete);
+            vm.displayAlert(true,"The placement was successfully deleted.");
         }, function(response) {
-            vm.displayAlert(false, "There was an error deleting the assignment.  The HTTP return code was " + response.status);
+            vm.displayAlert(false, "There was an error deleting the placement.  The HTTP return code was " + response.status);
         });
     }
 
@@ -81,20 +81,20 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
         var gradesURL = '/students'
     }
 
-    function getStudentAssignments(studentId){
+    function getStudentPlacements(studentId){
 	// Retrieve the work history for this student.
 		var detailsURL = '/students/' + studentId + '/work/';
 		$http.get(detailsURL).
             success(function(data){
-                vm.studentAssignments = [];
+                vm.studentPlacements = [];
                 angular.forEach(data, function(stud_detail) {
-                    vm.studentAssignments.push(stud_detail);
+                    vm.studentPlacements.push(stud_detail);
                 });
 		    }).
             error( function(data, status) {
                 if (status == 404) {
-                    vm.displayAlert(false,"This student has no work assignments.");
-                    vm.studentAssignments = [];
+                    vm.displayAlert(false,"This student has no work placements.");
+                    vm.studentPlacements = [];
                 } else {
                     //put up a failure message
                     vm.displayAlert(false,"There was an retrieving student details. The HTTP return code was "+status);
@@ -134,14 +134,14 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
         vm.studentId = student_id
         vm.searchInput = '';
         vm.isStudentSearch = false;
-        vm.getStudentAssignments(student_id);
+        vm.getStudentPlacements(student_id);
         vm.studentSearchInput = '';
     }
 
-    function showOrganizationDetails(indexSelectedObject, assignment_id) {
+    function showOrganizationDetails(indexSelectedObject, placement_id) {
         vm.truncateStyle = {height: '200px', 'overflow-y': 'scroll'};
         vm.selectedRow = indexSelectedObject;
-        var orgDetailsURL = '/work_assignments/' + assignment_id + '/org';
+        var orgDetailsURL = '/placements/' + placement_id + '/org';
 		$http.get(orgDetailsURL).
             success(function(data){
                 vm.orgDetails = [];
@@ -156,8 +156,8 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
         });
     }
 
-    function showGradesModal(organization_name, assignment_id) {
-        var grade_data = getGradeData(vm.studentId, assignment_id);
+    function showGradesModal(organization_name, placement_id) {
+        var grade_data = getGradeData(vm.studentId, placement_id);
         var modalOptions    = {
             closeButtonText: 'Close',
             headerText: 'Student Grades',

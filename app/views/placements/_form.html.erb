@@ -1,11 +1,11 @@
-<body ng-app="app" ng-controller="WAController as ctrl">
+<body ng-app="app" ng-controller="PlacementController as ctrl">
 <%= render "shared/navbar", input_name: "ctrl.searchInput" %>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12 main">
       <%= render "shared/alert_msg" %>
       <h2 class="sub-header"><%= header_text %></h2>
-      <%= simple_form_for(@work_assignment, html: {name: 'work_assignment_form'}) do |f| %>
+      <%= simple_form_for(@placement, html: {name: 'placement_form'}) do |f| %>
           <%= f.error_notification %>
 
           <div class="form-inputs container-fluid">
@@ -20,17 +20,17 @@
               <%= f.input :student_gradelevel, label: "Grade Level", hint: "Enter a number between 9 and 12" %>
               <%= f.hidden_field :student_id ,value: @student.id %>
               </div>
-              <div class="col-md-3" ng-init="ctrl.earliest_start='<%= @work_assignment.earliest_start %>';
-               ctrl.latest_start='<%= @work_assignment.latest_start %>';
-               ctrl.ideal_start='<%= @work_assignment.ideal_start %>';">
-                <div ng-class="{'has-error':work_assignment_form['work_assignment[earliest_start]'].$valid == false}">
+              <div class="col-md-3" ng-init="ctrl.earliest_start='<%= @placement.earliest_start %>';
+               ctrl.latest_start='<%= @placement.latest_start %>';
+               ctrl.ideal_start='<%= @placement.ideal_start %>';">
+                <div ng-class="{'has-error':placement_form['placement[earliest_start]'].$valid == false}">
                   <%= f.input :earliest_start, hint: "Enter a time, such as 8:00 or 8:00 AM",
                             :input_html => {:'ng-model' => 'ctrl.earliest_start', :'ng-pattern' => 'ctrl.time_pattern' } %>
                 </div>
-                <div ng-class="{'has-error':work_assignment_form['work_assignment[latest_start]'].$valid == false}">
+                <div ng-class="{'has-error':placement_form['placement[latest_start]'].$valid == false}">
                   <%= f.input :latest_start, :input_html => {:'ng-model' => 'ctrl.latest_start', :'ng-pattern' => 'ctrl.time_pattern' } %>
                 </div>
-                <div ng-class="{'has-error':work_assignment_form['work_assignment[ideal_start]'].$valid == false}">
+                <div ng-class="{'has-error':placement_form['placement[ideal_start]'].$valid == false}">
                   <%= f.input :ideal_start, :input_html => {:'ng-model' => 'ctrl.ideal_start', :'ng-pattern' => 'ctrl.time_pattern' } %>
                 </div>
               </div>

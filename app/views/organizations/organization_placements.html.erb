@@ -21,7 +21,7 @@
       <%= render "shared/alert_msg" %>
       <h2 class="sub-header">Student Work History
         <a class="btn btn-primary" target="_self" ng-if="ctrl.selectedOrg != -1"
-           href="/work_assignments/export.xls?student_id={{ctrl.orgs[ctrl.selectedOrg].id}}">Export</a>
+           href="/placements/export.xls?student_id={{ctrl.orgs[ctrl.selectedOrg].id}}">Export</a>
       </h2>
       <div class="jumbotron" ng-if="ctrl.selectedOrg == -1" style="background-color: transparent; text-align: center; padding-top:24px;">
         <h2>Select an Organization</h2>

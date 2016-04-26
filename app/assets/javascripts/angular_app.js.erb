@@ -21,10 +21,10 @@ function VanRouteService($resource) {
       });
 }
 
-app.factory('WorkAssignmentService', ['$resource', WorkAssignmentService]);
+app.factory('PlacementService', ['$resource', PlacementService]);
 
-function WorkAssignmentService($resource) {
-  return $resource('/work_assignments/:id.json');
+function PlacementService($resource) {
+  return $resource('/placements/:id.json');
 }
 
 app.directive('ngReallyClick', [function() {
@@ -104,8 +104,8 @@ app.service('ModalDetailsService', ['$modal',
 
         var modalOptions = {
             closeButtonText: 'Close',
-            headerText: 'Work Assignment Grades',
-            bodyText: 'Following are the PowerSchool grades for the clicked work assignment',
+            headerText: 'Placement Grades',
+            bodyText: 'Following are the PowerSchool grades for the clicked placement',
             tableData: {}
         };
 

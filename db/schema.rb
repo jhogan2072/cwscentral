@@ -56,6 +56,24 @@ ActiveRecord::Schema.define(version: 20160327123331) do
     t.datetime "updated_at",      null: false
   end
 
+  create_table "placements", force: :cascade do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "paid"
+    t.string   "work_day"
+    t.integer  "student_gradelevel"
+    t.string   "earliest_start"
+    t.string   "latest_start"
+    t.string   "ideal_start"
+    t.integer  "student_id"
+    t.integer  "contact_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "placements", ["contact_id"], name: "index_placements_on_contact_id", using: :btree
+  add_index "placements", ["student_id"], name: "index_placements_on_student_id", using: :btree
+
   create_table "route_stops", force: :cascade do |t|
     t.string   "stop_order"
     t.integer  "van_route_id"
@@ -135,29 +153,11 @@ ActiveRecord::Schema.define(version: 20160327123331) do
     t.integer  "capacity"
   end
 
-  create_table "work_assignments", force: :cascade do |t|
-    t.date     "start_date"
-    t.date     "end_date"
-    t.boolean  "paid"
-    t.string   "work_day"
-    t.integer  "student_gradelevel"
-    t.string   "earliest_start"
-    t.string   "latest_start"
-    t.string   "ideal_start"
-    t.integer  "student_id"
-    t.integer  "contact_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "work_assignments", ["contact_id"], name: "index_work_assignments_on_contact_id", using: :btree
-  add_index "work_assignments", ["student_id"], name: "index_work_assignments_on_student_id", using: :btree
-
   add_foreign_key "contacts", "organizations"
+  add_foreign_key "placements", "contacts"
+  add_foreign_key "placements", "students"
   add_foreign_key "route_stops", "organizations"
   add_foreign_key "route_stops", "van_routes"
   add_foreign_key "van_routes", "drivers"
   add_foreign_key "van_routes", "vans"
-  add_foreign_key "work_assignments", "contacts"
-  add_foreign_key "work_assignments", "students"
 end

@@ -88,7 +88,7 @@ respond_to :html, :json
   def org
     @van_route = VanRoute.find(params[:id])
     #add the data to an array for JSON formatting purposes
-    @assignment_array = Array.new(1, @van_route)
+    @placement_array = Array.new(1, @van_route)
   end
 
   def copy

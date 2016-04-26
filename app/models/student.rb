@@ -1,5 +1,5 @@
 class Student < ActiveRecord::Base
-  has_many :work_assignments, dependent: :destroy
+  has_many :placements, dependent: :destroy
   has_and_belongs_to_many :route_stops
 
   # Getter

@@ -1,4 +1,4 @@
-angular.module('app').controller("WAController", function($http, $timeout, $location, $window){
+angular.module('app').controller("PlacementController", function($http, $timeout, $location, $window){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";

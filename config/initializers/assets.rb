@@ -16,6 +16,6 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( students.js )
 # Rails.application.config.assets.precompile += %w( van_routes.js )
 # Rails.application.config.assets.precompile += %w( vans.js )
-# Rails.application.config.assets.precompile += %w( work_assignments.js )
+# Rails.application.config.assets.precompile += %w( placements.js )
 Rails.application.config.assets.precompile += %w( object_browser.css )
 Rails.application.config.assets.precompile += %w( login.css )

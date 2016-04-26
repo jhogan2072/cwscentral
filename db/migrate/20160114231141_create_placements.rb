@@ -1,6 +1,6 @@
-class CreateWorkAssignments < ActiveRecord::Migration
+class CreatePlacements < ActiveRecord::Migration
   def change
-    create_table :work_assignments do |t|
+    create_table :placements do |t|
       t.date :start_date
       t.date :end_date
       t.boolean :paid

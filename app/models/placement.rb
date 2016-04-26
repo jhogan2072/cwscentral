@@ -1,4 +1,4 @@
-class WorkAssignment < ActiveRecord::Base
+class Placement < ActiveRecord::Base
   belongs_to :student
   belongs_to :contact
 
@@ -81,8 +81,8 @@ class WorkAssignment < ActiveRecord::Base
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
       csv << column_names
-      all.each do |work_assignment|
-        csv << work_assignment.attributes.values_at(*column_names)
+      all.each do |placement|
+        csv << placement.attributes.values_at(*column_names)
       end
     end
   end

@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :work_assignments, except: [:index, :show, :new] do
+  resources :placements, except: [:index, :show, :new] do
     member do
       get :org, :defaults => { :format => :json }
     end
