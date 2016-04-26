@@ -9,6 +9,16 @@ class StudentsController < ApplicationController
     @students = Student.all
   end
 
+  def student_placements
+    @students = Student.all
+    respond_to do |format|
+
+      format.html # student_placements.html.erb
+      format.json { render 'student_placements.json.jbuilder': @students }
+
+    end
+  end
+
   # GET /students/1
   # GET /students/1.json
   def show

@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
   root 'van_routes#index'
-  resources :organizations
   resources :contacts
   resources :vans, except: [:show]
   resources :drivers, except: [:show]
@@ -12,11 +11,17 @@ Rails.application.routes.draw do
     member do
       get :work, :defaults => { :format => :json }
     end
+    collection do
+      get :student_placements
+    end
   end
 
   resources :organizations do
     member do
       get :work, :defaults => { :format => :json }
+    end
+    collection do
+      get :organization_placements
     end
   end
 

@@ -105,7 +105,7 @@ angular.module('app').controller("OrgController", function($http, $timeout, $loc
     }
 
     function getOrganizations() {
-        $http.get('/organizations.json').
+        $http.get('/organizations/organization_placements.json').
         success(function(data, status, headers, config) {
             // this callback will be called asynchronously
             // when the response is available

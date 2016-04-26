@@ -1,0 +1,92 @@
+<body ng-app="app" ng-controller="StudentController as ctrl">
+<%= render "shared/navbar", input_name: "ctrl.searchInput" %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar" style="padding-top:0px">
+      <ul class="nav nav-sidebar">
+        <li>
+          <div style="font-weight: bold; font-size: 12pt; padding-top:5px; padding-bottom:10px; padding-left:20px; background-color: lightgrey">
+            Students
+            <button type="button" data-ng-click="ctrl.showStudentModal()" class="btn btn-sm btn-primary pull-right" style="margin-right: 5px;line-height: 1.2">Add</button>
+          </div>
+        </li>
+        <li ng-repeat="student in ctrl.students | filter:ctrl.searchInput" ng-class="{'active':$index == ctrl.selectedStudent}"
+            ng-click="ctrl.setClickedStudent($index, student.full_name, student.id)">
+          <a href="#">{{student.full_name}}</a>
+
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header">Work History
+        <div class="pull-right">
+          <a class="btn btn-primary ng-scope" target="_self" ng-if="ctrl.selectedStudent != -1"
+             href="/work_assignments/add?student_id={{ctrl.students[ctrl.selectedStudent].id}}">New</a>
+          <a class="btn btn-primary" target="_self" ng-if="ctrl.selectedStudent != -1"
+             href="/work_assignments/export.xls?student_id={{ctrl.students[ctrl.selectedStudent].id}}">Export</a>
+        </div>
+      </h2>
+      <div class="jumbotron" ng-if="ctrl.selectedStudent == -1" style="background-color: transparent; text-align: center; padding-top:24px;">
+        <h2>Select a Student</h2>
+        <p class="lead">To see a student's work history, select the student from the list on the left.  The work history
+          will appear at the top of the page.  To see details about the student's employer, click on the work history
+          record.
+        </p>
+      </div>
+      <div class="table-responsive" ng-style="ctrl.truncateStyle" ng-if="ctrl.selectedStudent != -1">
+        <%= render 'shared/work_history', is_student: true %>
+      </div>
+      <div class="table-responsive" style="padding-top:30px" ng-if="ctrl.selectedRow != null">
+        <table class="table" style="margin-left: auto; margin-right: auto;">
+          <tbody ng-repeat="org_detail in ctrl.orgDetails">
+          <tr>
+            <td style="font-weight: bold">Contact Name:</td>
+            <td>{{ org_detail.contact_name }}</td>
+            <td style="font-weight: bold">Email:</td>
+            <td>{{ org_detail.email }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Contact Title:</td>
+            <td>{{ org_detail.title }}</td>
+            <td style="font-weight: bold">Mobile Phone:</td>
+            <td>{{ org_detail.mobile }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Department:</td>
+            <td>{{ org_detail.contact_department }}</td>
+            <td style="font-weight: bold">Office Phone:</td>
+            <td>{{ org_detail.office_phone }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Address:</td>
+            <td>{{ org_detail.contact_address }}</td>
+            <td style="font-weight: bold">Fax:</td>
+            <td>{{ org_detail.fax }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">&nbsp;</td>
+            <td>{{ org_detail.contact_address }}</td>
+            <td style="font-weight: bold">Earliest Start:</td>
+            <td>{{ org_detail.earliest_start }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Contact Start Date:</td>
+            <td>{{ org_detail.contact_start_date }}</td>
+            <td style="font-weight: bold">Latest Start:</td>
+            <td>{{ org_detail.latest_start }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Sponsor Since:</td>
+            <td>{{ org_detail.contact_sponsor_since }}</td>
+            <td style="font-weight: bold">Ideal Start:</td>
+            <td>{{ org_detail.ideal_start }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>

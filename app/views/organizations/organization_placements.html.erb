@@ -1,0 +1,89 @@
+<body ng-app="app" ng-controller="OrgController as ctrl">
+<%= render "shared/navbar", input_name: "ctrl.searchInput" %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar" style="padding-top:0px">
+      <ul class="nav nav-sidebar">
+        <li>
+          <div style="font-weight: bold; font-size: 12pt; padding-top:5px; padding-bottom:10px; padding-left:20px; background-color: lightgrey">
+            Organizations
+            <button type="button" data-ng-click="ctrl.showOrgModal()" class="btn btn-sm btn-primary pull-right" style="margin-right: 5px;line-height: 1.2">Add</button>
+          </div>
+        </li>
+        <li ng-repeat="org in ctrl.orgs | filter:ctrl.searchInput" ng-class="{'active':$index == ctrl.selectedOrg}"
+            ng-click="ctrl.setClickedOrg($index, org.full_name, org.id)">
+          <a href="#">{{org.name}}</a>
+
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header">Student Work History
+        <a class="btn btn-primary" target="_self" ng-if="ctrl.selectedOrg != -1"
+           href="/work_assignments/export.xls?student_id={{ctrl.orgs[ctrl.selectedOrg].id}}">Export</a>
+      </h2>
+      <div class="jumbotron" ng-if="ctrl.selectedOrg == -1" style="background-color: transparent; text-align: center; padding-top:24px;">
+        <h2>Select an Organization</h2>
+        <p class="lead">To see an organization's student work history and organization details, select an organization
+          from the list on the left.  The work history will appear at the top of the page, and the organizational
+          details below.  To edit student work history, use the students view by either clicking on a students name or
+          selecting Students from the top menu.
+        </p>
+      </div>
+      <div class="table-responsive" ng-style="ctrl.truncateStyle" ng-if="ctrl.selectedOrg != -1">
+        <%= render 'shared/work_history', is_student: false %>
+      </div>
+      <div class="table-responsive" style="padding-top:30px" ng-if="ctrl.selectedRow != null">
+        <table class="table" style="margin-left: auto; margin-right: auto;">
+          <tbody ng-repeat="org_detail in ctrl.orgDetails">
+          <tr>
+            <td style="font-weight: bold">Contact Name:</td>
+            <td>{{ org_detail.contact_name }}</td>
+            <td style="font-weight: bold">Email:</td>
+            <td>{{ org_detail.email }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Contact Title:</td>
+            <td>{{ org_detail.title }}</td>
+            <td style="font-weight: bold">Mobile Phone:</td>
+            <td>{{ org_detail.mobile }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Department:</td>
+            <td>{{ org_detail.contact_department }}</td>
+            <td style="font-weight: bold">Office Phone:</td>
+            <td>{{ org_detail.office_phone }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Address:</td>
+            <td>{{ org_detail.contact_address }}</td>
+            <td style="font-weight: bold">Fax:</td>
+            <td>{{ org_detail.fax }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">&nbsp;</td>
+            <td>{{ org_detail.contact_address }}</td>
+            <td style="font-weight: bold">Earliest Start:</td>
+            <td>{{ org_detail.earliest_start }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Contact Start Date:</td>
+            <td>{{ org_detail.contact_start_date }}</td>
+            <td style="font-weight: bold">Latest Start:</td>
+            <td>{{ org_detail.latest_start }}</td>
+          </tr>
+          <tr>
+            <td style="font-weight: bold">Sponsor Since:</td>
+            <td>{{ org_detail.contact_sponsor_since }}</td>
+            <td style="font-weight: bold">Ideal Start:</td>
+            <td>{{ org_detail.ideal_start }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>

@@ -1,10 +1,22 @@
 class OrganizationsController < ApplicationController
+  before_action :authenticate_user!
+
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
 
   # GET /organizations
   # GET /organizations.json
   def index
     @organizations = Organization.all
+  end
+
+  def organization_placements
+    @organizations = Organization.all
+    respond_to do |format|
+
+      format.html # organization_placements.html.erb
+      format.json { render 'organization_placements.json.jbuilder': @organizations }
+
+    end
   end
 
   # GET /organizations/1

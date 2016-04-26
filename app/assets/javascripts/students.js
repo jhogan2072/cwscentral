@@ -12,7 +12,7 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     vm.isSuccess = true;
     vm.logoutUser = logoutUser;
     vm.orgDetails = [];
-    vm.page = 'students';
+    vm.page = 'placements';
     vm.removeElement = removeElement;
     vm.searchInput = '';
     vm.selectedRow = null;
@@ -103,7 +103,7 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
 	}
 
     function getStudents() {
-        $http.get('/students.json').
+        $http.get('/students/student_placements.json').
         success(function(data, status, headers, config) {
             // this callback will be called asynchronously
             // when the response is available
