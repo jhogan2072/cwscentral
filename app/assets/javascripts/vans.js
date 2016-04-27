@@ -1,12 +1,10 @@
-angular.module('app').controller("VanController", function($http, $timeout, $location, $window){
+angular.module('app').controller("VanController", function($http, $timeout){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
     vm.displayAlert = displayAlert;
     vm.isSuccess = true;
-    vm.logoutUser = logoutUser;
     vm.page = 'vans';
-    vm.searchInput = '';
     vm.showResultAlert = false;
 
     ////////////
@@ -20,12 +18,6 @@ angular.module('app').controller("VanController", function($http, $timeout, $loc
         vm.alertText = message;
         vm.showResultAlert = true;
         $timeout(function(){vm.showResultAlert = false}, 5000);
-    }
-
-    function logoutUser() {
-        document.cookie = 'x_auth_token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        $window.location.href = '/logout';
-
     }
 
 });
