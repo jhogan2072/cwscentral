@@ -2,7 +2,7 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
-    vm.placement_student_class = "";
+    vm.assignment_student_class = "";
     vm.createStudent = createStudent;
     vm.deletePlacement = deletePlacement;
     vm.displayAlert = displayAlert;

@@ -9,16 +9,6 @@ class StudentsController < ApplicationController
     @students = Student.all
   end
 
-  def student_placements
-    @students = Student.all
-    respond_to do |format|
-
-      format.html # student_placements.html.erb
-      format.json { render 'student_placements.json.jbuilder': @students }
-
-    end
-  end
-
   # GET /students/1
   # GET /students/1.json
   def show
@@ -73,7 +63,7 @@ class StudentsController < ApplicationController
     end
   end
 
-  def work
+  def placements
     #retrieve a students work history
     @placements = Placement.search(student_id=params[:id])
     if @placements.length == 0

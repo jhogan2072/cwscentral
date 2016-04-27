@@ -9,10 +9,7 @@ Rails.application.routes.draw do
 
   resources :students do
     member do
-      get :work, :defaults => { :format => :json }
-    end
-    collection do
-      get :student_placements
+      get :placements, :defaults => { :format => :json }
     end
   end
 
