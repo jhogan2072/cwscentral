@@ -65,7 +65,7 @@ class StudentsController < ApplicationController
 
   def placements
     #retrieve a students work history
-    @placements = Placement.search(student_id=params[:id])
+    @placements = Placement.search(filtering_id=params[:id], query_type=0)
     if @placements.length == 0
       render json: :no_content, status: 404
     end

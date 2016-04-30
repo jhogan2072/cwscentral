@@ -62,6 +62,14 @@ class ContactsController < ApplicationController
     end
   end
 
+  def placements
+    #retrieve a students work history
+    @placements = Placement.search(filtering_id=params[:id], query_type=2)
+    if @placements.length == 0
+      render json: :no_content, status: 404
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_contact

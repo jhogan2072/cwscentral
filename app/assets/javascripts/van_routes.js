@@ -8,13 +8,11 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.deleteRoute = deleteRoute;
     vm.displayAlert = displayAlert;
     vm.isSuccess = true;
-    vm.logoutUser = logoutUser;
     vm.page = 'routes';
     vm.removeElement = removeElement;
     vm.searchInput = '';
     vm.showResultAlert = false;
     vm.routeDate = "";
-//    vm.VanRoute = $resource("/van_routes/:id.json");
     vm.getRoutes = getRoutes;
 
     Number.prototype.mod = function(n) {
@@ -80,12 +78,6 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
             vm.copyFromDate = date_string;
             $('#dt1').val(date_string).change();
         }
-    }
-
-    function logoutUser() {
-        document.cookie = 'x_auth_token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        $window.location.href = '/logout';
-
     }
 
     function removeElement(array, index){

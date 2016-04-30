@@ -3,10 +3,12 @@
   <tr>
     <th>Start Date</th>
     <th>End Date</th>
-    <% if (is_student) %>
+    <% if (query_type == 0) %>
+    <th>Student Name</th>
+    <% elsif (query_type == 1) %>
       <th>Organization Name</th>
-    <% else %>
-      <th>Student Name</th>
+    <% elsif (query_type == 2) %>
+        <th>Contact Name</th>
     <% end %>
     <th>Paid/Unpaid</th>
     <th>Work Day</th>
@@ -24,10 +26,12 @@
       ng-click="ctrl.showOrganizationDetails($index, student_placement.id)" id="{{student_placement.id}}">
     <td>{{ student_placement.start_date }}</td>
     <td>{{ student_placement.end_date }}</td>
-    <% if (is_student) %>
-      <td>{{ student_placement.organization_name }}</td>
-    <% else %>
+    <% if (query_type == 0) %>
       <td>{{ student_placement.student_name }}</td>
+    <% elsif (query_type == 1) %>
+      <td>{{ student_placement.organization_name }}</td>
+    <% elsif (query_type == 2) %>
+      <td>{{ student_placement.contact_name }}</td>
     <% end %>
     <td>{{ student_placement.paid }}</td>
     <td>{{ student_placement.work_day }}</td>

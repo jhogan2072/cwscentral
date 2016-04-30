@@ -35,56 +35,9 @@
         </p>
       </div>
       <div class="table-responsive" ng-style="ctrl.truncateStyle" ng-if="ctrl.selectedStudent != -1">
-        <%= render 'shared/work_history', is_student: true %>
+        <%= render 'work_history', query_type: 0 %>
       </div>
-      <div class="table-responsive" style="padding-top:30px" ng-if="ctrl.selectedRow != null">
-        <table class="table" style="margin-left: auto; margin-right: auto;">
-          <tbody ng-repeat="org_detail in ctrl.orgDetails">
-          <tr>
-            <td style="font-weight: bold">Contact Name:</td>
-            <td>{{ org_detail.contact_name }}</td>
-            <td style="font-weight: bold">Email:</td>
-            <td>{{ org_detail.email }}</td>
-          </tr>
-          <tr>
-            <td style="font-weight: bold">Contact Title:</td>
-            <td>{{ org_detail.title }}</td>
-            <td style="font-weight: bold">Mobile Phone:</td>
-            <td>{{ org_detail.mobile }}</td>
-          </tr>
-          <tr>
-            <td style="font-weight: bold">Department:</td>
-            <td>{{ org_detail.contact_department }}</td>
-            <td style="font-weight: bold">Office Phone:</td>
-            <td>{{ org_detail.office_phone }}</td>
-          </tr>
-          <tr>
-            <td style="font-weight: bold">Address:</td>
-            <td>{{ org_detail.contact_address }}</td>
-            <td style="font-weight: bold">Fax:</td>
-            <td>{{ org_detail.fax }}</td>
-          </tr>
-          <tr>
-            <td style="font-weight: bold">&nbsp;</td>
-            <td>{{ org_detail.contact_address }}</td>
-            <td style="font-weight: bold">Earliest Start:</td>
-            <td>{{ org_detail.earliest_start }}</td>
-          </tr>
-          <tr>
-            <td style="font-weight: bold">Contact Start Date:</td>
-            <td>{{ org_detail.contact_start_date }}</td>
-            <td style="font-weight: bold">Latest Start:</td>
-            <td>{{ org_detail.latest_start }}</td>
-          </tr>
-          <tr>
-            <td style="font-weight: bold">Sponsor Since:</td>
-            <td>{{ org_detail.contact_sponsor_since }}</td>
-            <td style="font-weight: bold">Ideal Start:</td>
-            <td>{{ org_detail.ideal_start }}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+      <%= render 'work_details' %>
     </div>
   </div>
 </div>

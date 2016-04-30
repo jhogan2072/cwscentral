@@ -1,12 +1,19 @@
-angular.module('app').controller("PlacementController", function($http, $timeout, $location, ModalFormService, ModalDetailsService, PlacementService){
+angular.module('app').controller("PlacementController", function($http, $timeout, $location, ModalFormService,
+                                                                 ModalDetailsService, PlacementService, ContactService){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
+    vm.contactId = -1;
+    vm.contactName = "";
+    vm.contacts = [];
+    vm.CONTACT_TYPE = 2;
+    vm.createContact = createContact;
     vm.createOrganization = createOrganization;
     vm.createStudent = createStudent;
     vm.deletePlacement = deletePlacement;
     vm.displayAlert = displayAlert;
     vm.getStudentPlacements = getStudentPlacements;
+    vm.getContacts = getContacts;
     vm.getGradeData = getGradeData;
     vm.getOrganizations = getOrganizations;
     vm.getStudents = getStudents;
@@ -16,16 +23,20 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.orgId = -1;
     vm.orgName = "";
     vm.orgs = [];
+    vm.ORG_TYPE = 1;
     vm.page = 'placements';
     vm.removeElement = removeElement;
     vm.searchInput = '';
     vm.selectedRow = null;
+    vm.selectedContact = -1;
     vm.selectedOrg = -1;
     vm.selectedStudent = -1;
+    vm.setClickedContact = setClickedContact;
     vm.setClickedOrg = setClickedOrg;
     vm.setClickedStudent = setClickedStudent;
-    vm.showOrganizationDetails = showOrganizationDetails;
+    vm.showContactModal = showContactModal;
     vm.showGradesModal = showGradesModal;
+    vm.showOrganizationDetails = showOrganizationDetails;
     vm.showOrgModal = showOrgModal;
     vm.showStudentModal = showStudentModal;
     vm.showResultAlert = false;
@@ -35,6 +46,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.studentId = -1;
     vm.students = [];
     vm.studentSearchInput = '';
+    vm.STUDENT_TYPE = 0;
     vm.truncateStyle = {};
     vm.time_pattern = '^([0]?[1-9]|1[0-2]):([0-5]\\d)\\s?(AM|PM|am|pm)?$';
 
@@ -43,11 +55,17 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         getStudents();
     } else if (absUrl.indexOf('/placements/organizations') > -1) {
         getOrganizations();
+    } else if (absUrl.indexOf('/placements/contacts') > -1) {
+        getContacts();
     }
     ////////////
 
     function alertShowHide(isShown) {
         vm[isShown] = !vm[isShown];
+    }
+
+    function createContact(contact_name) {
+        return true;
     }
 
     function createOrganization(container_name) {
@@ -110,6 +128,10 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         $timeout(function(){vm.showResultAlert = false}, 5000);
     }
 
+    function getContacts () {
+        vm.contacts = ContactService.query();
+    }
+
     function getGradeData(){
         var gradesURL = '/students'
     }
@@ -128,13 +150,15 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         });
     }
 
-    function getStudentPlacements(studentOrOrgId, isStudentListing){
+    function getStudentPlacements(listingId, listingType){
         // Retrieve the work history for this student.
         var detailsURL = '';
-        if (isStudentListing) {
-            detailsURL = '/students/' + studentOrOrgId + '/placements';
-        } else {
-            detailsURL = '/organizations/' + studentOrOrgId + '/placements';
+        if (listingType == vm.STUDENT_TYPE) {
+            detailsURL = '/students/' + listingId + '/placements';
+        } else if (listingType == vm.ORG_TYPE) {
+            detailsURL = '/organizations/' + listingId + '/placements';
+        } else if (listingType == vm.CONTACT_TYPE) {
+            detailsURL = '/contacts/' + listingId + '/placements';
         }
         $http.get(detailsURL).
         success(function(data){
@@ -172,6 +196,16 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         array.splice(index, 1);
     }
 
+    function setClickedContact(indexSelectedContact, contact_name, contact_id) {
+        vm.selectedRow = null;
+        vm.truncateStyle = {};
+        vm.selectedContact = indexSelectedContact;
+        vm.contactName = contact_name;
+        vm.contactId = contact_id
+        vm.searchInput = '';
+        vm.getStudentPlacements(contact_id, vm.CONTACT_TYPE);
+    }
+
     function setClickedOrg(indexSelectedOrg, org_name, org_id) {
         vm.selectedRow = null;
         vm.truncateStyle = {};
@@ -179,9 +213,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         vm.orgName = org_name;
         vm.orgId = org_id
         vm.searchInput = '';
-        vm.isOrgSearch = false;
-        vm.getStudentPlacements(org_id, false);
-        vm.orgSearchInput = '';
+        vm.getStudentPlacements(org_id, vm.ORG_TYPE);
     }
 
     function setClickedStudent(indexSelectedStudent, student_name, student_id) {
@@ -191,9 +223,30 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         vm.studentFullName = student_name;
         vm.studentId = student_id
         vm.searchInput = '';
-        vm.isStudentSearch = false;
-        vm.getStudentPlacements(student_id, true);
-        vm.studentSearchInput = '';
+        vm.getStudentPlacements(student_id, vm.STUDENT_TYPE);
+    }
+
+    function showContactModal() {
+        var modalOptions    = {
+            closeButtonText: 'Cancel',
+            actionButtonText: 'Create',
+            headerText: 'Create New Contact'
+        };
+        ModalFormService.showModal({}, modalOptions).then(function (result) {
+            vm.createContact(result.name);
+        });
+    }
+
+    function showGradesModal(organization_name, placement_id) {
+        var grade_data = getGradeData(vm.studentId, placement_id);
+        var modalOptions    = {
+            closeButtonText: 'Close',
+            headerText: 'Student Grades',
+            bodyText: 'Following are the PowerSchool grades for ' + organization_name,
+            tableData: grade_data
+        };
+        ModalDetailsService.showModal({}, modalOptions).then(function () {
+        });
     }
 
     function showOrganizationDetails(indexSelectedObject, placement_id) {
@@ -211,18 +264,6 @@ angular.module('app').controller("PlacementController", function($http, $timeout
             //put up a failure message
             vm.displayAlert(false,"There was an retrieving object details. The HTTP return code was "+status);
             vm.orgDetails = [];
-        });
-    }
-
-    function showGradesModal(organization_name, placement_id) {
-        var grade_data = getGradeData(vm.studentId, placement_id);
-        var modalOptions    = {
-            closeButtonText: 'Close',
-            headerText: 'Student Grades',
-            bodyText: 'Following are the PowerSchool grades for ' + organization_name,
-            tableData: grade_data
-        };
-        ModalDetailsService.showModal({}, modalOptions).then(function () {
         });
     }
 

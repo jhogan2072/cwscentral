@@ -70,11 +70,13 @@ class Placement < ActiveRecord::Base
     contact.fax
   end
 
-  def self.search(student_id=-1,organization_id=-1)
-    if student_id != -1
-      joins(contact: :organization).includes(contact: :organization).where("student_id = ?", student_id)
-    else
-      joins(contact: :student).includes(contact: :student).where("organization_id = ?", organization_id)
+  def self.search(filtering_id=-1,query_type=-1)
+    if query_type == 0
+      joins(contact: :organization).includes(contact: :organization).where("student_id = ?", filtering_id)
+    elsif query_type == 1
+      joins(contact: :organization).includes(contact: :organization).where("contacts.organization_id = ?", filtering_id)
+    elsif query_type == 2
+      joins(contact: :student).includes(contact: :student).where("contact_id = ?", filtering_id)
     end
   end
 

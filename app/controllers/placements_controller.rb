@@ -27,6 +27,16 @@ class PlacementsController < ApplicationController
     end
   end
 
+  def contacts
+    @contacts = Contact.all
+    respond_to do |format|
+
+      format.html # contacts_placements.html.erb
+      format.json { render 'contacts.json.jbuilder': @contacts }
+
+    end
+  end
+
   # GET /placements/1
   # GET /placements/1.json
   def show
@@ -97,9 +107,11 @@ class PlacementsController < ApplicationController
 
   def export
     if params[:student_id]
-      @placements = Placement.search(student_id=params[:student_id])
+      @placements = Placement.search(filtering_id=params[:student_id], query_type = 0)
     elsif params[:organization_id]
-      @placements = Placement.search(organization_id=params[:organization_id])
+      @placements = Placement.search(filtering_id=params[:organization_id], query_type = 1)
+    elsif params[:contact_id]
+      @placements = Placement.search(filtering_id=params[:contact_id], query_type = 2)
     end
     respond_to do |format|
       format.html
