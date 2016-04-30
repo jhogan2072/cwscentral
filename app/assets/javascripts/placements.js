@@ -129,7 +129,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     }
 
     function getContacts () {
-        vm.contacts = ContactService.query();
+        vm.contacts = PlacementService.contacts();
     }
 
     function getGradeData(){
@@ -169,7 +169,13 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         }).
         error( function(data, status) {
             if (status == 404) {
-                vm.displayAlert(false,"This organization has no student work placements.");
+                if (listingType == vm.STUDENT_TYPE) {
+                    vm.displayAlert(false, "This student has no work placements.");
+                } else if (listingType == vm.ORG_TYPE) {
+                    vm.displayAlert(false, "This organization has no student work placements.");
+                } else {
+                    vm.displayAlert(false, "This contact has no student work placements.");
+                }
                 vm.studentPlacements = [];
             } else {
                 //put up a failure message

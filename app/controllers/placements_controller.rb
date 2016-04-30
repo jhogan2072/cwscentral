@@ -1,4 +1,5 @@
 class PlacementsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_placement, only: [:show, :edit, :update, :destroy]
 
   # GET /placements
@@ -8,7 +9,7 @@ class PlacementsController < ApplicationController
   end
 
   def organizations
-    @organizations = Organization.all
+    @organizations = Organization.all.order('name')
     respond_to do |format|
 
       format.html # organization_placements.html.erb
@@ -18,7 +19,7 @@ class PlacementsController < ApplicationController
   end
 
   def students
-    @students = Student.all
+    @students = Student.all.order('last_name')
     respond_to do |format|
 
       format.html # students_placements.html.erb
@@ -28,7 +29,7 @@ class PlacementsController < ApplicationController
   end
 
   def contacts
-    @contacts = Contact.all
+    @contacts = Contact.all.order('last_name')
     respond_to do |format|
 
       format.html # contacts_placements.html.erb
@@ -80,7 +81,7 @@ class PlacementsController < ApplicationController
   def update
     respond_to do |format|
       if @placement.update(placement_params)
-        format.html { redirect_to students_path, notice: 'Placement was successfully created.' }
+        format.html { redirect_to :back, notice: 'Placement was successfully updated.' }
         format.json { head :no_content, status: :created }
       else
         format.html { render :edit }

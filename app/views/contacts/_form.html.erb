@@ -1,23 +1,36 @@
-<%= simple_form_for(@contact) do |f| %>
-    <%= f.error_notification %>
+<body ng-app="app" ng-controller="VanController as ctrl">
+<%= render "shared/navbar", input_name: "ctrl.searchInput" %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header"><%= header_text %></h2>
+      <%= simple_form_for(@contact, html: { class: 'form-horizontal' },
+                          wrapper: :horizontal_form ) do |f| %>
+          <%= f.error_notification %>
 
-    <div class="form-inputs">
-      <%= f.input :name %>
-      <%= f.input :title %>
-      <%= f.input :address %>
-      <%= f.input :work_day %>
-      <%= f.input :city %>
-      <%= f.input :state %>
-      <%= f.input :zip %>
-      <%= f.input :email %>
-      <%= f.input :mobile %>
-      <%= f.input :office_phone %>
-      <%= f.input :fax %>
-      <%= f.input :designations %>
-      <%= f.association :organization %>
-    </div>
+          <div class="form-inputs">
+            <%= f.input :first_name %>
+            <%= f.input :last_name %>
+            <%= f.input :title %>
+            <%= f.input :address %>
+            <%= f.input :city %>
+            <%= f.input :state %>
+            <%= f.input :zip %>
+            <%= f.input :email %>
+            <%= f.input :mobile %>
+            <%= f.input :office_phone %>
+            <%= f.input :fax %>
+            <%= f.input :designations %>
+            <%= f.association :organization %>
+          </div>
 
-    <div class="form-actions">
-      <%= f.button :submit %>
+          <div class="form-actions">
+            <%= f.button :submit, class: "btn btn-primary"  %>
+          </div>
+      <% end %>
     </div>
-<% end %>
+  </div>
+</div>
+</body>
+

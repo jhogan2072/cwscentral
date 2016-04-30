@@ -19,7 +19,7 @@
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <%= render "shared/alert_msg" %>
-      <h2 class="sub-header">Student Work History
+      <h2 class="sub-header">Student Placement History
         <a class="btn btn-primary" target="_self" ng-if="ctrl.selectedOrg != -1"
            href="/placements/export.xls?student_id={{ctrl.orgs[ctrl.selectedOrg].id}}">Export</a>
       </h2>
@@ -27,8 +27,7 @@
         <h2>Select an Organization</h2>
         <p class="lead">To see an organization's student work history and organization details, select an organization
           from the list on the left.  The work history will appear at the top of the page, and the organizational
-          details below.  To edit student work history, use the students view by either clicking on a students name or
-          selecting Students from the top menu.
+          details below.  To edit student work history, click the Edit link at the end of the relevant placement row.
         </p>
       </div>
       <div class="table-responsive" ng-style="ctrl.truncateStyle" ng-if="ctrl.selectedOrg != -1">

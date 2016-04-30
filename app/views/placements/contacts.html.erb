@@ -10,7 +10,7 @@
             <button type="button" data-ng-click="ctrl.showContactModal()" class="btn btn-sm btn-primary pull-right" style="margin-right: 5px;line-height: 1.2">Add</button>
           </div>
         </li>
-        <li ng-repeat="org in ctrl.contacts | filter:ctrl.searchInput" ng-class="{'active':$index == ctrl.selectedContact}"
+        <li ng-repeat="contact in ctrl.contacts | filter:ctrl.searchInput" ng-class="{'active':$index == ctrl.selectedContact}"
             ng-click="ctrl.setClickedContact($index, contact.name, contact.id)">
           <a href="#">{{contact.name}}</a>
 
@@ -19,7 +19,7 @@
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <%= render "shared/alert_msg" %>
-      <h2 class="sub-header">Student Work History
+      <h2 class="sub-header">Placement History
         <a class="btn btn-primary" target="_self" ng-if="ctrl.selectedContact != -1"
            href="/placements/export.xls?contact_id={{ctrl.contacts[ctrl.selectedContact].id}}">Export</a>
       </h2>
