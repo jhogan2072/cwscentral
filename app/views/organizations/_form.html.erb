@@ -1,17 +1,30 @@
-<%= simple_form_for(@organization) do |f| %>
-  <%= f.error_notification %>
+<body ng-app="app" ng-controller="OrgController as ctrl">
+<%= render "shared/navbar", input_name: nil %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header"><%= header_text %></h2>
+      <%= simple_form_for(@organization) do |f| %>
+          <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :billing_address %>
-    <%= f.input :city %>
-    <%= f.input :state %>
-    <%= f.input :zip %>
-    <%= f.input :sponsor_since %>
-    <%= f.input :sugarcrm_id %>
-  </div>
+          <div class="form-inputs">
+            <%= f.input :name, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :billing_address, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :city, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :state, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :zip, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :sponsor_since, wrapper_html: {class: 'col-sm-4'} %>
+          </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
+          <div class="form-group col-sm-12">
+            <%= f.button :submit, class: "btn btn-primary" %>
+          </div>
+      <% end %>
+
+
+    </div>
   </div>
-<% end %>
+</div>
+</body>
+

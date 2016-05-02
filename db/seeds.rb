@@ -12,11 +12,11 @@ user.password = 'password'
 user.password_confirmation = 'password'
 user.admin = true
 user.save!
-Student.create(first_name: 'Mark', last_name: 'Torres')
-Student.create(first_name: 'John', last_name: 'Hogan')
-Student.create(first_name: 'Selena', last_name: 'Lopez')
-Student.create(first_name: 'Julia', last_name: 'Martin')
-Student.create(first_name: 'Francisco', last_name: 'Samantha')
+Student.create(first_name: 'Mark', last_name: 'Torres', mobile_phone: '123-456-7890')
+Student.create(first_name: 'John', last_name: 'Hogan', mobile_phone: '567-890-1234')
+Student.create(first_name: 'Selena', last_name: 'Lopez', mobile_phone: '456-789-0123')
+Student.create(first_name: 'Julia', last_name: 'Martin', mobile_phone: '345-678-9012')
+Student.create(first_name: 'Francisco', last_name: 'Samantha', mobile_phone: '234-5678-9012')
 Organization.create(name: 'ACME Health Care', billing_address: '123 Main Street', city: 'Boston', state: 'MA', zip: '01742', sponsor_since: '01-jan-2011', sugarcrm_id: 'ABC')
 Organization.create(name: 'Black Duck Software', billing_address: '123 Main Street', city: 'Burlington', state: 'MA', zip: '01803', sponsor_since: '01-jan-2012', sugarcrm_id: 'DEF')
 Organization.create(name: 'Cartera Commerce, Inc.', billing_address: '1 Cranberry Hill', city: 'Lexington', state: 'MA', zip: '02421', sponsor_since: '01-jan-2013', sugarcrm_id: 'GHI')
@@ -56,3 +56,6 @@ RouteStop.create(stop_order:'B', van_route_id: 1, organization_id: 2, :students 
 RouteStop.create(stop_order:'C', van_route_id: 1, organization_id: 3, :students => Student.where(:last_name => 'Lopez'))
 RouteStop.create(stop_order:'D', van_route_id: 1, organization_id: 4, :students => Student.where(:last_name => 'Martin'))
 RouteStop.create(stop_order:'E', van_route_id: 1, organization_id: 5, :students => Student.where(:last_name => 'Samantha'))
+Incident.create(incident_date:'01-may-2016', description: 'The student was 3 hours late.', student_id: 1, contact_id: 1)
+Incident.create(incident_date:'01-may-2016', description: 'The student was chewing gum.', student_id: 2, contact_id: 2)
+Incident.create(incident_date:'01-may-2016', description: 'The student was wearing a funny hat.', student_id: 2, contact_id: 2)

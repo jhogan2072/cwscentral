@@ -1,6 +1,6 @@
 class VansController < ApplicationController
-  before_action :set_van, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :set_van, only: [:show, :edit, :update, :destroy]
 
   # GET /vans
   # GET /vans.json

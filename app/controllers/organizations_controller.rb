@@ -1,6 +1,5 @@
 class OrganizationsController < ApplicationController
   before_action :authenticate_user!
-
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
 
   # GET /organizations
@@ -44,7 +43,7 @@ class OrganizationsController < ApplicationController
   def update
     respond_to do |format|
       if @organization.update(organization_params)
-        format.html { redirect_to @organization, notice: 'Organization was successfully updated.' }
+        format.html { redirect_to :back, notice: 'Organization was successfully updated.' }
         format.json { render :show, status: :ok, location: @organization }
       else
         format.html { render :edit }
@@ -60,6 +59,14 @@ class OrganizationsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to organizations_url, notice: 'Organization was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def incidents
+    #retrieve an organizations student incident history
+    @incidents = Incident.search(filtering_id=params[:id], query_type=1)
+    if @incidents.length == 0
+      render json: :no_content, status: 404
     end
   end
 

@@ -1,0 +1,44 @@
+<body ng-app="app" ng-controller="IncidentController as ctrl">
+<%= render "shared/navbar", input_name: "ctrl.searchInput" %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar" style="padding-top:0px">
+      <ul class="nav nav-sidebar">
+        <li>
+          <div style="font-weight: bold; font-size: 12pt; padding-top:5px; padding-bottom:10px; padding-left:20px; background-color: lightgrey">
+            Students
+            <button type="button" data-ng-click="ctrl.showStudentModal()" class="btn btn-sm btn-primary pull-right" style="margin-right: 5px;line-height: 1.2">Add</button>
+          </div>
+        </li>
+        <li ng-repeat="student in ctrl.students | filter:ctrl.searchInput" ng-class="{'active':$index == ctrl.selectedStudent}"
+            ng-click="ctrl.setClickedStudent($index, student.full_name, student.id)">
+          <a href="#">{{student.full_name}}</a>
+
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header">Incident History
+        <div class="pull-right">
+          <a class="btn btn-primary ng-scope" target="_self" ng-if="ctrl.selectedStudent != -1"
+             href="/incidents/add?student_id={{ctrl.students[ctrl.selectedStudent].id}}">New</a>
+          <a class="btn btn-primary" target="_self" ng-if="ctrl.selectedStudent != -1"
+             href="/incidents/export.xls?student_id={{ctrl.students[ctrl.selectedStudent].id}}">Export</a>
+        </div>
+      </h2>
+      <div class="jumbotron" ng-if="ctrl.selectedStudent == -1" style="background-color: transparent; text-align: center; padding-top:24px;">
+        <h2>Select a Student</h2>
+        <p class="lead">To see a student's incident history, select the student from the list on the left.  The incident history
+          will appear on the right side of the page.  To edit an incident, click the Edit link.  To delete an incident,
+          click the trash can icon.
+        </p>
+      </div>
+      <div class="table-responsive" ng-style="ctrl.truncateStyle" ng-if="ctrl.selectedStudent != -1">
+        <%= render 'incident_history', query_type: 0 %>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>

@@ -1,6 +1,36 @@
 <body ng-app="app" ng-controller="StudentController as ctrl">
 <%= render "shared/navbar", input_name: "ctrl.searchInput" %>
 <div class="container-fluid">
-</div>
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header">Contacts
+        <button class="btn-file btn btn-primary" name="export">Export</button>
+      </h2>
+      <div class="table-responsive" ng-style="ctrl.truncateStyle">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Mobile Phone</th>
+            <th colspan="3"></th>
+          </tr>
+          </thead>
 
+          <tbody>
+          <tr ng-repeat="student in ctrl.students | filter:ctrl.searchInput">
+            <td>{{ student.first_name }}</td>
+            <td>{{ student.last_name }}</td>
+            <td>{{ student.mobile_phone }}</td>
+            <td><a target="_self" ng-href="/students/{{student.id}}/edit">Edit</a></td>
+            <td><a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/students/{{student.id}}">Delete</a></td>
+          </tr>
+          </tbody>
+        </table>
+        <%= link_to 'New Student', new_student_path, class: "btn btn-primary", target: "_self" %>
+      </div>
+    </div>
+  </div>
+</div>
 </body>

@@ -1,0 +1,34 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Incident Date</th>
+    <% if query_type == 0 or query_type == 2 %>
+      <th>Organization Name</th>
+    <% end %>
+    <% if query_type == 1 or query_type == 2 %>
+      <th>Student Name</th>
+    <% end %>
+    <% if query_type != 2 %>
+      <th>Contact Name</th>
+    <% end %>
+    <th>Description</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="incident in ctrl.incidents | filter:ctrl.searchInput"
+      ng-class="{'selected':$index == ctrl.selectedRow}">
+    <td>{{ incident.incident_date | date:'yyyy-MM-dd h:mm a' }}</td>
+    <td>{{ incident.student_name }}</td>
+    <td>{{ incident.contact_name }}</td>
+    <td>{{ incident.description }}</td>
+    <td><a href="/incidents/{{incident.id}}/edit" target="_self"
+           ng-class="{'white-link': ctrl.selectedRow != null}">Edit</a></td>
+    <td ng-click="$event.stopPropagation();"><img ng-src="<%= image_path("trash.png") %>" width="18" height="18"
+                                                  ng-really-message="Are you sure you want to delete this incident?"
+                                                  ng-really-click="ctrl.deleteIncident($index, incident.id);" class="delete_object">
+    </td>
+  </tr>
+  </tbody>
+</table>

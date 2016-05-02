@@ -1,0 +1,40 @@
+<body ng-app="app" ng-controller="IncidentController as ctrl">
+<%= render "shared/navbar", input_name: "ctrl.searchInput" %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar" style="padding-top:0px">
+      <ul class="nav nav-sidebar">
+        <li>
+          <div style="font-weight: bold; font-size: 12pt; padding-top:5px; padding-bottom:10px; padding-left:20px; background-color: lightgrey">
+            Contacts
+            <button type="button" data-ng-click="ctrl.showContactModal()" class="btn btn-sm btn-primary pull-right" style="margin-right: 5px;line-height: 1.2">Add</button>
+          </div>
+        </li>
+        <li ng-repeat="contact in ctrl.contacts | filter:ctrl.searchInput" ng-class="{'active':$index == ctrl.selectedContact}"
+            ng-click="ctrl.setClickedContact($index, contact.name, contact.id)">
+          <a href="#">{{contact.name}}</a>
+
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header">Incident History
+        <a class="btn btn-primary" target="_self" ng-if="ctrl.selectedContact != -1"
+           href="/incidents/export.xls?contact_id={{ctrl.contacts[ctrl.selectedContact].id}}">Export</a>
+      </h2>
+      <div class="jumbotron" ng-if="ctrl.selectedContact == -1" style="background-color: transparent; text-align: center; padding-top:24px;">
+        <h2>Select a Contact</h2>
+        <p class="lead">To see an contact's student incident history, select a contact
+          from the list on the left.  The incident history will appear at the right of the page.  To edit an incident,
+          click the Edit link.  To delete an incident, click the trash can icon..
+        </p>
+      </div>
+      <div class="table-responsive" ng-style="ctrl.truncateStyle" ng-if="ctrl.selectedContact != -1">
+        <%= render 'incident_history', query_type: 2 %>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>

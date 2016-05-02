@@ -1,0 +1,27 @@
+<body ng-app="app" ng-controller="StudentController as ctrl">
+<%= render "shared/navbar", input_name: nil %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header"><%= header_text %></h2>
+      <%= simple_form_for(@student) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-inputs">
+            <%= f.input :first_name, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :last_name, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :mobile_phone, wrapper_html: {class: 'col-sm-4'} %>
+          </div>
+
+          <div class="form-group col-sm-12">
+            <%= f.button :submit, class: "btn btn-primary" %>
+          </div>
+      <% end %>
+
+
+    </div>
+  </div>
+</div>
+</body>
+

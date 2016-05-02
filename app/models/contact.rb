@@ -1,6 +1,7 @@
 class Contact < ActiveRecord::Base
   belongs_to :organization
   has_many :placements
+  has_many :incidents
 
   def organization_name
     self.organization.name

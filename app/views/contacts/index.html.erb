@@ -31,7 +31,7 @@
               <td>{{ contact.mobile }}</td>
               <td>{{ contact.office_phone }}</td>
               <td>{{ contact.fax }}</td>
-              <td><a ng-href="/contacts/{{contact.id}}/edit">Edit</a></td>
+              <td><a target="_self" ng-href="/contacts/{{contact.id}}/edit">Edit</a></td>
               <td><a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/contacts/{{contact.id}}">Delete</a></td>
             </tr>
           </tbody>

@@ -1,5 +1,5 @@
 angular.module('app').controller("PlacementController", function($http, $timeout, $location, ModalFormService,
-                                                                 ModalDetailsService, PlacementService, ContactService){
+                                                                 ModalDetailsService, PlacementService){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";

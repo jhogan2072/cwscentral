@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160430112005) do
+ActiveRecord::Schema.define(version: 20160501205901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,18 @@ ActiveRecord::Schema.define(version: 20160430112005) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "incidents", force: :cascade do |t|
+    t.datetime "incident_date"
+    t.text     "description"
+    t.integer  "student_id"
+    t.integer  "contact_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "incidents", ["contact_id"], name: "index_incidents_on_contact_id", using: :btree
+  add_index "incidents", ["student_id"], name: "index_incidents_on_student_id", using: :btree
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name"
@@ -101,6 +113,7 @@ ActiveRecord::Schema.define(version: 20160430112005) do
     t.string   "powerschool_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "mobile_phone"
   end
 
   create_table "students_van_routes", id: false, force: :cascade do |t|
@@ -154,7 +167,27 @@ ActiveRecord::Schema.define(version: 20160430112005) do
     t.integer  "capacity"
   end
 
+  create_table "work_assignments", force: :cascade do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "paid"
+    t.string   "work_day"
+    t.integer  "student_gradelevel"
+    t.string   "earliest_start"
+    t.string   "latest_start"
+    t.string   "ideal_start"
+    t.integer  "student_id"
+    t.integer  "contact_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "work_assignments", ["contact_id"], name: "index_work_assignments_on_contact_id", using: :btree
+  add_index "work_assignments", ["student_id"], name: "index_work_assignments_on_student_id", using: :btree
+
   add_foreign_key "contacts", "organizations"
+  add_foreign_key "incidents", "contacts"
+  add_foreign_key "incidents", "students"
   add_foreign_key "placements", "contacts"
   add_foreign_key "placements", "students"
   add_foreign_key "route_stops", "organizations"

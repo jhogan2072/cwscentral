@@ -1,6 +1,5 @@
 class StudentsController < ApplicationController
   before_action :authenticate_user!
-
   before_action :set_student, only: [:show, :edit, :update, :destroy]
 
   # GET /students
@@ -60,6 +59,14 @@ class StudentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to students_url, notice: 'Student was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def incidents
+    #retrieve a students incident history
+    @incidents = Incident.search(filtering_id=params[:id], query_type=0)
+    if @incidents.length == 0
+      render json: :no_content, status: 404
     end
   end
 

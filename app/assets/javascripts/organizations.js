@@ -1,12 +1,15 @@
-angular.module('app').controller("OrgController", function($http, $timeout){
+angular.module('app').controller("OrgController", function($http, $timeout, OrganizationService){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
     vm.displayAlert = displayAlert;
+    vm.getOrganizations = getOrganizations;
     vm.isSuccess = true;
+    vm.organizations = [];
     vm.page = 'organizations';
     vm.showResultAlert = false;
 
+    getOrganizations();
     ////////////
 
     function alertShowHide(isShown) {
@@ -18,6 +21,10 @@ angular.module('app').controller("OrgController", function($http, $timeout){
         vm.alertText = message;
         vm.showResultAlert = true;
         $timeout(function(){vm.showResultAlert = false}, 5000);
+    }
+
+    function getOrganizations() {
+        vm.organizations = OrganizationService.query();
     }
 
 });

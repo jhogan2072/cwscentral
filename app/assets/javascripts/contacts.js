@@ -6,7 +6,7 @@ angular.module('app').controller("ContactController", function($http, $timeout, 
     vm.displayAlert = displayAlert;
     vm.getContacts = getContacts;
     vm.isSuccess = true;
-    vm.page = 'placements';
+    vm.page = 'organizations';
     vm.showResultAlert = false;
 
     getContacts();
