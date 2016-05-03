@@ -1,0 +1,10 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Route Sheet") do |sheet|
+  @route_export.route_stops.each do |route_stop|
+    sheet.add_row [@route_export.name, route_stop.stop_order, route_stop.organization.name,
+                   route_stop.organization.billing_address, route_stop.organization.city,
+                   route_stop.organization.state, route_stop.students.first.placements.first.contact.name]
+  end
+end
+
+#@route_export.first.route_stops.first.students.first.full_name

@@ -58,7 +58,7 @@ Rails.application.routes.draw do
 
   resources :van_routes do
     member do
-      get :export, defaults: { :format => :xls }
+      get :export, defaults: { :format => :xlsx }
     end
     collection do
       get :copy

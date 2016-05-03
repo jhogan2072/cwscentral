@@ -78,10 +78,13 @@ respond_to :html, :json
 
   def export
     @van_route = VanRoute.find(params[:id])
-    @route_export = VanRoute.joins(:driver, :van, :students).includes(:driver, :van, :students).where("van_routes.id = ?", @van_route.id)
+    @route_export = VanRoute.joins(:driver, :van, route_stops: :students)
+                        .includes(:driver, :van, route_stops: :students)
+                        .where("van_routes.id = ?", @van_route.id).first
     respond_to do |format|
       format.csv { send_data @route_export.to_csv }
-      format.xls { send_data @route_export.to_csv(col_sep: "\t") }
+      #format.xls { send_data @route_export.to_csv(col_sep: "\t") }
+      format.xlsx
     end
   end
 
