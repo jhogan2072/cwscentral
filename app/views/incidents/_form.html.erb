@@ -9,10 +9,10 @@
           <%= f.error_notification %>
 
           <div class="form-inputs">
+            <%= f.association :contact, wrapper_html: {class: 'col-sm-4'}  %>
             <%= f.input :incident_date, wrapper_html: {class: 'col-sm-4'}  %>
             <%= f.input :description, wrapper_html: {class: 'col-sm-4'}  %>
             <%= f.association :student, label_method: :full_name, value_method: :id, include_blank: false, wrapper_html: {class: 'col-sm-4'}  %>
-            <%= f.association :contact, wrapper_html: {class: 'col-sm-4'}  %>
           </div>
 
           <div class="form-group col-sm-12">

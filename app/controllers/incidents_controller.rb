@@ -18,6 +18,13 @@ class IncidentsController < ApplicationController
     end
   end
 
+  def add
+    student_id = params[:student_id]
+    @student = Student.find(student_id)
+    @incident = Incident.new
+    @incident.student = @student
+  end
+
   def students
     @students = Student.all.order('last_name')
     respond_to do |format|

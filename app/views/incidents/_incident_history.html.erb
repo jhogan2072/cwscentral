@@ -20,8 +20,15 @@
   <tr ng-repeat="incident in ctrl.incidents | filter:ctrl.searchInput"
       ng-class="{'selected':$index == ctrl.selectedRow}">
     <td>{{ incident.incident_date | date:'yyyy-MM-dd h:mm a' }}</td>
+    <% if query_type == 0 or query_type == 2 %>
+        <td>{{ incident.organization_name }}</td>
+    <% end %>
+    <% if query_type == 1 or query_type == 2 %>
     <td>{{ incident.student_name }}</td>
+    <% end %>
+    <% if query_type != 2 %>
     <td>{{ incident.contact_name }}</td>
+    <% end %>
     <td>{{ incident.description }}</td>
     <td><a href="/incidents/{{incident.id}}/edit" target="_self"
            ng-class="{'white-link': ctrl.selectedRow != null}">Edit</a></td>

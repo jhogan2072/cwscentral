@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       get :students
       get :organizations
       get :contacts
+      get :add
+      get :export
     end
   end
 
