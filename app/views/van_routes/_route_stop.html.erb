@@ -1,8 +1,6 @@
 <tr>
   <td class="col-md-1"><%= f.input :stop_order, label: false%></td>
-  <td class="col-md-6"><%= f.association :organization, label_method: :name_and_address, value_method: :id, label: false%></td>
-  <td class="col-md-4"><%= f.association :students, label_method: :full_name, value_method: :id, label: false,
-                                         input_html: { 'data-placeholder' => 'Select some students', class: 'chosen-select'}  %>
-  </td>
+  <td class="col-md-6"><%= f.association :placement, label_method: :org_contact_student,
+      include_blank: false, value_method: :id, label: false%></td>
   <td style="text-align: center; vertical-align: middle"><%= f.check_box :_destroy %></td>
 </tr>

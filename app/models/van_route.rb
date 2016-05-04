@@ -3,6 +3,8 @@
   belongs_to :driver
   has_many :route_stops, dependent: :destroy
   accepts_nested_attributes_for :route_stops, :allow_destroy => true
+  validates_presence_of :name
+
   default_scope { order('van_routes.name', 'van_routes.am_pm') }
 
   def clone_with_associations(copy_to_date)

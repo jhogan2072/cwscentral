@@ -70,6 +70,10 @@ class Placement < ActiveRecord::Base
     contact.fax
   end
 
+  def org_contact_student
+    self.organization_name + ' (' + self.contact_name + ')' + ' - ' + self.student_name
+  end
+
   def self.search(filtering_id=-1,query_type=-1)
     if query_type == 0
       joins(contact: :organization).includes(contact: :organization).where("student_id = ?", filtering_id)

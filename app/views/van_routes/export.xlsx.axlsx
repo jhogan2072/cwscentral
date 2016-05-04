@@ -1,10 +1,13 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "Route Sheet") do |sheet|
   @route_export.route_stops.each do |route_stop|
-    sheet.add_row [@route_export.name, route_stop.stop_order, route_stop.organization.name,
-                   route_stop.organization.billing_address, route_stop.organization.city,
-                   route_stop.organization.state, route_stop.students.first.placements.first.contact.name]
+    sheet.add_row [@route_export.name, @route_export.am_pm, route_stop.stop_order, route_stop.placement.contact.organization.name,
+                   route_stop.placement.contact.organization.billing_address, route_stop.placement.contact.organization.city,
+                   route_stop.placement.contact.organization.state, route_stop.placement.contact.first_name,
+                   route_stop.placement.contact.last_name, route_stop.placement.contact.office_phone,
+                   route_stop.placement.student_gradelevel.to_s + "th/" + route_stop.placement.work_day,
+                   route_stop.placement.student.first_name, route_stop.placement.student.last_name,
+                   route_stop.placement.student.mobile_phone, route_stop.placement.earliest_start,
+                   route_stop.placement.latest_start, route_stop.placement.ideal_start]
   end
 end
-
-#@route_export.first.route_stops.first.students.first.full_name

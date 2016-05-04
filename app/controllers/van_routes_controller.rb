@@ -33,6 +33,7 @@ respond_to :html, :json
   # GET /van_routes/1/edit
   def edit
     @van_route.route_date = Time.zone.parse(@van_route.route_date.beginning_of_day().to_s)
+    @filtered_stops = RouteStop.filtered_stops
   end
 
   # POST /van_routes
@@ -77,10 +78,10 @@ respond_to :html, :json
   end
 
   def export
-    @van_route = VanRoute.find(params[:id])
-    @route_export = VanRoute.joins(:driver, :van, route_stops: :students)
-                        .includes(:driver, :van, route_stops: :students)
-                        .where("van_routes.id = ?", @van_route.id).first
+    #@van_route = VanRoute.find(params[:id])
+    @route_export = VanRoute.joins(:driver, :van, route_stops: [{placement: :student}, {placement: :contact}] )
+                        .includes(:driver, :van, route_stops: [{placement: :student}, {placement: :contact}])
+                        .where("van_routes.id = ?", params[:id]).first
     respond_to do |format|
       format.csv { send_data @route_export.to_csv }
       #format.xls { send_data @route_export.to_csv(col_sep: "\t") }
@@ -110,6 +111,6 @@ end
 
 # Never trust parameters from the scary internet, only allow the white list through.
 def van_route_params
-  params.require(:van_route).permit(:id, :name, :route_date, :am_pm, :van_id, :driver_id, route_stops_attributes: [:id, :stop_order, :organization_id, {:student_ids => []}])
+  params.require(:van_route).permit(:id, :name, :route_date, :am_pm, :van_id, :driver_id, route_stops_attributes: [:id, :stop_order, :placement_id])
 end
 end

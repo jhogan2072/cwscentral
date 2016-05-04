@@ -90,21 +90,13 @@ ActiveRecord::Schema.define(version: 20160501205901) do
   create_table "route_stops", force: :cascade do |t|
     t.string   "stop_order"
     t.integer  "van_route_id"
-    t.integer  "organization_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "placement_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
-  add_index "route_stops", ["organization_id"], name: "index_route_stops_on_organization_id", using: :btree
+  add_index "route_stops", ["placement_id"], name: "index_route_stops_on_placement_id", using: :btree
   add_index "route_stops", ["van_route_id"], name: "index_route_stops_on_van_route_id", using: :btree
-
-  create_table "route_stops_students", id: false, force: :cascade do |t|
-    t.integer "route_stop_id", null: false
-    t.integer "student_id",    null: false
-  end
-
-  add_index "route_stops_students", ["route_stop_id", "student_id"], name: "index_route_stops_students_on_route_stop_id_and_student_id", using: :btree
-  add_index "route_stops_students", ["student_id", "route_stop_id"], name: "index_route_stops_students_on_student_id_and_route_stop_id", using: :btree
 
   create_table "students", force: :cascade do |t|
     t.string   "first_name"
@@ -114,11 +106,6 @@ ActiveRecord::Schema.define(version: 20160501205901) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "mobile_phone"
-  end
-
-  create_table "students_van_routes", id: false, force: :cascade do |t|
-    t.integer "van_route_id", null: false
-    t.integer "student_id",   null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -167,30 +154,12 @@ ActiveRecord::Schema.define(version: 20160501205901) do
     t.integer  "capacity"
   end
 
-  create_table "work_assignments", force: :cascade do |t|
-    t.date     "start_date"
-    t.date     "end_date"
-    t.boolean  "paid"
-    t.string   "work_day"
-    t.integer  "student_gradelevel"
-    t.string   "earliest_start"
-    t.string   "latest_start"
-    t.string   "ideal_start"
-    t.integer  "student_id"
-    t.integer  "contact_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "work_assignments", ["contact_id"], name: "index_work_assignments_on_contact_id", using: :btree
-  add_index "work_assignments", ["student_id"], name: "index_work_assignments_on_student_id", using: :btree
-
   add_foreign_key "contacts", "organizations"
   add_foreign_key "incidents", "contacts"
   add_foreign_key "incidents", "students"
   add_foreign_key "placements", "contacts"
   add_foreign_key "placements", "students"
-  add_foreign_key "route_stops", "organizations"
+  add_foreign_key "route_stops", "placements"
   add_foreign_key "route_stops", "van_routes"
   add_foreign_key "van_routes", "drivers"
   add_foreign_key "van_routes", "vans"
