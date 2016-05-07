@@ -9,6 +9,7 @@
           <%= f.error_notification %>
 
           <div class="form-inputs">
+            <%= f.input :salutation, wrapper_html: { class: 'col-sm-2' } %>
             <%= f.input :first_name, wrapper_html: { class: 'col-sm-4' } %>
             <%= f.input :last_name, wrapper_html: { class: 'col-sm-4' } %>
             <%= f.input :title, wrapper_html: { class: 'col-sm-4' } %>
@@ -20,7 +21,6 @@
             <%= f.input :mobile, wrapper_html: { class: 'col-sm-2' }  %>
             <%= f.input :office_phone, wrapper_html: { class: 'col-sm-2' }  %>
             <%= f.input :fax, wrapper_html: { class: 'col-sm-2' }  %>
-            <%= f.input :designations, wrapper_html: { class: 'col-sm-2' }  %>
             <%= f.association :organization, wrapper_html: { class: 'col-sm-4' }  %>
           </div>
 

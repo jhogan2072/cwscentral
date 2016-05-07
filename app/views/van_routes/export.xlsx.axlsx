@@ -1,13 +1,39 @@
 wb = xlsx_package.workbook
-wb.add_worksheet(name: "Route Sheet") do |sheet|
-  @route_export.route_stops.each do |route_stop|
-    sheet.add_row [@route_export.name, @route_export.am_pm, route_stop.stop_order, route_stop.placement.contact.organization.name,
-                   route_stop.placement.contact.organization.billing_address, route_stop.placement.contact.organization.city,
-                   route_stop.placement.contact.organization.state, route_stop.placement.contact.first_name,
-                   route_stop.placement.contact.last_name, route_stop.placement.contact.office_phone,
-                   route_stop.placement.student_gradelevel.to_s + "th/" + route_stop.placement.work_day,
-                   route_stop.placement.student.first_name, route_stop.placement.student.last_name,
-                   route_stop.placement.student.mobile_phone, route_stop.placement.earliest_start,
-                   route_stop.placement.latest_start, route_stop.placement.ideal_start]
+wb.styles do |s|
+  s.fonts.first.name = 'Calibri'
+  big_bold_date = s.add_style :b => true, :sz => 24, :format_code => 'dddd mmmm d, yyyy', :alignment => {:horizontal => :left}
+  small_bold = s.add_style :b => true, :sz => 14, :border => { :style => :thin, :color => "00" }
+  normal_cell = s.add_style :sz => 14, :border => { :style => :thin, :color => "00" }
+  driver_notes = s.add_style :b => false, :sz => 48, :alignment => {:vertical => :center}
+  behavior = s.add_style :b => false, :sz => 28
+  number = s.add_style :sz => 36, :alignment => {:horizontal => :center}
+  rating = s.add_style :sz => 22, :alignment => {:horizontal => :center}
+
+  wb.add_worksheet(name: "Route Sheet") do |sheet|
+    sheet.add_row [nil, @route_export.route_date], :style => [nil, big_bold_date]
+    sheet.merge_cells("B1:E1")
+    sheet.add_row ["Rt", "AM", "PM", "Account Name", "Address", "City", "State", "Salutation", "First Name", "Last Name",
+                   "Office Phone", "Grade/Work Day", "Student First Name", "Student Last Name", "Cell", "Earliest", "Latest",
+                   "Ideal"], :style => small_bold, :height => 45
+    @route_export.route_stops.each do |route_stop|
+      sheet.add_row [@route_export.name, route_stop.stop_order, " ", route_stop.placement.contact.organization.name,
+                     route_stop.placement.contact.organization.billing_address, route_stop.placement.contact.organization.city,
+                     route_stop.placement.contact.organization.state, route_stop.placement.contact.salutation,
+                     route_stop.placement.contact.first_name, route_stop.placement.contact.last_name,
+                     route_stop.placement.contact.office_phone,
+                     route_stop.placement.student_gradelevel.to_s + "th/" + route_stop.placement.work_day,
+                     route_stop.placement.student.first_name, route_stop.placement.student.last_name,
+                     route_stop.placement.student.mobile_phone, route_stop.placement.earliest_start,
+                     route_stop.placement.latest_start, route_stop.placement.ideal_start], :style => normal_cell, :height => 45
+    end
+    sheet.add_row ["Driver Notes"], :style => driver_notes, :height => 44
+    sheet.add_row ["How was the behavior of the students on the van today"], :style => behavior, :height => 44
+    sheet.add_row [nil]
+    sheet.add_row [nil, nil, nil, "1", nil, "2", nil, nil, nil, nil, "3"], :style => number, :height => 45
+    sheet.add_row [nil, nil, nil, "Poor", nil, "Fair", nil, nil, nil, nil, "Excellent"], :style => rating, :height => 28
+    sheet.add_row [nil]
+    sheet.add_row ["If there were any student issues please explain below"], :style => behavior, :height => 44
+
+    sheet.column_widths 6.33, 3.67, 3.67, 28.5, 22.67, 14.67, 4.67, 4.67, 17.67, 17.67, 17.5, 12.83, 14.5, 15.17, 16.5, 6.33, 6.33, 6.33
   end
 end

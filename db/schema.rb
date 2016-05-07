@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20160501205901) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "last_name"
+    t.string   "salutation"
   end
 
   add_index "contacts", ["organization_id"], name: "index_contacts_on_organization_id", using: :btree
