@@ -78,14 +78,13 @@ respond_to :html, :json
   end
 
   def export
-    #@van_route = VanRoute.find(params[:id])
     @route_export = VanRoute.joins(:driver, :van, route_stops: [{placement: :student}, {placement: :contact}] )
                         .includes(:driver, :van, route_stops: [{placement: :student}, {placement: :contact}])
                         .where("van_routes.id = ?", params[:id]).first
     respond_to do |format|
       format.csv { send_data @route_export.to_csv }
       #format.xls { send_data @route_export.to_csv(col_sep: "\t") }
-      format.xlsx
+      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename=' + @route_export.name + '.xlsx'}
     end
   end
 

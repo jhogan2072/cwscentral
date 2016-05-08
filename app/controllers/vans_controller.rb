@@ -62,6 +62,14 @@ class VansController < ApplicationController
     end
   end
 
+  def export
+    @vans = Van.all
+    respond_to do |format|
+      format.csv { send_data @vans.to_csv }
+      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="all_vans.xlsx"'}
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_van

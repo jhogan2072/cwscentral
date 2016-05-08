@@ -65,5 +65,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :vans, except: [:show]
+  resources :vans, except: [:show] do
+    collection do
+      get :export, defaults: { :format => :xlsx }
+    end
+  end
 end

@@ -5,7 +5,7 @@
     <div class="col-md-12 main">
       <%= render "shared/alert_msg" %>
       <h2 class="sub-header">Vans
-        <button class="btn-file btn btn-primary" name="export">Export</button>
+        <%= link_to "Export", export_vans_path, class: "btn btn-primary pull-right", target: "_self" %>
       </h2>
       <div class="table-responsive" ng-style="ctrl.truncateStyle">
         <table class="table table-striped">

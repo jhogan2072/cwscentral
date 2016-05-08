@@ -1,0 +1,10 @@
+wb = xlsx_package.workbook
+wb.styles do |style|
+  title_cell = style.add_style(b: true)
+  wb.add_worksheet(name: "Vans") do |sheet|
+    sheet.add_row ["Name", "Plate Number", "VIN", "Make", "Model Year", "Last Oil Change", "Capacity"], :style => title_cell
+    @vans.each do |van|
+      sheet.add_row [van.name, van.plate_number, van.vin, van.make, van.model_year, van.last_oil_change, van.capacity]
+    end
+  end
+end
