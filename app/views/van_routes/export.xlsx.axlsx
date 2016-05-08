@@ -1,20 +1,32 @@
 wb = xlsx_package.workbook
 wb.styles do |s|
   s.fonts.first.name = 'Calibri'
+  big_bold = s.add_style :b => true, :sz => 24, :alignment => {:horizontal => :left}
   big_bold_date = s.add_style :b => true, :sz => 24, :format_code => 'dddd mmmm d, yyyy', :alignment => {:horizontal => :left}
   small_bold = s.add_style :b => true, :sz => 14, :border => { :style => :thin, :color => "00" }
   normal_cell = s.add_style :sz => 14, :border => { :style => :thin, :color => "00" }
-  driver_notes = s.add_style :b => false, :sz => 48, :alignment => {:vertical => :center}
-  behavior = s.add_style :b => false, :sz => 28
+  driver_notes = s.add_style :b => false, :sz => 48, :alignment => {:vertical => :center}, :border => { :style => :thin, :color => "00", :edges => [:left]}
+  behavior_spanish = s.add_style :b => false, :sz => 24, :border => { :style => :thin, :color => "00", :edges => [:left]}
+  behavior = s.add_style :b => false, :sz => 28, :border => { :style => :thin, :color => "00", :edges => [:left]}
   number = s.add_style :sz => 36, :alignment => {:horizontal => :center}
   rating = s.add_style :sz => 22, :alignment => {:horizontal => :center}
+  rating_right = s.add_style :sz => 22, :alignment => {:horizontal => :center}, :border => { :style => :thin, :color => "00", :edges => [:right]}
+  underline = s.add_style :border => { :style => :thin, :color => "00", :edges => [:bottom]}
+  underline_with_left = s.add_style :border => { :style => :thin, :color => "00", :edges => [:left, :bottom]}
+  underline_with_right = s.add_style :border => { :style => :thin, :color => "00", :edges => [:right, :bottom]}
+  just_left_border = s.add_style :border => { :style => :thin, :color => "00", :edges => [:left]}
+  just_right_border = s.add_style :border => { :style => :thin, :color => "00", :edges => [:right]}
+  st_fb_st = s.add_style :sz => 22, :b => true, :border => {:style => :thin, :color => "00", :edges => [:left, :top, :bottom]}
+  st_fb_md = s.add_style :border => {:style => :thin, :color => "00", :edges => [:top, :bottom]}
+  st_fb_end = s.add_style :border => {:style => :thin, :color => "00", :edges => [:top, :bottom, :right]}
 
   wb.add_worksheet(name: "Route Sheet") do |sheet|
-    sheet.add_row [nil, @route_export.route_date], :style => [nil, big_bold_date]
+    sheet.add_row [nil, @route_export.route_date, nil, nil, nil, "Driver: " + @route_export.driver.name, nil, nil, nil, "Van: " + @route_export.van.name],
+                  :style => [nil, big_bold_date, nil, nil, nil, big_bold, nil, nil, nil, big_bold]
     sheet.merge_cells("B1:E1")
     sheet.add_row ["Rt", "AM", "PM", "Account Name", "Address", "City", "State", "Salutation", "First Name", "Last Name",
                    "Office Phone", "Grade/Work Day", "Student First Name", "Student Last Name", "Cell", "Earliest", "Latest",
-                   "Ideal"], :style => small_bold, :height => 45
+                   "Ideal", "AM", "PM", "Transportation Notes"], :style => small_bold, :height => 45
     @route_export.route_stops.each do |route_stop|
       sheet.add_row [@route_export.name, route_stop.stop_order, " ", route_stop.placement.contact.organization.name,
                      route_stop.placement.contact.organization.billing_address, route_stop.placement.contact.organization.city,
@@ -24,16 +36,45 @@ wb.styles do |s|
                      route_stop.placement.student_gradelevel.to_s + "th/" + route_stop.placement.work_day,
                      route_stop.placement.student.first_name, route_stop.placement.student.last_name,
                      route_stop.placement.student.mobile_phone, route_stop.placement.earliest_start,
-                     route_stop.placement.latest_start, route_stop.placement.ideal_start], :style => normal_cell, :height => 45
+                     route_stop.placement.latest_start, route_stop.placement.ideal_start, nil, nil, nil], :style => normal_cell, :height => 45
     end
-    sheet.add_row ["Driver Notes"], :style => driver_notes, :height => 44
-    sheet.add_row ["How was the behavior of the students on the van today"], :style => behavior, :height => 44
-    sheet.add_row [nil]
-    sheet.add_row [nil, nil, nil, "1", nil, "2", nil, nil, nil, nil, "3"], :style => number, :height => 45
-    sheet.add_row [nil, nil, nil, "Poor", nil, "Fair", nil, nil, nil, nil, "Excellent"], :style => rating, :height => 28
-    sheet.add_row [nil]
-    sheet.add_row ["If there were any student issues please explain below"], :style => behavior, :height => 44
+    sheet.add_row ["Driver Notes:", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                  :style => [driver_notes, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, just_right_border], :height => 44
+    sheet.add_row ["How was the behavior of the students on the van today", nil, nil, nil, nil, nil, nil, nil, nil, nil,
+                   nil, "Como fué el comportamiento de los estudiantes en la van hoy?", nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                  :style => [behavior, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, behavior, nil, nil, nil, nil, nil, nil, nil, nil, just_right_border], :height => 44
+    sheet.add_row [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                  :style => [just_left_border, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, just_left_border, nil, nil, nil, nil, nil, nil, nil, nil, just_right_border], :height => 45
+    sheet.add_row [nil, nil, nil, "1", nil, "2", nil, nil, nil, "3", nil, nil, "1", nil, nil, "2",nil, nil, nil, "3", nil],
+                  :style => [just_left_border, nil, nil, number,  nil, number, nil, nil, nil, number, nil, just_left_border, number,
+                             nil, nil, number,nil, nil, nil, number, just_right_border], :height => 45
+    sheet.add_row [nil, nil, nil, "Poor", nil, "Fair", nil, nil, nil, "Excellent", nil, nil, "Pobre", nil, nil, "Justo",
+                   nil, nil, nil, "Excelente", nil],
+                  :style => [just_left_border, nil, nil, rating, nil, rating, nil, nil, nil, rating, nil, just_left_border, rating,
+                             nil, nil, rating, nil, nil, nil, rating, just_right_border], :height => 28
+    sheet.add_row [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                  :style => [just_left_border, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, just_left_border, nil, nil, nil, nil, nil, nil, nil, nil, just_right_border], :height => 27
+    sheet.add_row ["If there were any student issues please explain below.", nil, nil, nil, nil, nil, nil, nil, nil, nil,
+                   nil, "Si hubo algun tipo de incidente con los estudiantes por favor explique abajo.", nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                  :style => [behavior, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, behavior_spanish, nil, nil, nil, nil, nil, nil, nil, nil, just_right_border], :height => 44
+    sheet.add_row [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                  :style => [underline_with_left, underline, underline, underline, underline, underline, underline, underline, underline, underline, underline,
+                             underline_with_left, underline, underline, underline, underline, underline, underline, underline, underline, underline_with_right], :height => 45
+    sheet.add_row [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                  :style => [underline_with_left, underline, underline, underline, underline, underline, underline, underline, underline, underline, underline,
+                             underline_with_left, underline, underline, underline, underline, underline, underline, underline, underline, underline_with_right], :height => 45
+    sheet.add_row [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                  :style => [underline_with_left, underline, underline, underline, underline, underline, underline, underline, underline, underline, underline,
+                             underline_with_left, underline, underline, underline, underline, underline, underline, underline, underline, underline_with_right], :height => 45
+    sheet.add_row [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                  :style => [underline_with_left, underline, underline, underline, underline, underline, underline, underline, underline, underline, underline,
+                             underline_with_left, underline, underline, underline, underline, underline, underline, underline, underline, underline_with_right], :height => 45
+    sheet.add_row ["CWSP Student: What time did the van return to NDCR?", nil, nil, nil, nil, nil, nil, nil, nil, nil,
+                   nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                  :style => [st_fb_st, st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md,
+                             st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md,
+                             st_fb_md, st_fb_md, st_fb_end], :height => 29
 
-    sheet.column_widths 6.33, 3.67, 3.67, 28.5, 22.67, 14.67, 4.67, 4.67, 17.67, 17.67, 17.5, 12.83, 14.5, 15.17, 16.5, 6.33, 6.33, 6.33
+    sheet.column_widths 6.33, 3.67, 3.67, 28.5, 22.67, 14.67, 4.67, 4.67, 17.67, 17.67, 17.5, 12.83, 14.5, 15.17, 16.5, 6.33, 6.33, 6.33, 10.17, 10.17, 35.67
   end
 end
