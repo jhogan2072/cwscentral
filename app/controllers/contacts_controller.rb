@@ -62,6 +62,14 @@ class ContactsController < ApplicationController
     end
   end
 
+  def export
+    @contacts = Contact.all.order("organization_id")
+    respond_to do |format|
+      format.csv { send_data @contacts.to_csv }
+      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="all_contacts.xlsx"'}
+    end
+  end
+
   def placements
     #retrieve a students work history
     @placements = Placement.search(filtering_id=params[:id], query_type=2)

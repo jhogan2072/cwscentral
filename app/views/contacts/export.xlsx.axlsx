@@ -1,0 +1,17 @@
+wb = xlsx_package.workbook
+wb.styles do |style|
+  title_cell = style.add_style(b: true)
+  wb.add_worksheet(name: "Contacts") do |sheet|
+    sheet.add_row ["Organization Name", "Salutation", "First Name", "Last Name", "Title", "Address", "City", "State", "Zip Code",
+                   "Email", "Mobile Phone", "Office Phone", "Fax"], :style => title_cell
+    @contacts.each do |contact|
+      sheet.add_row [contact.organization.name, contact.salutation, contact.first_name, contact.last_name, contact.title,
+                     contact.address.nil? ? contact.organization.billing_address: contact.address,
+                     contact.city.nil? ? contact.organization.city : contact.city,
+                     contact.state.nil? ? contact.organization.state : contact.state,
+                     contact.zip.nil? ? contact.organization.zip : contact.zip,
+                     contact.email, contact.mobile, contact.office_phone, contact.fax],
+                    :types => [nil, nil, nil, nil, nil, nil, nil, nil, :string, nil, nil, nil, nil]
+    end
+  end
+end

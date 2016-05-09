@@ -62,6 +62,14 @@ class OrganizationsController < ApplicationController
     end
   end
 
+  def export
+    @organizations = Organization.all
+    respond_to do |format|
+      format.csv { send_data @organizations.to_csv }
+      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="all_orgs.xlsx"'}
+    end
+  end
+
   def incidents
     #retrieve an organizations student incident history
     @incidents = Incident.search(filtering_id=params[:id], query_type=1)

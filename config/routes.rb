@@ -9,6 +9,9 @@ Rails.application.routes.draw do
       get :incidents, :defaults => { :format => :json }
       get :placements, defaults: {format: :json}
     end
+    collection do
+      get :export, defaults: { :format => :xlsx }
+    end
   end
 
   resources :drivers, except: [:show]
@@ -33,6 +36,9 @@ Rails.application.routes.draw do
     member do
       get :incidents, :defaults => { :format => :json }
       get :placements, :defaults => { :format => :json }
+    end
+    collection do
+      get :export, defaults: { :format => :xlsx }
     end
   end
 

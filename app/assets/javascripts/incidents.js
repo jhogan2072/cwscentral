@@ -14,6 +14,11 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
     vm.organizations = [];
     vm.ORG_TYPE = 1;
     vm.page = 'students';
+    vm.searchInput = '';
+    vm.selectedRow = null;
+    vm.selectedContact = -1;
+    vm.selectedOrg = -1;
+    vm.selectedStudent = -1;
     vm.setClickedContact = setClickedContact;
     vm.setClickedOrg = setClickedOrg;
     vm.setClickedStudent = setClickedStudent;
