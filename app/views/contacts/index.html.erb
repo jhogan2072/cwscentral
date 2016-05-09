@@ -24,7 +24,7 @@
 
           <tbody>
             <tr ng-repeat="contact in ctrl.contacts | filter:ctrl.searchInput">
-              <td>{{ contact.name }}</td>
+              <td><a target="_self" ng-href="/placements/contacts?sid={{contact.id}}">{{ contact.name }}</a></td>
               <td>{{ contact.organization_name }}</td>
               <td>{{ contact.title }}</td>
               <td>{{ contact.email }}</td>

@@ -1,5 +1,5 @@
 angular.module('app').controller("PlacementController", function($http, $timeout, $location, ModalFormService,
-                                                                 ModalDetailsService, PlacementService){
+                                                                 ModalDetailsService, PlacementService, $q){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
@@ -56,7 +56,11 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     } else if (absUrl.indexOf('/placements/organizations') > -1) {
         getOrganizations();
     } else if (absUrl.indexOf('/placements/contacts') > -1) {
-        getContacts();
+        if (window.location.search.substring(1)) {
+            getContacts(window.location.search.substring(1).split('=')[1]);
+        } else {
+            getContacts();
+        }
     }
     ////////////
 
@@ -128,8 +132,22 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         $timeout(function(){vm.showResultAlert = false}, 5000);
     }
 
-    function getContacts () {
+    function getContacts (contactId) {
         vm.contacts = PlacementService.contacts();
+        if (contactId) {
+            $q.all([
+                vm.contacts.$promise
+            ]).then(function() {
+                //CODE AFTER RESOURCES ARE LOADED
+                var i = 0;
+                angular.forEach(vm.contacts, function(contact) {
+                    if (window.location.search.substring(1).split('=')[1] == contact.id) {
+                        setClickedContact(i, contact.name, contact.id);
+                    }
+                    i++;
+                });
+            });
+        }
     }
 
     function getGradeData(){
