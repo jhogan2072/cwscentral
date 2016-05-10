@@ -7,9 +7,6 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.contactName = "";
     vm.contacts = [];
     vm.CONTACT_TYPE = 2;
-    vm.createContact = createContact;
-    vm.createOrganization = createOrganization;
-    vm.createStudent = createStudent;
     vm.deletePlacement = deletePlacement;
     vm.displayAlert = displayAlert;
     vm.getStudentPlacements = getStudentPlacements;
@@ -34,11 +31,8 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.setClickedContact = setClickedContact;
     vm.setClickedOrg = setClickedOrg;
     vm.setClickedStudent = setClickedStudent;
-    vm.showContactModal = showContactModal;
     vm.showGradesModal = showGradesModal;
     vm.showOrganizationDetails = showOrganizationDetails;
-    vm.showOrgModal = showOrgModal;
-    vm.showStudentModal = showStudentModal;
     vm.showResultAlert = false;
     vm.studentPlacements = [];
     vm.studentCount = 0;
@@ -66,52 +60,6 @@ angular.module('app').controller("PlacementController", function($http, $timeout
 
     function alertShowHide(isShown) {
         vm[isShown] = !vm[isShown];
-    }
-
-    function createContact(contact_name) {
-        return true;
-    }
-
-    function createOrganization(container_name) {
-        safe_name = container_name.replace(/['. ]/g, "_");
-        var containerURL = '/new_container?account='+vm.account.name+'&container='+safe_name;
-        $http.get(containerURL).success(function(status){
-            //Alert that the container was successfully created
-            vm.displayAlert(true, "The student was successfully created.");
-            vm.selectedRow = null;
-            vm.truncateStyle = {};
-            vm.getOrganizations();
-        }).
-        error(function(data, status, headers, config) {
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
-            if (status == 403) {
-                vm.displayAlert(false,"The student cannot be created.  Does this user have the correct permissions?");
-            } else {
-                vm.displayAlert(false,"There was an unexpected error.  The student was not created.");
-            }
-        });
-    }
-
-    function createStudent(container_name) {
-        safe_name = container_name.replace(/['. ]/g, "_");
-        var containerURL = '/new_container?account='+vm.account.name+'&container='+safe_name;
-        $http.get(containerURL).success(function(status){
-            //Alert that the container was successfully created
-            vm.displayAlert(true, "The student was successfully created.");
-            vm.selectedRow = null;
-            vm.truncateStyle = {};
-            vm.getStudents();
-        }).
-        error(function(data, status, headers, config) {
-            // called asynchronously if an error occurs
-            // or server returns response with an error status.
-            if (status == 403) {
-                vm.displayAlert(false,"The student cannot be created.  Does this user have the correct permissions?");
-            } else {
-                vm.displayAlert(false,"There was an unexpected error.  The student was not created.");
-            }
-        });
     }
 
     function deletePlacement(indexObjToDelete, placementId) {
@@ -250,17 +198,6 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         vm.getStudentPlacements(student_id, vm.STUDENT_TYPE);
     }
 
-    function showContactModal() {
-        var modalOptions    = {
-            closeButtonText: 'Cancel',
-            actionButtonText: 'Create',
-            headerText: 'Create New Contact'
-        };
-        ModalFormService.showModal({}, modalOptions).then(function (result) {
-            vm.createContact(result.name);
-        });
-    }
-
     function showGradesModal(organization_name, placement_id) {
         var grade_data = getGradeData(vm.studentId, placement_id);
         var modalOptions    = {
@@ -290,28 +227,5 @@ angular.module('app').controller("PlacementController", function($http, $timeout
             vm.orgDetails = [];
         });
     }
-
-    function showOrgModal() {
-        var modalOptions    = {
-            closeButtonText: 'Cancel',
-            actionButtonText: 'Create',
-            headerText: 'Create New Organization'
-        };
-        ModalFormService.showModal({}, modalOptions).then(function (result) {
-            vm.createOrganization(result.name);
-        });
-    }
-
-    function showStudentModal() {
-        var modalOptions    = {
-            closeButtonText: 'Cancel',
-            actionButtonText: 'Create',
-            headerText: 'Create New Student'
-        };
-        ModalFormService.showModal({}, modalOptions).then(function (result) {
-            vm.createStudent(result.name);
-        });
-    }
-
 
 });

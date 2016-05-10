@@ -7,7 +7,6 @@
         <li>
           <div style="font-weight: bold; font-size: 12pt; padding-top:5px; padding-bottom:10px; padding-left:20px; background-color: lightgrey">
             Contacts
-            <button type="button" data-ng-click="ctrl.showContactModal()" class="btn btn-sm btn-primary pull-right" style="margin-right: 5px;line-height: 1.2">Add</button>
           </div>
         </li>
         <li ng-repeat="contact in ctrl.contacts | filter:ctrl.searchInput" ng-class="{'active':$index == ctrl.selectedContact}"

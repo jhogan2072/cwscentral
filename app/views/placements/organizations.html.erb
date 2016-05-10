@@ -7,7 +7,6 @@
         <li>
           <div style="font-weight: bold; font-size: 12pt; padding-top:5px; padding-bottom:10px; padding-left:20px; background-color: lightgrey">
             Organizations
-            <button type="button" data-ng-click="ctrl.showOrgModal()" class="btn btn-sm btn-primary pull-right" style="margin-right: 5px;line-height: 1.2">Add</button>
           </div>
         </li>
         <li ng-repeat="org in ctrl.orgs | filter:ctrl.searchInput" ng-class="{'active':$index == ctrl.selectedOrg}"
