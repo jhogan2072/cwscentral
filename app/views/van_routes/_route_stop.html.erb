@@ -1,6 +1,7 @@
 <tr>
   <td class="col-md-1"><%= f.input :stop_order, label: false%></td>
-  <td class="col-md-6"><%= f.association :placement, label_method: :org_contact_student,
-      include_blank: false, value_method: :id, label: false%></td>
+  <td class="col-md-6"><%= f.association :placement, :collection => Placement.current_placements(@van_route.route_date),
+                                         label_method: :org_contact_student,
+                                         include_blank: false, value_method: :id, label: false%></td>
   <td style="text-align: center; vertical-align: middle"><%= f.check_box :_destroy %></td>
 </tr>

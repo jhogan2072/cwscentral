@@ -69,7 +69,7 @@
                 <th class="col-md-1" style="text-align: center; vertical-align: middle">Delete</th>
               </tr>
               <%= f.simple_fields_for :route_stops do |rs_form| %>
-                  <%= render(:partial => "van_routes/route_stop", :locals => { :f => rs_form }) %>
+                  <%= render partial: "van_routes/route_stop", locals: { f: rs_form }  %>
               <% end %>
             </table>
             <p style="display:block">
@@ -94,9 +94,10 @@
       inline: true,
       defaultDate: new Date($('#van_route_route_date').val())
     });
-
-  }).on('dp.change', function(e){
-    $('#van_route_route_date').val(e.date.format('DD-MMM-YYYY'));
+    $(".day").click(function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+    });
   });
 </script>
 </body>

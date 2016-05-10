@@ -33,13 +33,13 @@ respond_to :html, :json
   # GET /van_routes/1/edit
   def edit
     @van_route.route_date = Time.zone.parse(@van_route.route_date.beginning_of_day().to_s)
-    @filtered_stops = RouteStop.filtered_stops
   end
 
   # POST /van_routes
   # POST /van_routes.json
   def create
     @van_route = VanRoute.new(van_route_params)
+    @placements = @van_route.placements
 
     respond_to do |format|
       if @van_route.save

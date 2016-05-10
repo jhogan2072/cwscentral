@@ -1,6 +1,7 @@
 class Placement < ActiveRecord::Base
   belongs_to :student
   belongs_to :contact
+  has_many :route_stops
 
   def paid
       self[:paid] ? "Paid" : "Unpaid"
@@ -72,6 +73,10 @@ class Placement < ActiveRecord::Base
 
   def org_contact_student
     self.organization_name + ' (' + self.contact_name + ')' + ' - ' + self.student_name
+  end
+
+  def self.current_placements(effective_date)
+    where("start_date <= ? and end_date >= ?", effective_date, effective_date)
   end
 
   def self.search(filtering_id=-1,query_type=-1)
