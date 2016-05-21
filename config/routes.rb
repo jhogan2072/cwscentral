@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :incident_categories
   root 'van_routes#index'
 
   devise_for :users

@@ -1,6 +1,7 @@
 class Incident < ActiveRecord::Base
   belongs_to :student
   belongs_to :contact
+  belongs_to :incident_category
 
   def organization_id
     contact.organization_id

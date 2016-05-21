@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160501205901) do
+ActiveRecord::Schema.define(version: 20160521202019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,16 +46,24 @@ ActiveRecord::Schema.define(version: 20160501205901) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "incident_categories", force: :cascade do |t|
+    t.string   "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "incidents", force: :cascade do |t|
     t.datetime "incident_date"
     t.text     "description"
     t.integer  "student_id"
     t.integer  "contact_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "incident_category_id"
   end
 
   add_index "incidents", ["contact_id"], name: "index_incidents_on_contact_id", using: :btree
+  add_index "incidents", ["incident_category_id"], name: "index_incidents_on_incident_category_id", using: :btree
   add_index "incidents", ["student_id"], name: "index_incidents_on_student_id", using: :btree
 
   create_table "organizations", force: :cascade do |t|
@@ -111,19 +119,19 @@ ActiveRecord::Schema.define(version: 20160501205901) do
 
   create_table "users", force: :cascade do |t|
     t.string   "username"
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",   null: false
+    t.string   "encrypted_password",     default: "",   null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,    null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.boolean  "admin"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+    t.boolean  "admin",                  default: true
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -157,6 +165,7 @@ ActiveRecord::Schema.define(version: 20160501205901) do
 
   add_foreign_key "contacts", "organizations"
   add_foreign_key "incidents", "contacts"
+  add_foreign_key "incidents", "incident_categories"
   add_foreign_key "incidents", "students"
   add_foreign_key "placements", "contacts"
   add_foreign_key "placements", "students"
