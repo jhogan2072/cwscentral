@@ -23,13 +23,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :incidents do
+  resources :incidents, except: [:index, :show] do
     collection do
       get :students
       get :organizations
       get :contacts
       get :add
-      get :export
+      get :export, defaults: { :format => :xlsx }
     end
   end
 

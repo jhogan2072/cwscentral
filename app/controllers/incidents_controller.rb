@@ -1,12 +1,6 @@
 class IncidentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_incident, only: [:show, :edit, :update, :destroy]
-
-  # GET /incidents
-  # GET /incidents.json
-  def index
-    @incidents = Incident.all
-  end
+  before_action :set_incident, only: [:edit, :update, :destroy]
 
   def organizations
     @organizations = Organization.all.order('name')
@@ -43,10 +37,6 @@ class IncidentsController < ApplicationController
       format.json { render 'contacts.json.jbuilder': @contacts }
 
     end
-  end
-  # GET /incidents/1
-  # GET /incidents/1.json
-  def show
   end
 
   # GET /incidents/new
@@ -95,6 +85,20 @@ class IncidentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to incidents_url, notice: 'Incident was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def export
+    if params.has_key?(:student_id) && is_integer?(params[:student_id])
+      @incidents = Incident.search(params[:student_id], 0)
+    elsif params.has_key?(:organization_id) && is_integer?(params[:organization_id])
+      @incidents = Incident.search(params[:organization_id], 1)
+    elsif params.has_key?(:contact_id) && is_integer?(params[:contact_id])
+      @incidents = Incident.search(params[:contact_id], 2)
+    end
+
+    respond_to do |format|
+      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="incidents.xlsx"'}
     end
   end
 

@@ -22,7 +22,7 @@
       <h2 class="sub-header">Student Incident History
         <div class="pull-right">
         <a class="btn btn-primary" target="_self" ng-if="ctrl.selectedOrg != -1"
-           href="/incidents/export.xls?student_id={{ctrl.orgs[ctrl.selectedOrg].id}}">Export</a>
+           href="/incidents/export.xlsx?organization_id={{ctrl.organizations[ctrl.selectedOrg].id}}">Export</a>
         </div>
       </h2>
       <div class="jumbotron" ng-if="ctrl.selectedOrg == -1" style="background-color: transparent; text-align: center; padding-top:24px;">

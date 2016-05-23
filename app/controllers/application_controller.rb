@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
   end
 
+  def is_integer?(obj)
+    obj.to_s == obj.to_i.to_s
+  end
+
   protected
 
   # In Rails 4.2 and above
