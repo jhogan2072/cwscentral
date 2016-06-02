@@ -55,7 +55,7 @@ class IncidentsController < ApplicationController
 
     respond_to do |format|
       if @incident.save
-        format.html { redirect_to @incident, notice: 'Incident was successfully created.' }
+        format.html { redirect_to :back, notice: 'Incident was successfully created.' }
         format.json { render :show, status: :created, location: @incident }
       else
         format.html { render :new }
@@ -69,7 +69,7 @@ class IncidentsController < ApplicationController
   def update
     respond_to do |format|
       if @incident.update(incident_params)
-        format.html { redirect_to @incident, notice: 'Incident was successfully updated.' }
+        format.html { redirect_to :back, notice: 'Incident was successfully updated.' }
         format.json { render :show, status: :ok, location: @incident }
       else
         format.html { render :edit }
@@ -110,6 +110,6 @@ class IncidentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def incident_params
-      params.require(:incident).permit(:incident_date, :description, :student_id, :contact_id)
+      params.require(:incident).permit(:incident_date, :incident_category_id, :description, :student_id, :contact_id)
     end
 end

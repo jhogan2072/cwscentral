@@ -1,7 +1,10 @@
 <tr>
   <td class="col-md-1"><%= f.input :stop_order, label: false%></td>
   <td class="col-md-6"><%= f.input :placement_description,
+                                   :input_html => { :placeholder => "Start typing the organization name to select a placement" },
                                    :url => autocomplete_placement_org_contact_student_van_routes_path(:route_date=>@van_route.route_date),
-                                   :as => :autocomplete, :id_element => '#' + f.object_id.to_s, label: false %><%= f.hidden_field :placement_id, :id => f.object_id %></td>
+                                   :as => :autocomplete, :id_element => '#' + f.object_id.to_s, label: false %>
+    <%= f.hidden_field :placement_id, :id => f.object_id %>
+  </td>
   <td style="text-align: center; vertical-align: middle"><%= f.check_box :_destroy, "ng-model" => "ctrl.chk[" + f.object_id.to_s + "]", "ng-change" => "ctrl.incrementDeletes(" + f.object_id.to_s + ")"  %></td>
 </tr>

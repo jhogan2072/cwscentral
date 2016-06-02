@@ -11,7 +11,7 @@
     <% if query_type != 2 %>
       <th>Contact Name</th>
     <% end %>
-    <th>Description</th>
+    <th>Category</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
@@ -29,7 +29,7 @@
     <% if query_type != 2 %>
     <td>{{ incident.contact_name }}</td>
     <% end %>
-    <td>{{ incident.description }}</td>
+    <td>{{ incident.category }}</td>
     <td><a href="/incidents/{{incident.id}}/edit" target="_self"
            ng-class="{'white-link': ctrl.selectedRow != null}">Edit</a></td>
     <td ng-click="$event.stopPropagation();"><img ng-src="<%= image_path("trash.png") %>" width="18" height="18"

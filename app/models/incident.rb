@@ -19,9 +19,13 @@ class Incident < ActiveRecord::Base
     contact.name
   end
 
+  def category
+    incident_category.category
+  end
+
   def self.search(filtering_id=-1,query_type=-1)
     if query_type == 0
-      joins(contact: :organization).includes(contact: :organization).where("student_id = ?", filtering_id)
+      joins(contact: :organization).includes(contact: :organization).joins(:incident_category).includes(:incident_category).where("student_id = ?", filtering_id)
     elsif query_type == 1
       joins(contact: :organization).includes(contact: :organization).where("contacts.organization_id = ?", filtering_id)
     elsif query_type == 2
