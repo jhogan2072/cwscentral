@@ -1,7 +1,21 @@
 class VanRoutesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_van_route, only: [:show, :edit, :update, :destroy]
-respond_to :html, :json
+  respond_to :html, :json
+  autocomplete :placement, :org_contact_student
+
+  def get_autocomplete_items(parameters)
+    term = params[:term]
+    #placements = Placement.where("start_date <= ? and end_date >= ?", params[:route_date], params[:route_date], params[:term])
+    placements = Placement.joins(contact: :organization).includes(contact: :organization).includes(:student)
+                     .where("placements.start_date <= ? and placements.end_date >= ? and organizations.name like ?",
+                            params[:route_date], params[:route_date], "#{term}%")
+    placements.map { |placement| {:id => placement.id, :label => placement.org_contact_student, :value => placement.org_contact_student} }
+  end
+
+  def json_for_autocomplete(items, method, extra_data=[])
+    items
+  end
 
   # GET /van_routes
   # GET /van_routes.json
@@ -110,6 +124,6 @@ end
 
 # Never trust parameters from the scary internet, only allow the white list through.
 def van_route_params
-  params.require(:van_route).permit(:id, :name, :route_date, :am_pm, :van_id, :driver_id, route_stops_attributes: [:id, :stop_order, :placement_id])
+  params.require(:van_route).permit(:id, :name, :route_date, :am_pm, :van_id, :driver_id, route_stops_attributes: [:id, :stop_order, :placement_id, :_destroy])
 end
 end

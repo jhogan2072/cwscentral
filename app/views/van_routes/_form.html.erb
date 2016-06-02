@@ -74,7 +74,7 @@
             </table>
             <p style="display:block">
             <input type="button" value="Add New Stop" class="btn btn-primary" onclick="<%=  child_link_javascript(f, :route_stops, '.detail_route_rows')%>" />
-            <%= f.submit 'Save', class: "btn btn-primary" %>&nbsp;
+            <%= f.submit '{{ctrl.deletesChecked > 0 ? "Delete" : "Save"}}', class: "btn btn-primary" %>&nbsp;
             </p>
           </fieldset>
           </div>

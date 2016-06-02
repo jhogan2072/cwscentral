@@ -157,6 +157,8 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.2)
       loofah (~> 2.0)
+    rails-jquery-autocomplete (1.0.3)
+      rails (>= 3.2)
     rails-jquery-ui-sortable (1.11.4)
     rails_12factor (0.0.3)
       rails_serve_static_assets
@@ -238,6 +240,7 @@ DEPENDENCIES
   pg (= 0.18.4)
   rails (= 4.2.5)
   rails-angular-ui-sortable (= 0.13.4)
+  rails-jquery-autocomplete (= 1.0.3)
   rails_12factor (= 0.0.3)
   sass-rails (= 5.0.4)
   sdoc (= 0.4.1)

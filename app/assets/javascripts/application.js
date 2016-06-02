@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require jquery-ui/mouse
 //= require jquery-ui/sortable
+//= require jquery-ui/autocomplete
+//= require autocomplete-rails
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require angular

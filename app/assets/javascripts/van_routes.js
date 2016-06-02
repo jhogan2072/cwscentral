@@ -6,14 +6,17 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.copyRoutes = copyRoutes;
     vm.dailyRoutes = {};
     vm.deleteRoute = deleteRoute;
+    vm.deletesChecked = 0;
     vm.displayAlert = displayAlert;
+    vm.getRoutes = getRoutes;
+    vm.incrementDeletes = incrementDeletes;
     vm.isSuccess = true;
     vm.page = 'routes';
     vm.removeElement = removeElement;
+    vm.routeDate = "";
     vm.searchInput = '';
     vm.showResultAlert = false;
-    vm.routeDate = "";
-    vm.getRoutes = getRoutes;
+    vm.saveDelete = 'Save';
 
     Number.prototype.mod = function(n) {
         return ((this%n)+n)%n;
@@ -78,6 +81,13 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
             vm.copyFromDate = date_string;
             $('#dt1').val(date_string).change();
         }
+    }
+
+    function incrementDeletes(object_id) {
+        if (vm.chk[object_id])
+            vm.deletesChecked += 1;
+        else
+            vm.deletesChecked -= 1;
     }
 
     function removeElement(array, index){

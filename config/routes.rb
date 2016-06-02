@@ -68,6 +68,7 @@ Rails.application.routes.draw do
       get :export, defaults: { :format => :xlsx }
     end
     collection do
+      get :autocomplete_placement_org_contact_student
       get :copy
     end
   end

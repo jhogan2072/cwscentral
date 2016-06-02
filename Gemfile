@@ -36,6 +36,7 @@ gem 'simple_form', '3.2.1'
 gem 'business_time', '0.7.4'
 gem 'chosen-rails', '1.4.3'
 gem 'axlsx_rails', '0.4.0'
+gem 'rails-jquery-autocomplete', '1.0.3'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '8.2.1'

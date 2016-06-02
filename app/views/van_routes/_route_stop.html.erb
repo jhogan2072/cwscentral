@@ -1,7 +1,7 @@
 <tr>
   <td class="col-md-1"><%= f.input :stop_order, label: false%></td>
-  <td class="col-md-6"><%= f.association :placement, :collection => Placement.current_placements(@van_route.route_date),
-                                         label_method: :org_contact_student,
-                                         include_blank: false, value_method: :id, label: false%></td>
-  <td style="text-align: center; vertical-align: middle"><%= f.check_box :_destroy %></td>
+  <td class="col-md-6"><%= f.input :placement_description,
+                                   :url => autocomplete_placement_org_contact_student_van_routes_path(:route_date=>@van_route.route_date),
+                                   :as => :autocomplete, :id_element => '#' + f.object_id.to_s, label: false %><%= f.hidden_field :placement_id, :id => f.object_id %></td>
+  <td style="text-align: center; vertical-align: middle"><%= f.check_box :_destroy, "ng-model" => "ctrl.chk[" + f.object_id.to_s + "]", "ng-change" => "ctrl.incrementDeletes(" + f.object_id.to_s + ")"  %></td>
 </tr>
