@@ -3,7 +3,7 @@
     <div class="navbar-header">
       <ul class="nav navbar-left navbar-nav">
         <li><%= image_tag("logo2.png", size: "75x50") %></li>
-        <li><span style="font-size:x-large">NDCR Corporate Work Study</span></li>
+        <li><span style="font-size:x-large" class="<%= 'extra-padding' if not current_user.admin? %>">NDCR Work Study</span></li>
       </ul>
       <ul class="nav navbar-nav">
         <li ng-class="{'active':ctrl.page == 'placements'}">
@@ -42,6 +42,16 @@
             <li><%= link_to("Drivers", drivers_url, :target => "_self") %></li>
           </ul>
         </li>
+        <% if current_user.admin? %>
+        <li ng-class="{'active':ctrl.page == 'admin'}">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to("Users", van_routes_url, :target => "_self") %></li>
+            <li><%= link_to("Incident Categories", incident_categories_url, :target => "_self") %></li>
+            <li><%= link_to("Drivers", drivers_url, :target => "_self") %></li>
+          </ul>
+        </li>
+        <% end %>
       </ul>
       <div class="clearfix"></div>
     </div>

@@ -114,7 +114,15 @@ a:link.white-link, a:visited.white-link {
 .nav > li > span {
     position: relative;
     display: block;
-    padding: 15px;
+    padding: 15px 60px 15px 15px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: white;
+}
+.nav > li > span.extra-padding  {
+    position: relative;
+    display: block;
+    padding: 15px 120px 15px 15px;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: white;
