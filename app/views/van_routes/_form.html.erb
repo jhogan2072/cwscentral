@@ -30,16 +30,14 @@
             <li>
               <div class="col-md-10" style="margin-left:15px">
                 <fieldset class="well" style="padding-top: 5px; padding-bottom: 5px"><legend class="the-legend">Van</legend>
-                  <%= f.collection_radio_buttons :van_id, Van.all, :id, :name, item_wrapper_class: :radio,
-                                                 item_wrapper_tag: :div %>
+                  <%= f.input :van_id,:collection => Van.all,:label => false,:value_method => :id ,:include_blank => false %>
                 </fieldset>
               </div>
             </li>
             <li>
               <div class="col-md-10" style="margin-left:15px">
                 <fieldset class="well" style="padding-top: 5px; padding-bottom: 5px"><legend class="the-legend">Driver</legend>
-                  <%= f.collection_radio_buttons :driver_id, Driver.all, :id, :name, item_wrapper_class: :radio,
-                                                 item_wrapper_tag: :div %>
+                  <%= f.input :driver_id,:collection => Driver.all,:label => false,:value_method => :id ,:include_blank => false %>
                 </fieldset>
               </div>
             </li>
@@ -94,7 +92,7 @@
       inline: true,
       defaultDate: new Date($('#van_route_route_date').val())
     });
-    $(".day").click(function(event) {
+    $(".day, .prev, .next, .picker-switch").click(function(event) {
       event.preventDefault();
       event.stopPropagation();
     });
