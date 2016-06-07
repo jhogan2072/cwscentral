@@ -1,15 +1,10 @@
 class IncidentCategoriesController < ApplicationController
-  before_action :set_incident_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_incident_category, only: [:edit, :update, :destroy]
 
   # GET /incident_categories
   # GET /incident_categories.json
   def index
     @incident_categories = IncidentCategory.all
-  end
-
-  # GET /incident_categories/1
-  # GET /incident_categories/1.json
-  def show
   end
 
   # GET /incident_categories/new
@@ -28,11 +23,9 @@ class IncidentCategoriesController < ApplicationController
 
     respond_to do |format|
       if @incident_category.save
-        format.html { redirect_to @incident_category, notice: 'Incident category was successfully created.' }
-        format.json { render :show, status: :created, location: @incident_category }
+        format.html { redirect_to incident_categories_url, notice: 'Incident category was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @incident_category.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -42,11 +35,9 @@ class IncidentCategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @incident_category.update(incident_category_params)
-        format.html { redirect_to @incident_category, notice: 'Incident category was successfully updated.' }
-        format.json { render :show, status: :ok, location: @incident_category }
+        format.html { redirect_to incident_categories_url, notice: 'Incident category was successfully updated.' }
       else
         format.html { render :edit }
-        format.json { render json: @incident_category.errors, status: :unprocessable_entity }
       end
     end
   end

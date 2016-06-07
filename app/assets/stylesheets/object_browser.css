@@ -262,3 +262,23 @@ td > input[type=checkbox] {
 .delete_object:hover {
     cursor: pointer;
 }
+
+th > a {
+    color: #333333;
+}
+
+th > a:link {
+    color: #333333;
+}
+
+th > a:visited {
+    color: #333333;
+}
+
+th > a:hover {
+    color: #333333;
+}
+
+th > a:active {
+    color: #333333;
+}

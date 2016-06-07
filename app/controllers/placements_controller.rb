@@ -1,6 +1,6 @@
 class PlacementsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_placement, only: [:show, :edit, :update, :destroy]
+  before_action :set_placement, only: [:edit, :update, :destroy]
 
   # GET /placements
   # GET /placements.json
@@ -36,11 +36,6 @@ class PlacementsController < ApplicationController
       format.json { render 'contacts.json.jbuilder': @contacts }
 
     end
-  end
-
-  # GET /placements/1
-  # GET /placements/1.json
-  def show
   end
 
   # GET /placements/new

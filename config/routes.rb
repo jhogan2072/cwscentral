@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
 
-  resources :incident_categories
   root 'van_routes#index'
 
   devise_for :users
+  scope "/admin" do
+    resources :users, except: [:show]
+  end
 
   resources :contacts do
     member do
@@ -22,6 +24,8 @@ Rails.application.routes.draw do
       get :student
     end
   end
+
+  resources :incident_categories, except: [:show]
 
   resources :incidents, except: [:index, :show] do
     collection do

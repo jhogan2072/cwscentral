@@ -6,11 +6,12 @@ wb.styles do |style|
                    "Email", "Mobile Phone", "Office Phone", "Fax"], :style => title_cell
     @contacts.each do |contact|
       sheet.add_row [contact.organization.name, contact.salutation, contact.first_name, contact.last_name, contact.title,
+                     contact.role, contact.date_started, contact.date_departed,
                      contact.address.nil? ? contact.organization.billing_address: contact.address,
                      contact.city.nil? ? contact.organization.city : contact.city,
                      contact.state.nil? ? contact.organization.state : contact.state,
                      contact.zip.nil? ? contact.organization.zip : contact.zip,
-                     contact.email, contact.mobile, contact.office_phone, contact.fax],
+                     contact.email, contact.mobile, contact.office_phone, contact.fax, contact.notes],
                     :types => [nil, nil, nil, nil, nil, nil, nil, nil, :string, nil, nil, nil, nil]
     end
   end

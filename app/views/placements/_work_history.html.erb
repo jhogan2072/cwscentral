@@ -1,26 +1,96 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th>Start Date</th>
-    <th>End Date</th>
+    <th>
+      <a href="#" ng-click="ctrl.sortType = 'start_date'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+        Start Date
+      <span ng-show="ctrl.sortType == 'start_date' && !ctrl.sortReverse" style="text-decoration: none">
+        <%= image_tag("sort_down.png", size: "14x14") %>
+      </span>
+      <span ng-show="ctrl.sortType == 'start_date' && ctrl.sortReverse">
+        <%= image_tag("sort_up.png", size: "14x14") %>
+      </span>
+      </a>
+    </th>
+    <th>
+      <a href="#" ng-click="ctrl.sortType = 'end_date'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+        End Date
+      <span ng-show="ctrl.sortType == 'end_date' && !ctrl.sortReverse" style="text-decoration: none">
+        <%= image_tag("sort_down.png", size: "14x14") %>
+      </span>
+      <span ng-show="ctrl.sortType == 'end_date' && ctrl.sortReverse">
+        <%= image_tag("sort_up.png", size: "14x14") %>
+      </span>
+      </a>
+    </th>
     <% if query_type == 0 or query_type == 2 %>
-    <th>Organization Name</th>
+    <th>
+      <a href="#" ng-click="ctrl.sortType = 'organization_name'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+      Organization Name
+      <span ng-show="ctrl.sortType == 'organization_name' && !ctrl.sortReverse" style="text-decoration: none">
+        <%= image_tag("sort_down.png", size: "14x14") %>
+      </span>
+      <span ng-show="ctrl.sortType == 'organization_name' && ctrl.sortReverse">
+        <%= image_tag("sort_up.png", size: "14x14") %>
+      </span>
+      </a>
+    </th>
     <% end %>
     <% if query_type == 1 or query_type == 2 %>
-      <th>Student Name</th>
+    <th>
+      <a href="#" ng-click="ctrl.sortType = 'student_name'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+          Student Name
+        <span ng-show="ctrl.sortType == 'student_name' && !ctrl.sortReverse" style="text-decoration: none">
+          <%= image_tag("sort_down.png", size: "14x14") %>
+        </span>
+        <span ng-show="ctrl.sortType == 'student_name' && ctrl.sortReverse">
+          <%= image_tag("sort_up.png", size: "14x14") %>
+        </span>
+      </a>
+    </th>
     <% end %>
     <% if (query_type != 2) %>
-        <th>Contact Name</th>
+    <th>
+      <a href="#" ng-click="ctrl.sortType = 'contact_name'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+        Contact Name
+    <span ng-show="ctrl.sortType == 'contact_name' && !ctrl.sortReverse" style="text-decoration: none">
+      <%= image_tag("sort_down.png", size: "14x14") %>
+    </span>
+    <span ng-show="ctrl.sortType == 'contact_name' && ctrl.sortReverse">
+      <%= image_tag("sort_up.png", size: "14x14") %>
+    </span>
+      </a>
+    </th>
     <% end %>
     <th>Paid?</th>
-    <th>Work Day</th>
-    <th>Class</th>
+    <th>
+      <a href="#" ng-click="ctrl.sortType = 'work_day'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+        Work Day
+    <span ng-show="ctrl.sortType == 'work_day' && !ctrl.sortReverse" style="text-decoration: none">
+      <%= image_tag("sort_down.png", size: "14x14") %>
+    </span>
+    <span ng-show="ctrl.sortType == 'work_day' && ctrl.sortReverse">
+      <%= image_tag("sort_up.png", size: "14x14") %>
+    </span>
+      </a>
+    </th>
+    <th>
+      <a href="#" ng-click="ctrl.sortType = 'class'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+        Class
+    <span ng-show="ctrl.sortType == 'class' && !ctrl.sortReverse" style="text-decoration: none">
+      <%= image_tag("sort_down.png", size: "14x14") %>
+    </span>
+    <span ng-show="ctrl.sortType == 'class' && ctrl.sortReverse">
+      <%= image_tag("sort_up.png", size: "14x14") %>
+    </span>
+      </a>
+    </th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="student_placement in ctrl.studentPlacements | filter:ctrl.searchInput"
+  <tr ng-repeat="student_placement in ctrl.studentPlacements| orderBy:ctrl.sortType:ctrl.sortReverse | filter:ctrl.searchInput"
 
       ng-class="{'selected':$index == ctrl.selectedRow}"
 

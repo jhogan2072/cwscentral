@@ -1,27 +1,33 @@
-<p id="notice"><%= notice %></p>
+<body ng-app="app" ng-controller="AdminController as ctrl">
+<%= render "shared/navbar", input_name: nil %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header">Incident Categories
+      </h2>
+      <div class="table-responsive" ng-style="ctrl.truncateStyle">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Category</th>
+            <th colspan="2"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @incident_categories.each do |incident_category| %>
+              <tr>
+                <td><%= incident_category.category %></td>
+                <td><%= link_to 'Edit', edit_incident_category_path(incident_category), target: "_self" %></td>
+                <td><%= link_to 'Delete', incident_category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <%= link_to 'New Incident Category', new_incident_category_path, class: "btn btn-primary", target: "_self" %>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
 
-<h1>Listing Incident Categories</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Category</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @incident_categories.each do |incident_category| %>
-      <tr>
-        <td><%= incident_category.category %></td>
-        <td><%= link_to 'Show', incident_category %></td>
-        <td><%= link_to 'Edit', edit_incident_category_path(incident_category) %></td>
-        <td><%= link_to 'Destroy', incident_category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Incident category', new_incident_category_path %>
