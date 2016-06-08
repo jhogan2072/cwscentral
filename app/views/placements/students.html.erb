@@ -23,7 +23,7 @@
           <a class="btn btn-primary ng-scope" target="_self" ng-if="ctrl.selectedStudent != -1"
              href="/placements/add?student_id={{ctrl.students[ctrl.selectedStudent].id}}">New</a>
           <a class="btn btn-primary" target="_self" ng-if="ctrl.selectedStudent != -1"
-             href="/placements/export.xls?student_id={{ctrl.students[ctrl.selectedStudent].id}}">Export</a>
+             href="/placements/export?student_id={{ctrl.students[ctrl.selectedStudent].id}}">Export</a>
         </div>
       </h2>
       <div class="jumbotron" ng-if="ctrl.selectedStudent == -1" style="background-color: transparent; text-align: center; padding-top:24px;">

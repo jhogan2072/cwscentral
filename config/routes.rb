@@ -56,7 +56,7 @@ Rails.application.routes.draw do
       get :organizations
       get :contacts
       get :add
-      get :export
+      get :export, defaults: { :format => :xlsx }
     end
   end
 

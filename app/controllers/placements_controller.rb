@@ -112,7 +112,7 @@ class PlacementsController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data @placements.to_csv }
-      format.xls # { send_data @placements.to_csv(col_sep: "\t") }
+      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="placements.xlsx"'}
     end
   end
   private

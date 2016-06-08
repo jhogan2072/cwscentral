@@ -34,7 +34,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.showGradesModal = showGradesModal;
     vm.showOrganizationDetails = showOrganizationDetails;
     vm.showResultAlert = false;
-    vm.sortReverse = true;
+    vm.sortReverse = false;
     vm.sortType = 'start_date';
     vm.studentPlacements = [];
     vm.studentCount = 0;
