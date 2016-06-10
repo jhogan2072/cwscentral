@@ -95,9 +95,22 @@ class VanRoutesController < ApplicationController
                         .includes(:driver, :van, route_stops: [{placement: :student}, {placement: :contact}])
                         .where("van_routes.id = ?", params[:id]).first
     respond_to do |format|
-      format.csv { send_data @route_export.to_csv }
-      #format.xls { send_data @route_export.to_csv(col_sep: "\t") }
       format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename=' + @route_export.name + '.xlsx'}
+    end
+  end
+
+  def export_all
+    all_routes = VanRoute.where("route_date = ?", params[:route_date])
+    @route_export = []
+    all_routes.each do |route|
+      route_info = VanRoute.joins(:driver, :van, route_stops: [{placement: :student}, {placement: :contact}] )
+          .includes(:driver, :van, route_stops: [{placement: :student}, {placement: :contact}])
+          .where("van_routes.id = ?", route.id)
+      @route_export << route_info.first
+    end
+    # The request has json in the URL although it will be generating an excel sheet.
+    respond_to do |format|
+      format.json {response.headers['Content-Disposition'] = 'attachment; filename=' + @route_export.name + '.xlsx'}
     end
   end
 

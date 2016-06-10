@@ -8,6 +8,7 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.deleteRoute = deleteRoute;
     vm.deletesChecked = 0;
     vm.displayAlert = displayAlert;
+    vm.exportAll = exportAll;
     vm.getRoutes = getRoutes;
     vm.incrementDeletes = incrementDeletes;
     vm.isSuccess = true;
@@ -68,6 +69,17 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
         vm.alertText = message;
         vm.showResultAlert = true;
         $timeout(function(){vm.showResultAlert = false}, 5000);
+    }
+
+    function exportAll() {
+        VanRouteService.export_all({
+            route_date: vm.routeDate
+        }, function(data) {
+            //success handler
+            vm.displayAlert(true, "Routes exported.")
+        }, function(response) {
+            vm.displayAlert(false, "There was an error exporting routes.  The HTTP return code was " + response.status);
+        });
     }
 
     function getRoutes () {
