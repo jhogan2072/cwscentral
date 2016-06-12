@@ -33,8 +33,7 @@ app.factory('VanRouteService', ['$resource', VanRouteService]);
 function VanRouteService($resource) {
   return $resource('/van_routes/:collectionRoute/:id.json', null,
       {
-        'copy': {method: 'GET', isArray: true, params: {collectionRoute: 'copy'}},
-        'export_all': {method: 'GET', isArray: true, params: {collectionRoute: 'export_all'}}
+        'copy': {method: 'GET', isArray: true, params: {collectionRoute: 'copy', format: 'json'}},
       });
 }
 

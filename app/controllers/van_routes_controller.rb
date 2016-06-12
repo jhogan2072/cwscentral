@@ -105,12 +105,14 @@ class VanRoutesController < ApplicationController
     all_routes.each do |route|
       route_info = VanRoute.joins(:driver, :van, route_stops: [{placement: :student}, {placement: :contact}] )
           .includes(:driver, :van, route_stops: [{placement: :student}, {placement: :contact}])
-          .where("van_routes.id = ?", route.id)
-      @route_export << route_info.first
+          .where("van_routes.id = ?", route.id).order("route_stops.stop_order")
+      #TODO - the above join returns null for routes without route stops, resulting in an array with nils in it
+      if not route_info.first.nil?
+        @route_export << route_info.first
+      end
     end
-    # The request has json in the URL although it will be generating an excel sheet.
     respond_to do |format|
-      format.json {response.headers['Content-Disposition'] = 'attachment; filename=' + @route_export.name + '.xlsx'}
+      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename=routes-' + params[:route_date] + '.xlsx'}
     end
   end
 
