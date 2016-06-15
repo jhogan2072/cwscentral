@@ -84,6 +84,15 @@ body {
     float:left;
     width: 50%;
 }
+.van_route_check_in_time > label {
+    float:left;
+    line-height: 34px;
+    margin-right: 5px;
+}
+.van_route_check_in_time > input {
+    float:left;
+    width: 50%;
+}
 .van_route_students > label {
     float:left;
     line-height: 34px;

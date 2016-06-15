@@ -18,6 +18,7 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.searchInput = '';
     vm.showResultAlert = false;
     vm.saveDelete = 'Save';
+    vm.time_pattern = '^([0]?[1-9]|1[0-2]):([0-5]\\d)\\s?(AM|PM|am|pm)?$';
 
     Number.prototype.mod = function(n) {
         return ((this%n)+n)%n;

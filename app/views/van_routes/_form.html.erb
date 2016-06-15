@@ -1,6 +1,6 @@
 <body ng-app="app" ng-controller="VanRouteController as ctrl">
 <%= render "shared/navbar", input_name: "ctrl.searchInput" %>
-<%= simple_form_for(@van_route) do |f| %>
+<%= simple_form_for(@van_route, html: {name: 'van_route_form'}) do |f| %>
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" style="padding-top:0px">
@@ -53,10 +53,15 @@
             </div>
             <% end %>
           </h2>
-          <div class="row">
+          <div class="row" ng-init="ctrl.check_in_time='<%= @van_route.check_in_time %>'">
             <%= f.input :name, label: "Route Name:", wrapper_html: { class: 'col-md-5', style: 'display: block'},
                         :label_html => { :class => "col-md-5" }, input_html: {placeholder: 'Enter a route name',
                                                                               class: 'col-md-3' }%>
+            <div ng-class="{'has-error':van_route_form['van_route[check_in_time]'].$valid == false}">
+            <%= f.input :check_in_time, label: "Check In Time:", wrapper_html: { class: 'col-md-5', style: 'display: block'},
+                        :label_html => { :class => "col-md-5" }, input_html: {placeholder: 'Enter a time, e.g. 8:00 AM',
+                                                     class: 'col-md-3', :'ng-model' => 'ctrl.check_in_time', :'ng-pattern' => 'ctrl.time_pattern' } %>
+            </div>
           </div>
           <div class="row">
           <fieldset class="col-md-10">
