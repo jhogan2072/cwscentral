@@ -32,7 +32,7 @@ wb.styles do |s|
                      "Ideal", "AM", "PM", "Transportation Notes"], :style => small_bold, :height => 45
       route_export.route_stops.each do |route_stop|
         sheet.add_row [route_export.name, route_export.am_pm=="AM" ? route_stop.stop_order : " ",
-                       route_export.am_pm=="PM" ? route_stop.stop_order : " ", 
+                       route_export.am_pm=="PM" ? route_stop.stop_order : " ",
                        route_stop.placement.contact.organization.name,
                        route_stop.placement.contact.organization.billing_address, route_stop.placement.contact.organization.city,
                        route_stop.placement.contact.organization.state, route_stop.placement.contact.salutation,

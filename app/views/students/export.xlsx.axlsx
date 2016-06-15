@@ -1,0 +1,19 @@
+wb = xlsx_package.workbook
+wb.styles do |style|
+  style.fonts.first.name = 'Calibri'
+  title_style = style.add_style :b => true, :sz => 24, :alignment => {:horizontal => :left}, :color => Axlsx::Color.new(:rgb => "003366")
+  heading_syle = style.add_style :b => true, :sz => 16
+  normal_style = style.add_style :b => false, :sz => 14
+  wb.add_worksheet(name: "Students") do |sheet|
+    sheet.add_row ["Student Profile"], :style => title_style
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row ["Name:", @student.full_name], :style => [heading_syle, normal_style]
+    sheet.add_row ["Mobile Phone:", @student.mobile_phone], :style => [heading_syle, normal_style]
+    sheet.add_row
+    sheet.add_row
+    sheet.add_row ["Skills:", @student.skills], :style => [heading_syle, normal_style]
+    sheet.add_row ["Goals:", @student.goals], :style => [heading_syle, normal_style]
+    sheet.column_widths 30, 55
+  end
+end

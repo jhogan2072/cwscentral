@@ -62,6 +62,7 @@ Rails.application.routes.draw do
 
   resources :students do
     member do
+      get :export, defaults: { :format => :xlsx }
       get :incidents, :defaults => { :format => :json }
       get :placements, :defaults => { :format => :json }
     end

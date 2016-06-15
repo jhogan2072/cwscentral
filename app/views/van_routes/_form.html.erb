@@ -49,7 +49,7 @@
             <% if edit_mode %>
             <div class="pull-right">
               <%= link_to "Back", van_routes_path(route_date: @van_route.route_date), class: "btn btn-primary", target: "_self" %>
-            <%= link_to "Export", export_van_route_path(@van_route), class: "btn btn-primary", target: "_self" %>
+              <%= link_to "Export", export_van_route_path(@van_route), class: "btn btn-primary", target: "_self" %>
             </div>
             <% end %>
           </h2>

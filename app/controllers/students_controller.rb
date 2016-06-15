@@ -62,6 +62,13 @@ class StudentsController < ApplicationController
     end
   end
 
+  def export
+    @student = Student.find(params[:id])
+    respond_to do |format|
+      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename=' + @student.last_name + '.xlsx'}
+    end
+  end
+
   def incidents
     #retrieve a students incident history
     @incidents = Incident.search(filtering_id=params[:id], query_type=0)
