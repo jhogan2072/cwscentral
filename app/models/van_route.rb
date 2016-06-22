@@ -1,4 +1,4 @@
-  class VanRoute < ActiveRecord::Base
+class VanRoute < ActiveRecord::Base
   belongs_to :van
   belongs_to :driver
   has_many :route_stops, dependent: :destroy

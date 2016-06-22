@@ -1,10 +1,13 @@
 class Contact < ActiveRecord::Base
-  belongs_to :organization
   has_many :placements
   has_many :incidents
+  has_many :contact_assignments
+  accepts_nested_attributes_for :contact_assignments
 
   def organization_name
-    self.organization.name
+    contact_assignment = self.contact_assignments.where("? between contact_assignments.effective_start_date and
+contact_assignments.effective_end_date", DateTime.now)
+    contact_assignment.first.organization.name
   end
 
   def name

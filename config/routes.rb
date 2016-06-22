@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :users, except: [:show]
   end
 
-  resources :contacts do
+  resources :contacts, except: [:show] do
     member do
       get :incidents, :defaults => { :format => :json }
       get :placements, defaults: {format: :json}

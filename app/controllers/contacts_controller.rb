@@ -1,16 +1,11 @@
 class ContactsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_contact, only: [:show, :edit, :update, :destroy]
+  before_action :set_contact, only: [:edit, :update, :destroy]
 
   # GET /contacts
   # GET /contacts.json
   def index
     @contacts = Contact.all.order('last_name')
-  end
-
-  # GET /contacts/1
-  # GET /contacts/1.json
-  def show
   end
 
   # GET /contacts/new
@@ -29,8 +24,8 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.save
-        format.html { redirect_to @contact, notice: 'Contact was successfully created.' }
-        format.json { render :show, status: :created, location: @contact }
+        format.html { redirect_to contacts_url, notice: 'Contact was successfully created.' }
+        format.json { render :show, status: :created, location: contacts_url }
       else
         format.html { render :new }
         format.json { render json: @contact.errors, status: :unprocessable_entity }
@@ -43,8 +38,8 @@ class ContactsController < ApplicationController
   def update
     respond_to do |format|
       if @contact.update(contact_params)
-        format.html { redirect_to @contact, notice: 'Contact was successfully updated.' }
-        format.json { render :show, status: :ok, location: @contact }
+        format.html { redirect_to edit_contact_url, notice: 'Contact was successfully updated.' }
+        format.json { render :show, status: :ok, location: contacts_url }
       else
         format.html { render :edit }
         format.json { render json: @contact.errors, status: :unprocessable_entity }
@@ -92,8 +87,10 @@ class ContactsController < ApplicationController
       @contact = Contact.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+  # Never trust parameters from the scary internet, only allow the white list through.
     def contact_params
-      params.require(:contact).permit(:name, :title, :address, :city, :state, :zip, :email, :mobile, :office_phone, :fax, :designations, :organization_id)
+      params.require(:contact).permit(:salutation, :first_name, :last_name, :email, :mobile,
+                                      contact_assignments_attributes: [:id, :organization_id, :title, :role, :address,
+                                                                      :city, :state, :zip, :office_phone, :fax, :notes])
     end
 end

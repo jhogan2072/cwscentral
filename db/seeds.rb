@@ -14,23 +14,55 @@ user.admin = true
 user.save!
 User.create(email: 'claire@example.com', username: 'chogan', password: 'password', admin: false)
 User.create(email: 'mark@example.com', username: 'msmith', password: 'password', admin: false)
-Student.create(first_name: 'Mark', last_name: 'Torres', mobile_phone: '123-456-7890', skills: 'bilingual, great typist', goals: 'Start a software company')
-Student.create(first_name: 'John', last_name: 'Hogan', mobile_phone: '567-890-1234', skills: 'Reads braille', goals: 'Become a doctor')
-Student.create(first_name: 'Selena', last_name: 'Lopez', mobile_phone: '456-789-0123', skills: 'Can drive a forklift', goals: 'Learn to code')
-Student.create(first_name: 'Julia', last_name: 'Martin', mobile_phone: '345-678-9012', skills: 'Excellent communicator', goals: 'Open a restaurant')
-Student.create(first_name: 'Francisco', last_name: 'Samantha', mobile_phone: '234-5678-9012', skills: 'Lab experience, knows cold room procedures', goals: 'Commercialize nuclear fusion')
-Organization.create(name: 'ACME Health Care', billing_address: '123 Main Street', city: 'Boston', state: 'MA', zip: '01742', sponsor_since: '01-jan-2011', sugarcrm_id: 'ABC')
-Organization.create(name: 'Black Duck Software', billing_address: '123 Main Street', city: 'Burlington', state: 'MA', zip: '01803', sponsor_since: '01-jan-2012', sugarcrm_id: 'DEF')
-Organization.create(name: 'Cartera Commerce, Inc.', billing_address: '1 Cranberry Hill', city: 'Lexington', state: 'MA', zip: '02421', sponsor_since: '01-jan-2013', sugarcrm_id: 'GHI')
-Organization.create(name: 'Aptus Health', billing_address: '55 Walkers Brook Drive', city: 'Reading', state: 'MA', zip: '01867', sponsor_since: '01-jan-2013', sugarcrm_id: 'JKL')
-Organization.create(name: 'AutoUse Deluca', billing_address: '100 Brickstone Sq.', city: 'Andover', state: 'MA', zip: '01810', sponsor_since: '01-jan-2013', sugarcrm_id: 'JKL')
-Contact.create(salutation: 'Ms.', first_name: 'Nancy', last_name: 'Parker', title: 'Chief Medical Officer', department: 'Medical Devices', email: 'nparker@example.com', mobile: '123-456-7890', office_phone: '123-456-7890', fax: '123-456-78890', start_date: '01-jan-2012', sugarcrm_id: 'ABC', organization_id: 1)
-Contact.create(salutation: 'Mr.', first_name: 'Can', last_name: 'Keskin', title: 'Senior Engineer', department: 'Engineering', role: 'Engineer', date_started: '01-jan-2012', notes: 'Nice manaager', email: 'ckeskin@example.com', mobile: '123-456-7890', office_phone: '123-456-7890', fax: '123-456-78890', start_date: '01-jan-2012', sugarcrm_id: 'ABC', organization_id: 2)
-Contact.create(salutation: 'Mrs.', first_name: 'Diana', last_name: 'Noe', title: 'Staff Accountant', department: 'Accounting Department', role: 'Accountant', date_started: '01-jan-2012', date_departed: '01-jun-2016', notes: 'Nice manaager', email: 'dnoe@example.com', mobile: '123-456-7890', office_phone: '123-456-7890', fax: '123-456-78890', start_date: '01-jan-2012', sugarcrm_id: 'ABC', organization_id: 2)
-Contact.create(salutation: 'Mr.', first_name: 'Steve', last_name: 'Tamaro', title: 'Accounting Manager', department: 'Accounting Department', role: 'Manager', date_started: '01-jan-2012', date_departed: '01-jun-2016', notes: 'Nice manaager', email: 'stammaro@example.com', mobile: '123-456-7890', office_phone: '123-456-7890', fax: '123-456-78890', start_date: '01-jan-2012', sugarcrm_id: 'ABC', organization_id: 3)
-Contact.create(salutation: 'Mr.', first_name: 'Jim', last_name: 'Speredelozzi', title: 'Senior Director of Global Inside Sales', department: 'Sales Department', role: 'Sales', date_started: '01-jan-2012', date_departed: '01-jun-2017', notes: 'Nice manaager', email: 'jim@example.com', mobile: '123-456-7890', office_phone: '123-456-7890', fax: '123-456-78890', start_date: '01-jan-2012', sugarcrm_id: 'ABC', organization_id: 3)
-Contact.create(salutation: 'Miss', first_name: 'Cathy', last_name: 'Counsell', title: 'Executive Director, Gain Share Operational Strategy', department: 'Account Management', role: 'Sales', date_started: '01-jan-2012', date_departed: '01-jun-2017', notes: 'Nice manaager', email: 'cathy@example.com', mobile: '123-456-7890', office_phone: '123-456-7890', fax: '123-456-78890', start_date: '01-jan-2012', sugarcrm_id: 'XYZ', organization_id: 4)
-Contact.create(salutation: 'Ms.', first_name: 'Lisa', last_name: 'Candelario', title: 'Supervisor', department: 'Human Resources', role: 'HR', date_started: '01-jan-2012', date_departed: '01-jun-2017', notes: 'Nice manaager', email: 'lisa@example.com', mobile: '123-456-7890', office_phone: '123-456-7890', fax: '123-456-78890', start_date: '01-jan-2012', sugarcrm_id: 'LRM', organization_id: 5)
+Student.create(first_name: 'Mark', last_name: 'Torres', mobile_phone: '123-456-7890', skills: 'bilingual, great typist',
+               goals: 'Start a software company')
+Student.create(first_name: 'John', last_name: 'Hogan', mobile_phone: '567-890-1234', skills: 'Reads braille',
+               goals: 'Become a doctor')
+Student.create(first_name: 'Selena', last_name: 'Lopez', mobile_phone: '456-789-0123', skills: 'Can drive a forklift',
+               goals: 'Learn to code')
+Student.create(first_name: 'Julia', last_name: 'Martin', mobile_phone: '345-678-9012', skills: 'Excellent communicator',
+               goals: 'Open a restaurant')
+Student.create(first_name: 'Francisco', last_name: 'Samantha', mobile_phone: '234-5678-9012',
+               skills: 'Lab experience, knows cold room procedures', goals: 'Commercialize nuclear fusion')
+Organization.create(name: 'ACME Health Care', billing_address: '123 Main Street', city: 'Boston', state: 'MA',
+                    zip: '01742', sponsor_since: '01-jan-2011', sugarcrm_id: 'ABC')
+Organization.create(name: 'Black Duck Software', billing_address: '123 Main Street', city: 'Burlington', state: 'MA',
+                    zip: '01803', sponsor_since: '01-jan-2012', sugarcrm_id: 'DEF')
+Organization.create(name: 'Cartera Commerce, Inc.', billing_address: '1 Cranberry Hill', city: 'Lexington', state: 'MA',
+                    zip: '02421', sponsor_since: '01-jan-2013', sugarcrm_id: 'GHI')
+Organization.create(name: 'Aptus Health', billing_address: '55 Walkers Brook Drive', city: 'Reading', state: 'MA',
+                    zip: '01867', sponsor_since: '01-jan-2013', sugarcrm_id: 'JKL')
+Organization.create(name: 'AutoUse Deluca', billing_address: '100 Brickstone Sq.', city: 'Andover', state: 'MA',
+                    zip: '01810', sponsor_since: '01-jan-2013', sugarcrm_id: 'JKL')
+Contact.create(salutation: 'Ms.', first_name: 'Nancy', last_name: 'Parker', email: 'nparker@example.com', mobile: '123-456-7890')
+ContactAssignment.create(title: 'Chief Medical Officer', department: 'Medical Devices', office_phone: '123-456-7890',
+                         fax: '123-456-78890', effective_start_date: '01-jan-2012', effective_end_date: '31-dec-9999', organization_id: 1, contact_id: 1,
+                         role: 'CMO', notes: 'Nice manager', business_email: 'nancy@work.com')
+Contact.create(salutation: 'Mr.', first_name: 'Can', last_name: 'Keskin', email: 'ckeskin@example.com', mobile: '123-456-7890')
+ContactAssignment.create(title: 'Senior Engineer', department: 'Engineering', office_phone: '123-456-7890',
+                         fax: '123-456-78890', effective_start_date: '01-jan-2012', effective_end_date: '31-dec-9999', organization_id: 2, contact_id: 2,
+                         role: 'Engineer', notes: 'Excellent engineer and teacher', business_email: 'can@work.com')
+Contact.create(salutation: 'Mrs.', first_name: 'Diana', last_name: 'Noe', email: 'dnoe@example.com', mobile: '123-456-7890')
+ContactAssignment.create(title: 'Staff Accountant', department: 'Accounting Department', office_phone: '123-456-7890',
+                         fax: '123-456-7880', effective_start_date: '01-jan-2012', effective_end_date: '31-dec-9999', organization_id: 3, contact_id: 3,
+                         role: 'Accountant', notes: 'Interesting personality', business_email: 'diana@work.com')
+Contact.create(salutation: 'Mr.', first_name: 'Steve', last_name: 'Tamaro', email: 'stammaro@example.com', mobile: '123-456-7890')
+ContactAssignment.create(title: 'Accounting Manager', department: 'Accounting Department', office_phone: '123-456-7890',
+                         fax: '123-456-7880', effective_start_date: '01-sep-2014', effective_end_date: '31-dec-9999', organization_id: 4, contact_id: 4,
+                         role: 'Manager', notes: 'Very helpful', business_email: 'steve@work.com')
+Contact.create(salutation: 'Mr.', first_name: 'Jim', last_name: 'Speredelozzi', email: 'jim@example.com', mobile: '123-456-7890')
+ContactAssignment.create(title: 'Senior Director of Global Inside Sales', department: 'Sales Department',
+                         office_phone: '123-456-7890', fax: '123-456-7880', effective_start_date: '01-sep-2013', effective_end_date: '31-dec-9999',
+                         organization_id: 4, contact_id: 5, role: 'Sales', notes: 'Very helpful', business_email: 'jim@work.com')
+Contact.create(salutation: 'Miss', first_name: 'Cathy', last_name: 'Counsell', email: 'cathy@example.com', mobile: '123-456-7890')
+ContactAssignment.create(title: 'Executive Director, Gain Share Operational Strategy', department: 'Account Management',
+                         office_phone: '123-456-7890', fax: '123-456-7880', effective_start_date: '01-jan-2012', effective_end_date: '31-dec-9999',
+                         organization_id: 5, contact_id: 6, role: 'Sales', business_email: 'cathy@work.com',
+                         notes: 'Does not want people working half days, wants people working full days.  And a half day is 12 hours.')
+Contact.create(salutation: 'Ms.', first_name: 'Lisa', last_name: 'Candelario', email: 'lisa@example.com', mobile: '123-456-7890')
+ContactAssignment.create(title: 'Floor Supervisor', department: 'Human Resources', business_email: 'lisa@work.com',
+                         office_phone: '123-456-7890', fax: '123-456-7880', effective_start_date: '01-sep-2013', effective_end_date: '31-dec-9999',
+                         organization_id: 5, contact_id: 7, role: 'HR Representative', notes: 'Tough negotiator')
 Placement.create(start_date: '01-sep-2014', end_date: '01-sep-2015', paid: false, work_day: 'Friday', student_gradelevel: 10, earliest_start: '8:00', latest_start: '9:00', ideal_start: '8:30', student_id: 1, contact_id: 1)
 Placement.create(start_date: '01-sep-2015', end_date: '01-sep-2016', paid: false, work_day: 'Thursday', student_gradelevel: 11, earliest_start: '8:00', latest_start: '9:00', ideal_start: '8:30', student_id: 1, contact_id: 1)
 Placement.create(start_date: '01-sep-2015', end_date: '01-sep-2016', paid: false, work_day: 'Thursday', student_gradelevel: 10, earliest_start: '8:30', latest_start: '9:00', ideal_start: '8:30', student_id: 2, contact_id: 2)

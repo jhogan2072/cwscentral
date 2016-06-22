@@ -131,13 +131,13 @@ class VanRoutesController < ApplicationController
   end
 
 private
-# Use callbacks to share common setup or constraints between actions.
-def set_van_route
-  @van_route = VanRoute.find(params[:id])
-end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_van_route
+    @van_route = VanRoute.find(params[:id])
+  end
 
-# Never trust parameters from the scary internet, only allow the white list through.
-def van_route_params
-  params.require(:van_route).permit(:id, :name, :route_date, :am_pm, :van_id, :driver_id, route_stops_attributes: [:id, :stop_order, :placement_id, :_destroy])
-end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def van_route_params
+    params.require(:van_route).permit(:id, :name, :route_date, :am_pm, :van_id, :driver_id, route_stops_attributes: [:id, :stop_order, :placement_id, :_destroy])
+  end
 end

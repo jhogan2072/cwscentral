@@ -11,38 +11,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615115542) do
+ActiveRecord::Schema.define(version: 20160617194052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "contacts", force: :cascade do |t|
-    t.string   "first_name"
+  create_table "contact_assignments", force: :cascade do |t|
+    t.datetime "effective_start_date"
+    t.datetime "effective_end_date"
+    t.integer  "organization_id"
+    t.integer  "contact_id"
     t.string   "title"
     t.string   "department"
     t.string   "address"
     t.string   "city"
     t.string   "state"
     t.string   "zip"
-    t.string   "email"
-    t.string   "mobile"
+    t.string   "business_email"
     t.string   "office_phone"
     t.string   "fax"
+    t.string   "role"
+    t.text     "notes"
+    t.integer  "organizations_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "contact_assignments", ["contact_id"], name: "index_contact_assignments_on_contact_id", using: :btree
+  add_index "contact_assignments", ["organizations_id"], name: "index_contact_assignments_on_organizations_id", using: :btree
+
+  create_table "contacts", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "email"
+    t.string   "mobile"
     t.integer  "designations"
     t.date     "start_date"
     t.string   "sugarcrm_id"
-    t.integer  "organization_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "last_name"
     t.string   "salutation"
-    t.string   "role"
-    t.date     "date_started"
-    t.date     "date_departed"
-    t.text     "notes"
   end
-
-  add_index "contacts", ["organization_id"], name: "index_contacts_on_organization_id", using: :btree
 
   create_table "drivers", force: :cascade do |t|
     t.string   "name"
@@ -170,7 +179,8 @@ ActiveRecord::Schema.define(version: 20160615115542) do
     t.integer  "capacity"
   end
 
-  add_foreign_key "contacts", "organizations"
+  add_foreign_key "contact_assignments", "contacts"
+  add_foreign_key "contact_assignments", "organizations"
   add_foreign_key "incidents", "contacts"
   add_foreign_key "incidents", "incident_categories"
   add_foreign_key "incidents", "students"
