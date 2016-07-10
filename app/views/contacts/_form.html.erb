@@ -20,27 +20,18 @@
           </fieldset>
           <fieldset>
             <legend>Position(s)</legend>
-          <div class="form-inputs">
-            <%= f.simple_fields_for :contact_assignments do |rs_form| %>
-                <%= rs_form.association :organization, wrapper_html: { class: 'col-sm-4' }  %>
-                <%= rs_form.input :effective_start_date, wrapper_html: {class: 'col-sm-4'} %>
-                <%= rs_form.input :effective_end_date, wrapper_html: {class: 'col-sm-4'} %>
-                <%= rs_form.input :title, wrapper_html: { class: 'col-sm-4' } %>
-                <%= rs_form.input :role, wrapper_html: { class: 'col-sm-4' } %>
-                <%= rs_form.input :address, wrapper_html: { class: 'col-sm-4' } %>
-                <%= rs_form.input :city, wrapper_html: { class: 'col-sm-4' } %>
-                <%= rs_form.input :state, wrapper_html: { class: 'col-sm-2' } %>
-                <%= rs_form.input :zip, wrapper_html: { class: 'col-sm-2' } %>
-                <%= rs_form.input :office_phone, wrapper_html: { class: 'col-sm-2' }  %>
-                <%= rs_form.input :fax, wrapper_html: { class: 'col-sm-2' }  %>
-                <%= rs_form.input :notes, wrapper_html: { class: 'col-sm-4' } %>
-            <% end %>
-
-          </div>
-            </fieldset>
+            <table class="form-inputs detail_assignment_rows">
+              <%= f.simple_fields_for :contact_assignments do |rs_form| %>
+                  <%= render partial: "contacts/contact_assignment", locals: { f: rs_form }  %>
+              <% end %>
+            </table>
+          </fieldset>
 
           <div class="form-group col-sm-12">
-            <%= f.button :submit, class: "btn btn-primary" %>
+            <p style="display:block">
+              <input type="button" value="Add New Position" class="btn btn-primary" onclick="<%=  child_link_javascript(f, :contact_assignments, '.detail_assignment_rows')%>" />
+              <%= f.submit '{{ctrl.deletesChecked > 0 ? "Delete" : "Save"}}', class: "btn btn-primary" %>&nbsp;
+            </p>
           </div>
       <% end %>
     </div>

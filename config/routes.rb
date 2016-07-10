@@ -32,7 +32,6 @@ Rails.application.routes.draw do
       get :students
       get :organizations
       get :contacts
-      get :add
       get :export, defaults: { :format => :xlsx }
     end
   end
@@ -60,7 +59,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :students do
+  resources :students, except: [:show] do
     member do
       get :export, defaults: { :format => :xlsx }
       get :incidents, :defaults => { :format => :json }

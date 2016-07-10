@@ -6,7 +6,8 @@ class VanRoutesController < ApplicationController
 
   def get_autocomplete_items(parameters)
     term = params[:term]
-    placements = Placement.joins(contact: :organization).includes(contact: :organization).includes(:student)
+    placements = Placement.joins(contact_assignment: [:organization, :contact])
+                     .includes(contact_assignment: [:organization, :contact]).includes(:student)
                      .where("placements.start_date <= ? and placements.end_date >= ? and organizations.name ILIKE ?",
                             params[:route_date], params[:route_date], "#{term}%")
     placements.map { |placement| {:id => placement.id, :label => placement.org_contact_student, :value => placement.org_contact_student} }

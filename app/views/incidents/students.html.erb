@@ -22,7 +22,7 @@
       <h2 class="sub-header">Incident History
         <div class="pull-right">
           <a class="btn btn-primary ng-scope" target="_self" ng-if="ctrl.selectedStudent != -1"
-             href="/incidents/add?student_id={{ctrl.students[ctrl.selectedStudent].id}}">New</a>
+             href="/incidents/new?student_id={{ctrl.students[ctrl.selectedStudent].id}}">New</a>
           <a class="btn btn-primary" target="_self" ng-if="ctrl.selectedStudent != -1"
              href="/incidents/export.xlsx?student_id={{ctrl.students[ctrl.selectedStudent].id}}">Export</a>
         </div>

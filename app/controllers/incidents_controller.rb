@@ -12,13 +12,6 @@ class IncidentsController < ApplicationController
     end
   end
 
-  def add
-    student_id = params[:student_id]
-    @student = Student.find(student_id)
-    @incident = Incident.new
-    @incident.student = @student
-  end
-
   def students
     @students = Student.all.order('last_name')
     respond_to do |format|
@@ -41,11 +34,20 @@ class IncidentsController < ApplicationController
 
   # GET /incidents/new
   def new
-    @incident = Incident.new
+    student_id = params[:student_id]
+    if student_id.nil?
+      flash[:notice] = "You tried to access an invalid URL."
+      redirect_to students_incidents_url
+    else
+      @student = Student.find(student_id)
+      @incident = Incident.new
+      @incident.student = @student
+    end
   end
 
   # GET /incidents/1/edit
   def edit
+    @student = Student.find(@incident.student_id)
   end
 
   # POST /incidents
@@ -69,11 +71,10 @@ class IncidentsController < ApplicationController
   def update
     respond_to do |format|
       if @incident.update(incident_params)
-        format.html { redirect_to :back, notice: 'Incident was successfully updated.' }
-        format.json { render :show, status: :ok, location: @incident }
+        format.html { redirect_to edit_incident_url, notice: 'Incident was successfully updated.' }
       else
+        @student = Student.find(@incident.student_id)
         format.html { render :edit }
-        format.json { render json: @incident.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -110,6 +111,6 @@ class IncidentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def incident_params
-      params.require(:incident).permit(:incident_date, :incident_category_id, :description, :student_id, :contact_id)
+      params.require(:incident).permit(:incident_date, :incident_category_id, :description, :student_id, :contact_assignment_id)
     end
 end

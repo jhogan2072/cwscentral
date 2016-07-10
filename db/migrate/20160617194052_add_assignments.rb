@@ -1,8 +1,8 @@
 class AddAssignments < ActiveRecord::Migration
   def change
     create_table :contact_assignments do |t|
-      t.datetime :effective_start_date
-      t.datetime :effective_end_date
+      t.date :effective_start_date
+      t.date :effective_end_date
       t.integer :organization_id
       t.integer :contact_id
       t.string   :title
@@ -21,6 +21,10 @@ class AddAssignments < ActiveRecord::Migration
       t.timestamps null: false
     end
 
+    remove_column :incidents, :contact_id, :integer
+    add_reference :incidents, :contact_assignment, index: true, foreign_key: true
+    remove_column :placements, :contact_id, :integer
+    add_reference :placements, :contact_assignment, index: true, foreign_key: true
     remove_column :contacts, :organization_id, :integer
     remove_column :contacts, :date_started, :date
     remove_column :contacts, :date_departed, :date

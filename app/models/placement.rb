@@ -1,6 +1,7 @@
 class Placement < ActiveRecord::Base
   belongs_to :student
-  belongs_to :contact
+  belongs_to :contact_assignment
+  delegate :contact, :to => :contact_assignment
   has_many :route_stops
 
   def paid
@@ -8,11 +9,11 @@ class Placement < ActiveRecord::Base
   end
 
   def organization_id
-    contact.organization_id
+    contact_assignment.organization_id
   end
 
   def organization_name
-    contact.organization.name
+    contact_assignment.organization_name
   end
 
   def student_name
@@ -20,55 +21,55 @@ class Placement < ActiveRecord::Base
   end
 
   def billing_address
-    contact.organization.billing_address
+    contact_assignment.organization.billing_address
   end
 
   def city
-    contact.organization.city
+    contact_assignment.organization.city
   end
 
   def state
-    contact.organization.state
+    contact_assignment.organization.state
   end
 
   def zip
-    contact.organization.zip
+    contact_assignment.organization.zip
   end
 
   def sponsor_since
-    contact.organization.sponsor_since
+    contact_assignment.organization.sponsor_since
   end
 
-  def org_sugarcrm_id
-    contact.organization.sugarcrm_id
+  def contact_id
+    contact_assignment.contact_id
   end
 
   def contact_name
-    contact.name
+    contact_assignment.contact.name
   end
 
   def title
-    contact.title
+    contact_assignment.title
   end
 
   def department
-    contact.department
+    contact_assignment.department
   end
 
   def email
-    contact.email
+    contact_assignment.business_email
   end
 
   def mobile
-    contact.mobile
+    contact_assignment.contact.mobile
   end
 
   def office_phone
-    contact.office_phone
+    contact_assignment.office_phone
   end
 
   def fax
-    contact.fax
+    contact_assignment.fax
   end
 
   def org_contact_student
@@ -81,11 +82,14 @@ class Placement < ActiveRecord::Base
 
   def self.search(filtering_id=-1,query_type=-1)
     if query_type == 0
-      joins(contact: :organization).includes(contact: :organization).where("student_id = ?", filtering_id)
+      joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
+          .where("student_id = ?", filtering_id)
     elsif query_type == 1
-      joins(contact: :organization).includes(contact: :organization).where("contacts.organization_id = ?", filtering_id)
+      joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
+          .where("contact_assignments.organization_id = ?", filtering_id)
     elsif query_type == 2
-      joins(contact: :organization).includes(contact: :organization).includes(:student).where("placements.contact_id = ?", filtering_id)
+      joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
+          .includes(:student).where("contact_assignments.contact_id = ?", filtering_id)
     end
   end
 

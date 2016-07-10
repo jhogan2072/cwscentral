@@ -1,8 +1,8 @@
 class Contact < ActiveRecord::Base
-  has_many :placements
-  has_many :incidents
+  has_many :placements, through: :contact_assignments
   has_many :contact_assignments
-  accepts_nested_attributes_for :contact_assignments
+  has_many :organizations, through: :contact_assignments
+  accepts_nested_attributes_for :contact_assignments, :allow_destroy => true
 
   def organization_name
     contact_assignment = self.contact_assignments.where("? between contact_assignments.effective_start_date and

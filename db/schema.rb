@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(version: 20160617194052) do
   enable_extension "plpgsql"
 
   create_table "contact_assignments", force: :cascade do |t|
-    t.datetime "effective_start_date"
-    t.datetime "effective_end_date"
+    t.date     "effective_start_date"
+    t.date     "effective_end_date"
     t.integer  "organization_id"
     t.integer  "contact_id"
     t.string   "title"
@@ -69,13 +69,13 @@ ActiveRecord::Schema.define(version: 20160617194052) do
     t.datetime "incident_date"
     t.text     "description"
     t.integer  "student_id"
-    t.integer  "contact_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
     t.integer  "incident_category_id"
+    t.integer  "contact_assignment_id"
   end
 
-  add_index "incidents", ["contact_id"], name: "index_incidents_on_contact_id", using: :btree
+  add_index "incidents", ["contact_assignment_id"], name: "index_incidents_on_contact_assignment_id", using: :btree
   add_index "incidents", ["incident_category_id"], name: "index_incidents_on_incident_category_id", using: :btree
   add_index "incidents", ["student_id"], name: "index_incidents_on_student_id", using: :btree
 
@@ -101,12 +101,12 @@ ActiveRecord::Schema.define(version: 20160617194052) do
     t.string   "latest_start"
     t.string   "ideal_start"
     t.integer  "student_id"
-    t.integer  "contact_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "contact_assignment_id"
   end
 
-  add_index "placements", ["contact_id"], name: "index_placements_on_contact_id", using: :btree
+  add_index "placements", ["contact_assignment_id"], name: "index_placements_on_contact_assignment_id", using: :btree
   add_index "placements", ["student_id"], name: "index_placements_on_student_id", using: :btree
 
   create_table "route_stops", force: :cascade do |t|
@@ -181,10 +181,10 @@ ActiveRecord::Schema.define(version: 20160617194052) do
 
   add_foreign_key "contact_assignments", "contacts"
   add_foreign_key "contact_assignments", "organizations"
-  add_foreign_key "incidents", "contacts"
+  add_foreign_key "incidents", "contact_assignments"
   add_foreign_key "incidents", "incident_categories"
   add_foreign_key "incidents", "students"
-  add_foreign_key "placements", "contacts"
+  add_foreign_key "placements", "contact_assignments"
   add_foreign_key "placements", "students"
   add_foreign_key "route_stops", "placements"
   add_foreign_key "route_stops", "van_routes"

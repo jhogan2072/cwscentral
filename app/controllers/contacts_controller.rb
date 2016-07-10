@@ -36,8 +36,28 @@ class ContactsController < ApplicationController
   # PATCH/PUT /contacts/1
   # PATCH/PUT /contacts/1.json
   def update
+    new_assignment_index = -1
+    original_assignment_index = -1
+    contact_params[:contact_assignments_attributes].each_with_index  do |assignment, index|
+      if assignment[1]["effective_end_date"] == ""
+        new_assignment_index = index
+      else
+        if assignment[1]["effective_end_date"].to_s.split("-")[0] == "9999"
+          original_assignment_index = index
+        end
+      end
+    end
+    cp = contact_params
+    if new_assignment_index > -1 and original_assignment_index > -1
+      cp[:contact_assignments_attributes].values[new_assignment_index]["effective_end_date"] = "9999-12-31"
+      my_int = cp[:contact_assignments_attributes].values[new_assignment_index]["effective_start_date(3i)"].to_i - 1
+      cp[:contact_assignments_attributes].values[original_assignment_index]["effective_end_date"] =
+          cp[:contact_assignments_attributes].values[new_assignment_index]["effective_start_date(1i)"] + "-" +
+              cp[:contact_assignments_attributes].values[new_assignment_index]["effective_start_date(2i)"] + "-" +
+              my_int.to_s
+    end
     respond_to do |format|
-      if @contact.update(contact_params)
+      if @contact.update(cp)
         format.html { redirect_to edit_contact_url, notice: 'Contact was successfully updated.' }
         format.json { render :show, status: :ok, location: contacts_url }
       else
@@ -90,7 +110,9 @@ class ContactsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
     def contact_params
       params.require(:contact).permit(:salutation, :first_name, :last_name, :email, :mobile,
-                                      contact_assignments_attributes: [:id, :organization_id, :title, :role, :address,
-                                                                      :city, :state, :zip, :office_phone, :fax, :notes])
+                                      contact_assignments_attributes: [:id, :effective_start_date, :effective_end_date,
+                                                                       :organization_id, :title, :role, :address,
+                                                                      :city, :state, :zip, :business_email, :office_phone,
+                                                                       :fax, :notes, :_destroy])
     end
 end

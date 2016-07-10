@@ -1,5 +1,6 @@
 class Organization < ActiveRecord::Base
-  has_many :contacts, dependent: :destroy
+  has_many :contact_assignments, dependent: :destroy
+  has_many :contacts, through: :contact_assignments
   has_many :route_stops
 
   def name_and_address
