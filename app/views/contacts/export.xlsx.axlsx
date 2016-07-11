@@ -1,18 +1,28 @@
 wb = xlsx_package.workbook
 wb.styles do |style|
   title_cell = style.add_style(b: true)
+
   wb.add_worksheet(name: "Contacts") do |sheet|
-    sheet.add_row ["Organization Name", "Salutation", "First Name", "Last Name", "Title", "Address", "City", "State", "Zip Code",
-                   "Email", "Mobile Phone", "Office Phone", "Fax"], :style => title_cell
+    sheet.add_row ["Organization Name", "Salutation", "First Name", "Last Name", "Title", "Role", "Date Started",
+                   "Date Departed", "Address", "City", "State", "Zip Code",
+                   "Email", "Mobile Phone", "Office Phone", "Fax", "Notes"], :style => title_cell
     @contacts.each do |contact|
-      sheet.add_row [contact.organization.name, contact.salutation, contact.first_name, contact.last_name, contact.title,
-                     contact.role, contact.date_started, contact.date_departed,
-                     contact.address.nil? ? contact.organization.billing_address: contact.address,
-                     contact.city.nil? ? contact.organization.city : contact.city,
-                     contact.state.nil? ? contact.organization.state : contact.state,
-                     contact.zip.nil? ? contact.organization.zip : contact.zip,
-                     contact.email, contact.mobile, contact.office_phone, contact.fax, contact.notes],
-                    :types => [nil, nil, nil, nil, nil, nil, nil, nil, :string, nil, nil, nil, nil]
+      sheet.add_row [contact.organization_name, contact.salutation, contact.first_name, contact.last_name,
+                     contact.contact_assignments.first.title, contact.contact_assignments.first.role,
+                     contact.contact_assignments.first.effective_start_date,
+                     contact.contact_assignments.first.effective_end_date == '31-Dec-9999'.to_date ? '' :
+                         contact.contact_assignments.first.effective_end_date,
+                     contact.contact_assignments.first.address.nil? ?
+                         contact.contact_assignments.first.organization.billing_address: contact.contact_assignments.first.address,
+                     contact.contact_assignments.first.city.nil? ? contact.contact_assignments.first.organization.city :
+                         contact.contact_assignments.first.city,
+                     contact.contact_assignments.first.state.nil? ? contact.contact_assignments.first.organization.state :
+                         contact.contact_assignments.first.state,
+                     contact.contact_assignments.first.zip.nil? ? contact.contact_assignments.first.organization.zip :
+                         contact.contact_assignments.first.zip,
+                     contact.email, contact.mobile, contact.contact_assignments.first.office_phone,
+                     contact.contact_assignments.first.fax, contact.contact_assignments.first.notes],
+                    :types => [nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, :string, nil, nil, nil, nil]
     end
   end
 end

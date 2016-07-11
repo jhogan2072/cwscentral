@@ -78,9 +78,8 @@ class ContactsController < ApplicationController
   end
 
   def export
-    @contacts = Contact.all.order("organization_id")
+    @contacts = Contact.get_assignment_info
     respond_to do |format|
-      format.csv { send_data @contacts.to_csv }
       format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="all_contacts.xlsx"'}
     end
   end

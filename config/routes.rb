@@ -65,6 +65,9 @@ Rails.application.routes.draw do
       get :incidents, :defaults => { :format => :json }
       get :placements, :defaults => { :format => :json }
     end
+    collection do
+      get :export_all, defaults: {:format => :xlsx }
+    end
   end
 
   resources :van_routes do
