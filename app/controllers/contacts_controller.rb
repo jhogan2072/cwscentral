@@ -5,7 +5,12 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    @contacts = Contact.all.order('last_name')
+    #@contacts = Contact.all.order('last_name')
+    @contacts = Contact.get_assignment_info.order('last_name')
+    # respond_to do |format|
+    #   format.html { render :index }
+    #   format.json { render :json => @contacts.to_json(include: {contact_assignments: {include: :organization}}) }
+    # end
   end
 
   # GET /contacts/new
