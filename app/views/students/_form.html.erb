@@ -19,6 +19,7 @@
             <%= f.input :mobile_phone, wrapper_html: {class: 'col-sm-4'} %>
             <%= f.input :skills, label: "Skills/Interests", wrapper_html: {class: 'col-sm-4'}, as: :text %>
             <%= f.input :goals, wrapper_html: {class: 'col-sm-4'}, as: :text %>
+            <%= f.input :active, input_html: { checked: @student.active? } , wrapper_html: {class: 'col-sm-4'} %>
           </div>
 
           <div class="form-group col-sm-12">

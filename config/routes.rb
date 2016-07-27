@@ -66,6 +66,7 @@ Rails.application.routes.draw do
       get :placements, :defaults => { :format => :json }
     end
     collection do
+      get :active
       get :export_all, defaults: {:format => :xlsx }
     end
   end

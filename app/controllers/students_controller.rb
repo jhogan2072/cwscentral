@@ -5,7 +5,16 @@ class StudentsController < ApplicationController
   # GET /students
   # GET /students.json
   def index
-    @students = Student.all
+    if request.format == "json"
+      @students = Student.all.order(:last_name)
+    end
+  end
+
+  def active
+    if request.format == "json"
+      @students = Student.active_students.order(:last_name)
+    end
+    render :index
   end
 
   # GET /students/1
@@ -98,7 +107,7 @@ class StudentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def student_params
-    params.require(:student).permit(:first_name, :last_name, :middle_name, :powerschool_id)
+    params.require(:student).permit(:first_name, :last_name, :middle_name, :active)
   end
 end
 

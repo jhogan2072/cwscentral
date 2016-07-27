@@ -1,4 +1,4 @@
-angular.module('app').controller("StudentController", function($http, $timeout, StudentService){
+angular.module('app').controller("StudentController", function($http, $timeout, $location, StudentService){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
@@ -9,7 +9,12 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     vm.showResultAlert = false;
     vm.students = [];
 
-    getStudents();
+    var absUrl = $location.absUrl();
+    if (absUrl.indexOf('/students/active') > -1) {
+        getActiveStudents();
+    } else {
+        getStudents();
+    }
     ////////////
 
     function alertShowHide(isShown) {
@@ -26,4 +31,9 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     function getStudents() {
         vm.students = StudentService.query();
     }
+
+    function getActiveStudents() {
+        vm.students = StudentService.active();
+    }
+
 });

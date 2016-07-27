@@ -20,7 +20,10 @@ function ContactService($resource) {
 
 app.factory('StudentService', ['$resource', StudentService]);
 function StudentService($resource) {
-  return $resource('/students/:id.json');
+  return $resource('/students/:collectionRoute/:id.json', null,
+      {
+        'active': {method: 'GET', isArray: true, params: {collectionRoute: 'active', format: 'json'}},
+      });
 }
 
 app.factory('OrganizationService', ['$resource', OrganizationService]);
