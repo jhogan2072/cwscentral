@@ -18,11 +18,20 @@ function ContactService($resource) {
   return $resource('/contacts/:id.json');
 }
 
+app.factory('ContactAssignmentService', ['$resource', ContactAssignmentService]);
+function ContactAssignmentService($resource) {
+  return $resource('/contact_assignments/:collectionRoute/:id.json', null,
+      {
+        'update': {method: 'PUT', format: 'json'},
+        'reopen': {method: 'GET', isArray: false, params: {collectionRoute: 'reopen', format: 'json'}}
+      });
+}
+
 app.factory('StudentService', ['$resource', StudentService]);
 function StudentService($resource) {
   return $resource('/students/:collectionRoute/:id.json', null,
       {
-        'active': {method: 'GET', isArray: true, params: {collectionRoute: 'active', format: 'json'}},
+        'active': {method: 'GET', isArray: true, params: {collectionRoute: 'active', format: 'json'}}
       });
 }
 
@@ -36,7 +45,7 @@ app.factory('VanRouteService', ['$resource', VanRouteService]);
 function VanRouteService($resource) {
   return $resource('/van_routes/:collectionRoute/:id.json', null,
       {
-        'copy': {method: 'GET', isArray: true, params: {collectionRoute: 'copy', format: 'json'}},
+        'copy': {method: 'GET', isArray: true, params: {collectionRoute: 'copy', format: 'json'}}
       });
 }
 

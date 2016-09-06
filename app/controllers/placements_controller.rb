@@ -29,7 +29,7 @@ class PlacementsController < ApplicationController
   end
 
   def contacts
-    @contacts = Contact.all.order('last_name')
+    @contacts = Contact.active_contacts
     respond_to do |format|
 
       format.html # contacts_placements.html.erb

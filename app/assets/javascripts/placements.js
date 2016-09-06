@@ -2,7 +2,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
                                                                  ModalDetailsService, PlacementService, $q){
     var vm = this;
     vm.alertShowHide = alertShowHide;
-    vm.alertText = "Hello, World";
+    vm.alertText = "";
     vm.contactId = -1;
     vm.contactName = "";
     vm.contacts = [];

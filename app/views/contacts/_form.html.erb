@@ -4,7 +4,12 @@
   <div class="row">
     <div class="col-md-12 main">
       <%= render "shared/alert_msg" %>
-      <h2 class="sub-header"><%= header_text %></h2>
+      <h2 class="sub-header">
+        <%= header_text %>
+        <div class="pull-right">
+          <button type="button" ng-if="<%= @contact.current_assignment_id %> > 0" data-ng-click="ctrl.showCloseoutModal(<%= @contact.current_assignment_id %>)" class="btn btn-primary">Close Out Contact</button>
+        </div>
+      </h2>
       <%= simple_form_for(@contact) do |f| %>
           <%= f.error_notification %>
 
@@ -31,7 +36,8 @@
           <div class="form-group col-sm-12">
             <p style="display:block">
               <input type="button" value="Add New Position" class="btn btn-primary" onclick="<%=  child_link_javascript(f, :contact_assignments, '.detail_assignment_rows')%>" />
-              <%= f.submit '{{ctrl.deletesChecked > 0 ? "Delete" : "Save"}}', class: "btn btn-primary" %>&nbsp;
+              <button type="button" ng-if="<%= @contact.current_assignment_id %> < 0" data-ng-click="ctrl.reopenContact(<%= @contact.id %>)" class="btn btn-primary">Reopen</button>
+              <%= f.submit '{{ctrl.deletesChecked > 0 ? "Delete" : "Save"}}', class: "btn btn-primary" %>
             </p>
           </div>
       <% end %>

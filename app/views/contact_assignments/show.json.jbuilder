@@ -1,0 +1,1 @@
+json.extract! @contact_assignment, :id, :effective_start_date, :effective_end_date

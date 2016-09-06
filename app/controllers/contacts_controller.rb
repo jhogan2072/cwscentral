@@ -5,12 +5,8 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    #@contacts = Contact.all.order('last_name')
-    @contacts = Contact.get_assignment_info.order('last_name')
-    # respond_to do |format|
-    #   format.html { render :index }
-    #   format.json { render :json => @contacts.to_json(include: {contact_assignments: {include: :organization}}) }
-    # end
+    #@contacts = Contact.get_assignment_info
+    @contacts = Contact.display_active
   end
 
   # GET /contacts/new
@@ -20,6 +16,7 @@ class ContactsController < ApplicationController
 
   # GET /contacts/1/edit
   def edit
+    @current_assignment_id = @contact.current_assignment_id
   end
 
   # POST /contacts
@@ -60,6 +57,10 @@ class ContactsController < ApplicationController
           cp[:contact_assignments_attributes].values[new_assignment_index]["effective_start_date(1i)"] + "-" +
               cp[:contact_assignments_attributes].values[new_assignment_index]["effective_start_date(2i)"] + "-" +
               my_int.to_s
+    else
+      if new_assignment_index > -1
+        cp[:contact_assignments_attributes].values[new_assignment_index]["effective_end_date"] = "9999-12-31"
+      end
     end
     respond_to do |format|
       if @contact.update(cp)

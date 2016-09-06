@@ -9,7 +9,10 @@ angular.module('app').controller("OrgController", function($http, $timeout, Orga
     vm.page = 'organizations';
     vm.showResultAlert = false;
 
-    getOrganizations();
+    if (window.location.pathname == '/organizations') {
+        getOrganizations();
+    }
+
     ////////////
 
     function alertShowHide(isShown) {

@@ -1,40 +1,9 @@
 class ContactAssignmentsController < ApplicationController
-  before_action :set_contact_assignment, only: [:show, :edit, :update, :destroy]
-
-  # GET /contact_assignments
-  # GET /contact_assignments.json
-  def index
-    @contact_assignments = ContactAssignment.all.order('effective_start_date')
-  end
+  before_action :set_contact_assignment, only: [:show, :update]
 
   # GET /contact_assignments/1
   # GET /contact_assignments/1.json
   def show
-  end
-
-  # GET /contact_assignments/new
-  def new
-    @contact_assignments = ContactAssignment.new
-  end
-
-  # GET /contacts/1/edit
-  def edit
-  end
-
-  # POST /contact_assignments
-  # POST /contact_assignments.json
-  def create
-    @contact_assignments = ContactAssignment.new(contact_assignment_params)
-
-    respond_to do |format|
-      if @contact_assignments.save
-        format.html { redirect_to @contact_assignments, notice: 'Contact assignment was successfully created.' }
-        format.json { render :show, status: :created, location: @contact_assignments }
-      else
-        format.html { render :new }
-        format.json { render json: @contact_assignments.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PATCH/PUT /contact_assignments/1
@@ -51,13 +20,17 @@ class ContactAssignmentsController < ApplicationController
     end
   end
 
-  # DELETE /contact_assignments/1
-  # DELETE /contact_assignments/1.json
-  def destroy
-    @contact.destroy
+  def reopen
+    @contact_assignment = Contact.find(params[:contact_id]).contact_assignments
+                              .where("effective_end_date < '31-dec-9999'")
+                              .order("effective_end_date").last
+    @contact_assignment.effective_end_date = '31-dec-9999'
     respond_to do |format|
-      format.html { redirect_to contact_assignments_url, notice: 'Contact assignment was successfully destroyed.' }
-      format.json { head :no_content }
+      if @contact_assignment.save
+        format.json {redirect_to @contact_assignment, notice: 'Contact assignment was successfully updated.' }
+      else
+        format.json { render json: @contact_assignment.errors, status: :unprocessable_entity }
+      end
     end
   end
 

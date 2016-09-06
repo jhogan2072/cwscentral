@@ -25,7 +25,7 @@
                ctrl.ideal_start='<%= @placement.ideal_start %>';">
                 <div ng-class="{'has-error':placement_form['placement[earliest_start]'].$valid == false}">
                   <%= f.input :earliest_start, hint: "Enter a time, such as 8:00 or 8:00 AM",
-                            :input_html => {:'ng-model' => 'ctrl.earliest_start', :'ng-pattern' => 'ctrl.time_pattern' } %>
+                              :input_html => {:'ng-model' => 'ctrl.earliest_start', :'ng-pattern' => 'ctrl.time_pattern' } %>
                 </div>
                 <div ng-class="{'has-error':placement_form['placement[latest_start]'].$valid == false}">
                   <%= f.input :latest_start, :input_html => {:'ng-model' => 'ctrl.latest_start', :'ng-pattern' => 'ctrl.time_pattern' } %>

@@ -17,6 +17,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :contact_assignments, only: [:show, :update], :defaults => { :format => :json } do
+    collection do
+      get :reopen
+    end
+  end
+
   resources :drivers, except: [:show]
 
   resources :exports do

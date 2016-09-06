@@ -4,14 +4,32 @@ class Contact < ActiveRecord::Base
 
   def organization_name
     contact_assignment = self.contact_assignments.where("? between contact_assignments.effective_start_date and
-contact_assignments.effective_end_date", DateTime.now)
+contact_assignments.effective_end_date", DateTime.now.to_date)
     contact_assignment.first.organization.name
+  end
+
+  def current_assignment_id
+    contact_assignment = self.contact_assignments.where("? between contact_assignments.effective_start_date and
+contact_assignments.effective_end_date", DateTime.now.to_date)
+    contact_assignment.first.nil? ? -1 : contact_assignment.first.id
+  end
+
+  def self.display_active
+    joins("LEFT JOIN contact_assignments ON contacts.id = contact_assignments.contact_id LEFT JOIN organizations
+          ON organizations.id = contact_assignments.organization_id").includes(contact_assignments: :organization)
+        .order("contact_assignments.organization_id, contacts.last_name")
+  end
+
+  def self.active_contacts
+    joins(:contact_assignments)
+        .where("? between contact_assignments.effective_start_date and contact_assignments.effective_end_date", DateTime.now.to_date)
+        .includes(:contact_assignments).order(:last_name, :first_name)
   end
 
   def self.get_assignment_info
     joins(contact_assignments: :organization).includes(contact_assignments: :organization)
         .where("? between contact_assignments.effective_start_date and contact_assignments.effective_end_date",
-        DateTime.now).order("contact_assignments.organization_id")
+        DateTime.now).order("contact_assignments.organization_id, contacts.last_name")
   end
 
   def name

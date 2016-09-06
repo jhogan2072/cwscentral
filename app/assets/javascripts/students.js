@@ -12,7 +12,7 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     var absUrl = $location.absUrl();
     if (absUrl.indexOf('/students/active') > -1) {
         getActiveStudents();
-    } else {
+    } else if (window.location.pathname == '/students') {
         getStudents();
     }
     ////////////

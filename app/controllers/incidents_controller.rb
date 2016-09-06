@@ -13,7 +13,7 @@ class IncidentsController < ApplicationController
   end
 
   def students
-    @students = Student.all.order('last_name')
+    @students = Student.active_students.order('last_name')
     respond_to do |format|
 
       format.html # students_placements.html.erb
@@ -23,7 +23,7 @@ class IncidentsController < ApplicationController
   end
 
   def contacts
-    @contacts = Contact.all.order('last_name')
+    @contacts = Contact.active_contacts
     respond_to do |format|
 
       format.html # contacts_placements.html.erb

@@ -1,4 +1,4 @@
-angular.module('app').controller("DriverController", function($http, $timeout, $location, $window, $cookies, ModalFormService, ModalDetailsService){
+angular.module('app').controller("DriverController", function($http, $timeout, $location, $window){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
