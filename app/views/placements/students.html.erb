@@ -10,7 +10,7 @@
           </div>
         </li>
         <li ng-repeat="student in ctrl.students | filter:ctrl.searchInput" ng-class="{'active':$index == ctrl.selectedStudent}"
-            ng-click="ctrl.setClickedStudent($index, student.full_name, student.id)">
+            ng-click="ctrl.setClickedStudent($index, student.id)">
           <a href="#">{{student.full_name}}</a>
 
         </li>

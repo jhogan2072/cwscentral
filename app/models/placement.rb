@@ -9,7 +9,9 @@ class Placement < ActiveRecord::Base
   end
 
   def organization_id
-    contact_assignment.organization_id
+    if contact_assignment
+      contact_assignment.organization_id
+    end
   end
 
   def organization_name
@@ -83,7 +85,7 @@ class Placement < ActiveRecord::Base
   def self.search(filtering_id=-1,query_type=-1)
     if query_type == 0
       joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
-          .where("student_id = ?", filtering_id)
+          .where("student_id = ?", filtering_id).order("placements.start_date")
     elsif query_type == 1
       joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
           .where("contact_assignments.organization_id = ?", filtering_id)

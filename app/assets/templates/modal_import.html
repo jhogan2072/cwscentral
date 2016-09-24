@@ -1,0 +1,14 @@
+<div class="modal-header"> 
+    <a href="#" class="close" data-ng-click="modalOptions.close()">x</a> 
+    <h4 class="modal-title">{{modalOptions.headerText}}</h4> 
+</div> 
+<form enctype="multipart/form-data" action="/students/import" accept-charset="UTF-8" method="post" class="ng-pristine ng-valid">
+    <div class="modal-body"> 
+        <span>{{modalOptions.bodyText}}</span> 
+            <input type="file" name="file" id="file" data-ng-model="mydata.filename" >
+    </div> 
+    <div class="modal-footer"> 
+        <button type="button" class="btn" data-ng-click="modalOptions.close()">{{modalOptions.closeButtonText}}</button>
+        <input type="submit" name="commit" value="Import">
+    </div>
+</form>

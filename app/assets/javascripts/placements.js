@@ -1,5 +1,5 @@
 angular.module('app').controller("PlacementController", function($http, $timeout, $location, ModalFormService,
-                                                                 ModalDetailsService, PlacementService, $q){
+                                                                 PlacementService, $q){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "";
@@ -31,14 +31,12 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.setClickedContact = setClickedContact;
     vm.setClickedOrg = setClickedOrg;
     vm.setClickedStudent = setClickedStudent;
-    vm.showGradesModal = showGradesModal;
     vm.showOrganizationDetails = showOrganizationDetails;
     vm.showResultAlert = false;
     vm.sortReverse = false;
     vm.sortType = 'start_date';
     vm.studentPlacements = [];
     vm.studentCount = 0;
-    vm.studentFullName = "";
     vm.studentId = -1;
     vm.students = [];
     vm.studentSearchInput = '';
@@ -48,7 +46,11 @@ angular.module('app').controller("PlacementController", function($http, $timeout
 
     var absUrl = $location.absUrl();
     if (absUrl.indexOf('/placements/students') > -1) {
-        getStudents();
+        if (window.location.search.substring(1)) {
+            getStudents(window.location.search.substring(1).split('=')[1]);
+        } else {
+            getStudents();
+        }
     } else if (absUrl.indexOf('/placements/organizations') > -1) {
         getOrganizations();
     } else if (absUrl.indexOf('/placements/contacts') > -1) {
@@ -152,17 +154,25 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         });
     }
 
-    function getStudents() {
-        $http.get('/placements/students.json').
-        success(function(data, status, headers, config) {
-            // this callback will be called asynchronously
-            // when the response is available
-            angular.forEach(data, function(student) {
-                vm.students.push(student);
-            });
-        }).
-        error(function(data, status, headers, config) {
-            vm.displayAlert(false,"There was an unexpected error.  Could not retrieve students.");
+    function getStudents(studentId) {
+        vm.students = PlacementService.students(function(data) {
+            // success handler
+            if (studentId) {
+                $q.all([
+                    vm.students.$promise
+                ]).then(function() {
+                    //CODE AFTER RESOURCES ARE LOADED
+                    var i = 0;
+                    angular.forEach(vm.students, function(student) {
+                        if (window.location.search.substring(1).split('=')[1] == student.id) {
+                            setClickedStudent(i, student.id);
+                        }
+                        i++;
+                    });
+                });
+            }
+        }, function(response) {
+            vm.displayAlert(false, "There was an unexpected error.  Could not retrieve students.  The HTTP return code was " + response.status);
         });
     }
 
@@ -190,26 +200,13 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         vm.getStudentPlacements(org_id, vm.ORG_TYPE);
     }
 
-    function setClickedStudent(indexSelectedStudent, student_name, student_id) {
+    function setClickedStudent(indexSelectedStudent, student_id) {
         vm.selectedRow = null;
         vm.truncateStyle = {};
         vm.selectedStudent = indexSelectedStudent;
-        vm.studentFullName = student_name;
         vm.studentId = student_id
         vm.searchInput = '';
         vm.getStudentPlacements(student_id, vm.STUDENT_TYPE);
-    }
-
-    function showGradesModal(organization_name, placement_id) {
-        var grade_data = getGradeData(vm.studentId, placement_id);
-        var modalOptions    = {
-            closeButtonText: 'Close',
-            headerText: 'Student Grades',
-            bodyText: 'Following are the PowerSchool grades for ' + organization_name,
-            tableData: grade_data
-        };
-        ModalDetailsService.showModal({}, modalOptions).then(function () {
-        });
     }
 
     function showOrganizationDetails(indexSelectedObject, placement_id) {

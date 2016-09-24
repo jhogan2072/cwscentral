@@ -74,6 +74,7 @@ Rails.application.routes.draw do
     collection do
       get :active
       get :export_all, defaults: {:format => :xlsx }
+      post :import
     end
   end
 

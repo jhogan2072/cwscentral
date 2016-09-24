@@ -62,7 +62,7 @@ class PlacementsController < ApplicationController
 
     respond_to do |format|
       if @placement.save
-        format.html { redirect_to students_path, notice: 'Placement was successfully created.' }
+        format.html { redirect_to students_placements_path("student_id" => params[:placement][:student_id]), notice: 'Placement was successfully created.' }
         format.json { head :no_content, status: :created }
       else
         format.html { render :new }

@@ -1,5 +1,5 @@
 //= depend_on_asset "modal_form.html"
-//= depend_on_asset "modal_details.html"
+//= depend_on_asset "modal_import.html"
 
 var app = angular.module('app', ['ui.bootstrap','ui.sortable','datetimepicker','ngResource', 'ngAnimate','ngCookies'])
     .config([
@@ -65,7 +65,8 @@ app.factory('PlacementService', ['$resource', PlacementService]);
 function PlacementService($resource) {
   return $resource('/placements/:collectionRoute/:id.json', null,
       {
-        'contacts': {method: 'GET', isArray: true, params: {collectionRoute: 'contacts'}}
+        'contacts': {method: 'GET', isArray: true, params: {collectionRoute: 'contacts'}},
+        'students': {method: 'GET', isArray: true, params: {collectionRoute: 'students'}}
       });
 }
 
@@ -134,21 +135,20 @@ app.service('ModalFormService', ['$modal',
 
     }]
 );
-app.service('ModalDetailsService', ['$modal',
+app.service('ModalImportService', ['$modal',
     function ($modal) {
 
         var modalDefaults = {
             backdrop: true,
             keyboard: true,
             modalFade: true,
-            templateUrl: '<%= asset_path("modal_details.html") %>'
+            templateUrl: '<%= asset_path("modal_import.html") %>'
         };
 
         var modalOptions = {
             closeButtonText: 'Close',
-            headerText: 'Placement Grades',
-            bodyText: 'Following are the PowerSchool grades for the clicked placement',
-            tableData: {}
+            headerText: 'Import Students',
+            bodyText: 'Select a file to import students from'
         };
 
         this.showModal = function (customModalDefaults, customModalOptions) {
