@@ -7,8 +7,7 @@
           <ul class="nav nav-sidebar">
             <li>
               <div style="font-weight: bold; font-size: 12pt; padding-left:20px; background-color: lightgrey; display: inline-block; width: 100%; line-height: 34px;">
-                Time and Day:
-                <%= f.input :am_pm, collection: ['PM','AM'], label: false, include_blank: false %>
+                Route Day:
               </div>
             </li>
             <li>
@@ -68,7 +67,8 @@
             <legend>Route Stops</legend>
             <table class="detail_route_rows">
               <tr>
-                <th class="col-md-1 text-center">Order</th>
+                <th class="col-md-1 text-center">AM Order</th>
+                <th class="col-md-1 text-center">PM Order</th>
                 <th class="col-md-6">Placement</th>
                 <th class="col-md-1" style="text-align: center; vertical-align: middle">Delete</th>
               </tr>

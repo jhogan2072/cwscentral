@@ -37,7 +37,7 @@ class VanRoutesController < ApplicationController
 
   # GET /van_routes/new
   def new
-    @van_route = VanRoute.new(route_date: DateTime.now, am_pm: 'AM', van_id: Van.first.id, driver_id: Driver.first.id)
+    @van_route = VanRoute.new(route_date: DateTime.now, van_id: Van.first.id, driver_id: Driver.first.id)
     if params[:route_date]
       @van_route.route_date = params[:route_date]
     end
@@ -92,8 +92,8 @@ class VanRoutesController < ApplicationController
   end
 
   def export
-    @route_export = VanRoute.joins(:driver, :van, route_stops: [{placement: :student}, {placement: :contact}] )
-                        .includes(:driver, :van, route_stops: [{placement: :student}, {placement: :contact}])
+    @route_export = VanRoute.joins(:driver, :van, route_stops: {placement: [:student, [{contact_assignment: :contact}]]})
+                        .includes(:driver, :van, route_stops: {placement: [:student, [{contact_assignment: :contact}]]})
                         .where("van_routes.id = ?", params[:id]).first
     respond_to do |format|
       format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename=' + @route_export.name + '.xlsx'}
@@ -104,9 +104,9 @@ class VanRoutesController < ApplicationController
     all_routes = VanRoute.where("route_date = ?", params[:route_date])
     @route_export = []
     all_routes.each do |route|
-      route_info = VanRoute.joins(:driver, :van, route_stops: [{placement: :student}, {placement: :contact}] )
-          .includes(:driver, :van, route_stops: [{placement: :student}, {placement: :contact}])
-          .where("van_routes.id = ?", route.id).order("route_stops.stop_order")
+      route_info = VanRoute.joins(:driver, :van, route_stops: {placement: [:student, [{contact_assignment: :contact}]]})
+          .includes(:driver, :van, route_stops: {placement: [:student, [{contact_assignment: :contact}]]})
+          .where("van_routes.id = ?", route.id).order("route_stops.am_order")
       #TODO - the above join returns null for routes without route stops, resulting in an array with nils in it
       if not route_info.first.nil?
         @route_export << route_info.first
@@ -139,6 +139,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def van_route_params
-    params.require(:van_route).permit(:id, :name, :route_date, :am_pm, :van_id, :driver_id, route_stops_attributes: [:id, :stop_order, :placement_id, :_destroy])
+    params.require(:van_route).permit(:id, :name, :route_date, :van_id, :driver_id, route_stops_attributes: [:id, :am_order, :pm_order, :placement_id, :_destroy])
   end
 end

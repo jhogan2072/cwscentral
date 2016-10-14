@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160726105244) do
+ActiveRecord::Schema.define(version: 20161008143154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,11 +111,12 @@ ActiveRecord::Schema.define(version: 20160726105244) do
   add_index "placements", ["student_id"], name: "index_placements_on_student_id", using: :btree
 
   create_table "route_stops", force: :cascade do |t|
-    t.string   "stop_order"
+    t.string   "am_order"
     t.integer  "van_route_id"
     t.integer  "placement_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.string   "pm_order"
   end
 
   add_index "route_stops", ["placement_id"], name: "index_route_stops_on_placement_id", using: :btree
@@ -158,7 +159,6 @@ ActiveRecord::Schema.define(version: 20160726105244) do
   create_table "van_routes", force: :cascade do |t|
     t.string   "name"
     t.date     "route_date"
-    t.string   "am_pm"
     t.integer  "van_id"
     t.integer  "driver_id"
     t.datetime "created_at",    null: false

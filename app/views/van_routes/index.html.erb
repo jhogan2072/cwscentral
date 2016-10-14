@@ -49,14 +49,12 @@
           </div>
           <table ng-if="ctrl.dailyRoutes.length > 0">
             <tr>
-              <th class="col-md-2">AM/PM</th>
               <th class="col-md-3">Name</th>
               <th class="col-md-3">Driver</th>
               <th class="col-md-3">Van</th>
               <th class="col-md-1">Delete</th>
             </tr>
             <tr ng-repeat="van_route in ctrl.dailyRoutes">
-              <td class="col-md-2">{{ van_route.am_pm }}</td>
               <td class="col-md-3"><a href="/van_routes/{{van_route.id}}/edit" target="_self">{{van_route.name}}</a></td>
               <td class="col-md-3">{{ van_route.driver.name }}</td>
               <td class="col-md-3">{{ van_route.van.name }}</td>

@@ -2,12 +2,10 @@
 
 one:
   route_date: 2016-01-16
-  am_pm: MyString
-  van_id: 
+  van_id:
   driver_id: 
 
 two:
   route_date: 2016-01-16
-  am_pm: MyString
-  van_id: 
+  van_id:
   driver_id: 
