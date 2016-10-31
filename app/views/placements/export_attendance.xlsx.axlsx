@@ -1,0 +1,49 @@
+wb = xlsx_package.workbook
+wb.styles do |s|
+  s.fonts.first.name = 'Calibri'
+  heading_noborder = s.add_style :sz => 20, :alignment => {:horizontal => :center}
+  heading = s.add_style :sz => 20, :alignment => {:horizontal => :center}, :border => { :style => :thin, :color => "00" }
+  normal_border = s.add_style :sz => 14, :border => { :style => :thin, :color => "00" }, :alignment => {:wrap_text => true}
+  small_border = s.add_style :sz => 12, :border => { :style => :thin, :color => "00" }
+  bold_cell = s.add_style :b => true, :sz => 14, :alignment => {:horizontal => :center}
+  normal_cell = s.add_style :sz => 14, :alignment => {:horizontal => :center}
+
+  index = 0
+  @attendance_export.each do |attendance_sheet|
+    index += 1
+    wb.add_worksheet(name: attendance_sheet.first.student_gradelevel.to_s + "th-" + @route_date.strftime("%a")) do |sheet|
+      sheet.add_row [@grade_names[attendance_sheet.first.student_gradelevel] + " Attendance", nil, nil, nil, nil, nil],
+                    :style => [heading_noborder, nil, nil, nil, nil, nil], :height => 31
+      sheet.merge_cells("A1:F1")
+      sheet.add_row [@route_date.strftime("%A, %B %e, %Y"), nil, nil, nil, nil, nil, "Uniform Allowance", nil, nil, nil, nil],
+                     :style => [heading, heading, heading, heading, heading, heading, heading, heading, heading, heading, heading], :height => 31
+      sheet.merge_cells("A2:E2")
+      sheet.merge_cells("G2:K2")
+      sheet.add_row ["Student First Name", "Student Last Name", "Account Name", "Route", "Start Date", "Transportation Check-in Time",
+                     "no tie", "unripped jeans", "NDCR t-shirt", "sneakers or boots", "Other:"],
+                    :style => [normal_border, normal_border, normal_border, normal_border, normal_border, normal_border, normal_border,
+                               normal_border, normal_border, normal_border, normal_border], :height => 39
+      attendance_sheet.each do |placement|
+        sheet.add_row [placement.student.first_name,
+                       placement.student.last_name,
+                       placement.contact_assignment.organization.name,
+                       placement.route_stops.first.van_route.name,
+                       placement.start_date.strftime("%B %e"),
+                       placement.route_stops.first.van_route.check_in_time, nil, nil, nil, nil, nil],
+                      :style => [normal_border, normal_border, normal_border, normal_border, normal_border, normal_border, normal_border,
+                                 normal_border, normal_border, normal_border, normal_border], :height => 40
+      end
+      current_row = sheet.add_row [nil, nil, "TC = Transportation Contract = NO VAN", nil, nil, nil, nil, nil, nil, nil, nil],
+                    :style => [nil, nil, bold_cell, nil, nil, nil, nil, nil, nil, nil, nil], :height => 37
+      sheet.merge_cells current_row.cells[(2..4)]
+      current_row = sheet.add_row ["Office Use: Attendance Input", nil, nil, nil, nil, nil, nil, nil, nil, nil, nil],
+                    :style => [normal_cell, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil], :height => 33
+      sheet.merge_cells current_row.cells[(0..10)]
+      sheet.add_row [nil, "Powerschool attendance", nil, "Fee Log", nil, "Make up log", "Powerschool exceptions", nil, nil, nil, nil],
+                    :style => [small_border, small_border, small_border, small_border, small_border, small_border, small_border,
+                                     small_border, small_border, small_border, small_border], :height => 15
+
+      sheet.column_widths 20, 20, 30, 8, 25, 25, 8, 10, 10, 10, 20
+    end
+  end
+end

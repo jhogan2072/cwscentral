@@ -4,6 +4,15 @@ class Placement < ActiveRecord::Base
   delegate :contact, :to => :contact_assignment
   has_many :route_stops
 
+  def self.grade_names
+    {
+        9 => "Freshmen",
+        10 => "Sophomores",
+        11 => "Juniors",
+        12 => "Seniors"
+    }
+  end
+
   def paid
       self[:paid] ? "Paid" : "Unpaid"
   end
@@ -80,6 +89,12 @@ class Placement < ActiveRecord::Base
 
   def self.current_placements(effective_date)
     where("start_date <= ? and end_date >= ?", effective_date, effective_date)
+  end
+
+  def self.attendance(route_date, grade_level)
+    joins(contact_assignment: :organization).joins(:student).joins(route_stops: :van_route).includes(:student)
+        .includes(route_stops: :van_route).where("van_routes.route_date = ? and placements.student_gradelevel = ?",
+                                    route_date , grade_level).order("placements.student_gradelevel")
   end
 
   def self.search(filtering_id=-1,query_type=-1)

@@ -3,6 +3,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "";
+    vm.attendanceDate = "";
     vm.contactId = -1;
     vm.contactName = "";
     vm.contacts = [];
@@ -24,6 +25,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.page = 'placements';
     vm.removeElement = removeElement;
     vm.searchInput = '';
+    vm.selectedClasses = {};
     vm.selectedRow = null;
     vm.selectedContact = -1;
     vm.selectedOrg = -1;

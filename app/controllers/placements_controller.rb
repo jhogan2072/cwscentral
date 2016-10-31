@@ -8,6 +8,49 @@ class PlacementsController < ApplicationController
     @placements = Placement.all
   end
 
+  def attendance
+    @todays_date = DateTime.now
+  end
+
+  def export_attendance
+    grade_level = []
+    @route_date = DateTime.strptime(params["route_date"], '%d-%b-%Y')
+    params["selected_class"].each do |selection|
+      if selection[1] != "0"
+        grade_level << selection[1].to_i
+      end
+    end
+    @grade_names = Placement.grade_names
+    @attendance_export = []
+    grade_level.each do |grade|
+      attendance_list = Placement.attendance(params["route_date"], grade)
+      if not attendance_list.first.nil?
+        @attendance_export << attendance_list
+      end
+    end
+    respond_to do |format|
+      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename=attendance-' + params["route_date"] + '.xlsx'}
+    end
+
+=begin
+    student first name, student last name, account name, route name, start date, check in time
+    all_routes = VanRoute.where("route_date = ?", params[:route_date])
+    @route_export = []
+    all_routes.each do |route|
+      route_info = VanRoute.joins(:driver, :van, route_stops: {placement: [:student, [{contact_assignment: :contact}]]})
+                       .includes(:driver, :van, route_stops: {placement: [:student, [{contact_assignment: :contact}]]})
+                       .where("van_routes.id = ?", route.id).order("route_stops.am_order")
+      #TODO - the above join returns null for routes without route stops, resulting in an array with nils in it
+      if not route_info.first.nil?
+        @route_export << route_info.first
+      end
+    end
+    respond_to do |format|
+      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename=routes-' + params[:route_date] + '.xlsx'}
+    end
+=end
+  end
+
   def organizations
     @organizations = Organization.all.order('name')
     respond_to do |format|

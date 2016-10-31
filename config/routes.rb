@@ -57,6 +57,8 @@ Rails.application.routes.draw do
       get :org, :defaults => { :format => :json }
     end
     collection do
+      post :export_attendance, defaults: { :format => :xlsx }
+      get :attendance
       get :students
       get :organizations
       get :contacts
