@@ -76,9 +76,13 @@ Rails.application.routes.draw do
     collection do
       get :active
       get :export_all, defaults: {:format => :xlsx }
+      get :import
       post :import
+      post :commit
     end
   end
+
+  resources :students_stagings, only: [:edit, :update, :destroy]
 
   resources :van_routes do
     member do

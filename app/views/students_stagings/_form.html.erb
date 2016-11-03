@@ -1,0 +1,34 @@
+<body ng-app="app" ng-controller="StudentController as ctrl">
+<%= render "shared/navbar", input_name: nil %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header">
+        <%= header_text %>
+      </h2>
+      <%= simple_form_for(@students_staging) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-inputs">
+            <%= f.input :first_name, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :middle_name, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :last_name, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :mobile_phone, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :skills, label: "Skills/Interests", wrapper_html: {class: 'col-sm-4'}, as: :text %>
+            <%= f.input :goals, wrapper_html: {class: 'col-sm-4'}, as: :text %>
+            <%= f.input :active, input_html: { checked: @students_staging.active? } , wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :duplicate, input_html: { checked: @students_staging.duplicate? } , wrapper_html: {class: 'col-sm-4'} %>
+          </div>
+
+          <div class="form-group col-sm-12">
+            <%= f.button :submit, class: "btn btn-primary", value: "Update" %>
+          </div>
+      <% end %>
+
+
+    </div>
+  </div>
+</div>
+</body>
+

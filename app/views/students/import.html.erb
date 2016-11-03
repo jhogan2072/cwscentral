@@ -1,0 +1,98 @@
+<body ng-app="app" ng-controller="StudentController as ctrl">
+<%= render "shared/navbar", input_name: nil %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <%= form_tag @students_staging.count == 0? import_students_path : commit_students_path, name: "import_form", multipart: true do %>
+        <h2 class="sub-header">
+          Import Students
+          <% if @students_staging.count == 0 %>
+            <div class="pull-right">
+              <button type="submit" class="btn btn-primary pull-right" ng-disabled="import_form.import_file.$invalid">Import</button>
+            </div>
+          <% else %>
+            <div class="pull-right">
+              <button type="submit" class="btn btn-primary pull-right">Commit</button>
+            </div>
+          <% end %>
+        </h2>
+        <% if @students_staging.count > 0 %>
+          <div class="table-responsive" ng-style="ctrl.truncateStyle">
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>Mobile Phone</th>
+                <th>Skills</th>
+                <th>Goals</th>
+                <th>Active?</th>
+                <th>Duplicate?</th>
+                <th colspan="2"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <% @students_staging.each do |student| %>
+                  <tr style="<%= student.duplicate ? "font-weight: bold; color: red" : "" %>">
+                    <td><%= student.first_name %></td>
+                    <td><%= student.middle_name %></td>
+                    <td><%= student.last_name %></td>
+                    <td><%= student.mobile_phone %></td>
+                    <td><%= student.skills %></td>
+                    <td><%= student.goals %></td>
+                    <td><%= student.active %></td>
+                    <td><%= student.duplicate %></td>
+                    <td><%= link_to 'Edit', edit_students_staging_path(student), target: "_self" %></td>
+                    <td><%= link_to 'Delete', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                  </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <div class="input-group col-md-5" style="margin-top:50px; ">
+            <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                        Browse… <input type="file" name="file_content" style="display: none;">
+                    </span>
+            </label>
+            <div ng-class="{'has-error':import_form.import_file.$invalid && !import_form.import_file.$pristine}">
+              <input type="text" name="import_file" id="import_file" class="form-control" ng-model='student.import_file' valid-csv required readonly >
+            </div>
+          </div>
+            <p ng-show="import_form.import_file.$invalid && !import_form.import_file.$pristine" class="help-block">Please select a valid CSV file.</p>
+          <p class="help-block">Select a CSV file to import students from.</p>
+        <% end %>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+<script>
+  $(function() {
+
+    $(document).on('change', ':file', function() {
+      var input = $(this),
+          label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+      input.trigger('fileselect', label);
+    });
+
+    $(document).ready( function() {
+      $(':file').on('fileselect', function(event, label) {
+
+        var input = $(this).parents('.input-group').find(':text');
+
+        if( input.length ) {
+          input.val(label);
+          input.trigger('input');
+          //input.trigger('change');
+        }
+
+      });
+    });
+
+  });
+</script>
+</body>

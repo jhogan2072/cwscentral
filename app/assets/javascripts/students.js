@@ -1,4 +1,4 @@
-angular.module('app').controller("StudentController", function($http, $timeout, $location, ModalImportService, StudentService){
+angular.module('app').controller("StudentController", function($http, $timeout, $location, StudentService){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
@@ -6,7 +6,6 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     vm.getStudents = getStudents;
     vm.isSuccess = true;
     vm.page = 'students';
-    vm.showImportModal = showImportModal;
     vm.showResultAlert = false;
     vm.students = [];
 
@@ -37,16 +36,21 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
         vm.students = StudentService.active();
     }
 
-    function showImportModal() {
-        var modalOptions = {
-            closeButtonText: 'Cancel',
-            actionButtonText: 'Save',
-            headerText: 'Import Students',
-            bodyText: 'Select a file to import students from'
-        };
-
-        ModalImportService.showModal({}, modalOptions).then(function (result) {
-            vm.importStudent(result.filename);
-        });
-    }
-});
+})
+.directive('validCsv', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attr, ctrl) {
+            function myValidation(value) {
+                var ext = value.substring(value.lastIndexOf('.') + 1).toLowerCase();
+                if (ext.indexOf("csv") > -1) {
+                    ctrl.$setValidity('charCSV', true);
+                } else {
+                    ctrl.$setValidity('charCSV', false);
+                }
+                return value;
+            }
+            ctrl.$parsers.push(myValidation);
+        }
+    };
+})
