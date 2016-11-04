@@ -53,4 +53,4 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
             ctrl.$parsers.push(myValidation);
         }
     };
-})
+});

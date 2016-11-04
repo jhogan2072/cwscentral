@@ -1,5 +1,5 @@
 class Contact < ActiveRecord::Base
-  has_many :contact_assignments
+  has_many :contact_assignments, :dependent => :destroy
   accepts_nested_attributes_for :contact_assignments, :allow_destroy => true
 
   def organization_name

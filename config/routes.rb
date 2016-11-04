@@ -64,8 +64,13 @@ Rails.application.routes.draw do
       get :contacts
       get :add
       get :export, defaults: { :format => :xlsx }
+      get :import
+      post :import
+      post :commit
     end
   end
+
+  resources :placement_stagings, only: [:edit, :update, :destroy]
 
   resources :students, except: [:show] do
     member do

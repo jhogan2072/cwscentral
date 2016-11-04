@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161101223625) do
+ActiveRecord::Schema.define(version: 20161104000222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,26 @@ ActiveRecord::Schema.define(version: 20161101223625) do
     t.string   "sugarcrm_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+  end
+
+  create_table "placement_stagings", force: :cascade do |t|
+    t.string   "student_first_name"
+    t.string   "student_last_name"
+    t.string   "student_middle_name"
+    t.string   "contact_first_name"
+    t.string   "contact_last_name"
+    t.string   "organization_name"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "paid"
+    t.string   "work_day"
+    t.string   "student_gradelevel"
+    t.string   "earliest_start"
+    t.string   "latest_start"
+    t.string   "ideal_start"
+    t.boolean  "duplicate"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
   end
 
   create_table "placements", force: :cascade do |t|

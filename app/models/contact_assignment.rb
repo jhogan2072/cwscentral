@@ -19,6 +19,12 @@ class ContactAssignment < ActiveRecord::Base
     self.joins(:placements).where('placements.student_id = ?', student_id)
   end
 
+  def self.for_start_date(start_date)
+    self.joins(:organization).joins(:contact)
+        .includes(:organization).includes(:contact).where("? between contact_assignments.effective_start_date and
+contact_assignments.effective_end_date", start_date.nil? ? DateTime.now.to_date : start_date).order("contacts.last_name")
+  end
+
   def self.for_organization(organization_id)
     if organization_id
       self.where('organization_id = ?', organization_id)

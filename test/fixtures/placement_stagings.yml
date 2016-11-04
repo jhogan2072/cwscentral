@@ -1,0 +1,35 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_date: 2016-11-03
+  end_date: 2016-11-03
+  paid: false
+  work_day: MyString
+  student_gradelevel: MyString
+  earliest_start: MyString
+  latest_start: MyString
+  ideal_start: MyString
+  student_first_name: MyString
+  student_last_name: MyString
+  student_middle_name: MyString
+  contact_first_name: MyString
+  contact_last_name: MyString
+  organization_name: MyString
+  duplicate: false
+
+two:
+  start_date: 2016-11-03
+  end_date: 2016-11-03
+  paid: false
+  work_day: MyString
+  student_gradelevel: MyString
+  earliest_start: MyString
+  latest_start: MyString
+  ideal_start: MyString
+  student_first_name: MyString
+  student_last_name: MyString
+  student_middle_name: MyString
+  contact_first_name: MyString
+  contact_last_name: MyString
+  organization_name: MyString
+  duplicate: false

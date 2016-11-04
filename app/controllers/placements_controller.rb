@@ -31,24 +31,6 @@ class PlacementsController < ApplicationController
     respond_to do |format|
       format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename=attendance-' + params["route_date"] + '.xlsx'}
     end
-
-=begin
-    student first name, student last name, account name, route name, start date, check in time
-    all_routes = VanRoute.where("route_date = ?", params[:route_date])
-    @route_export = []
-    all_routes.each do |route|
-      route_info = VanRoute.joins(:driver, :van, route_stops: {placement: [:student, [{contact_assignment: :contact}]]})
-                       .includes(:driver, :van, route_stops: {placement: [:student, [{contact_assignment: :contact}]]})
-                       .where("van_routes.id = ?", route.id).order("route_stops.am_order")
-      #TODO - the above join returns null for routes without route stops, resulting in an array with nils in it
-      if not route_info.first.nil?
-        @route_export << route_info.first
-      end
-    end
-    respond_to do |format|
-      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename=routes-' + params[:route_date] + '.xlsx'}
-    end
-=end
   end
 
   def organizations
@@ -157,6 +139,53 @@ class PlacementsController < ApplicationController
       format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="placements.xlsx"'}
     end
   end
+
+  def import
+    if request.method == "GET"
+      @placement_staging = PlacementStaging.all.order(:student_last_name, :student_first_name)
+    elsif request.method == "POST"
+      PlacementStaging.import(params[:file_content])
+      redirect_to import_placements_url, notice: "Placements imported to staging."
+    end
+  end
+
+  def commit
+    # Insert all the records in students_stagings into students
+    placement_list = PlacementStaging.all
+    placement_list.each do |staging_placement|
+      if !staging_placement.duplicate
+        student_id = Student.where(last_name: staging_placement.student_last_name)
+                         .where(first_name: staging_placement.student_first_name)
+                         .where(middle_name: staging_placement.student_middle_name).pluck(:id).first
+        contact_id = Contact.where(last_name: staging_placement.contact_last_name)
+                         .where(first_name: staging_placement.contact_first_name).pluck(:id).first
+        organization_id = Organization.where(name: staging_placement.organization_name).pluck(:id).first
+        contact_assignment_id = ContactAssignment.where(organization_id: organization_id)
+                          .where(contact_id: contact_id)
+                          .where("? between contact_assignments.effective_start_date and contact_assignments.effective_end_date", DateTime.now.to_date).pluck(:id).first
+        if !student_id.nil? and student_id > 0 and !contact_assignment_id.nil? and contact_assignment_id > 0
+          new_placement = Placement.new(
+              student_id: student_id,
+              contact_assignment_id: contact_assignment_id,
+              start_date: staging_placement.start_date,
+              end_date: staging_placement.end_date,
+              paid: staging_placement.paid,
+              work_day: staging_placement.work_day,
+              student_gradelevel: staging_placement.student_gradelevel,
+              earliest_start: staging_placement.earliest_start,
+              latest_start: staging_placement.latest_start,
+              ideal_start: staging_placement.ideal_start
+          )
+
+          new_placement.save
+          placement_list.delete(staging_placement.id)
+        end
+      end
+    end
+
+    redirect_to import_placements_url, notice: "Placements imported!"
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_placement

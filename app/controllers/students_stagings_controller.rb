@@ -8,7 +8,7 @@ class StudentsStagingsController < ApplicationController
   def update
     respond_to do |format|
       if @students_staging.update(students_staging_params)
-        format.html { redirect_to import_students_url, notice: 'Student was successfully updated.' }
+        format.html { redirect_to import_students_url, notice: 'Student staging record was successfully updated.' }
       else
         format.html { render :edit }
       end

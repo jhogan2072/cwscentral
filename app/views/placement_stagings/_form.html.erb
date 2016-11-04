@@ -1,0 +1,59 @@
+<body ng-app="app" ng-controller="PlacementController as ctrl">
+<%= render "shared/navbar", input_name: nil %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header">
+        <%= header_text %>
+      </h2>
+      <%= simple_form_for(@placement_staging) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-inputs container-fluid">
+            <%= f.input :student_first_name, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :student_middle_name, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :student_last_name, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :contact_first_name, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :contact_last_name, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :organization_name, wrapper_html: {class: 'col-sm-4'} %>
+            <div class="row">
+              <div class="col-md-3">
+                <%= f.input :start_date %>
+                <%= f.input :end_date %>
+                <%= f.input :paid, input_html: { checked: @placement_staging.paid? } %>
+                <%= f.input :duplicate, input_html: { checked: @placement_staging.duplicate? } %>
+              </div>
+              <div class="col-md-3">
+                <%= f.input :work_day, hint: "Enter a day of the week, e.g. Tuesday" %>
+                <%= f.input :student_gradelevel, label: "Grade Level", hint: "Enter a number between 9 and 12" %>
+              </div>
+              <div class="col-md-3" ng-init="ctrl.earliest_start='<%= @placement_staging.earliest_start %>';
+             ctrl.latest_start='<%= @placement_staging.latest_start %>';
+             ctrl.ideal_start='<%= @placement_staging.ideal_start %>';">
+                <div ng-class="{'has-error':placement_form['placement[earliest_start]'].$valid == false}">
+                  <%= f.input :earliest_start, hint: "Enter a time, such as 8:00 or 8:00 AM",
+                              :input_html => {:'ng-model' => 'ctrl.earliest_start', :'ng-pattern' => 'ctrl.time_pattern' } %>
+                </div>
+                <div ng-class="{'has-error':placement_form['placement[latest_start]'].$valid == false}">
+                  <%= f.input :latest_start, :input_html => {:'ng-model' => 'ctrl.latest_start', :'ng-pattern' => 'ctrl.time_pattern' } %>
+                </div>
+                <div ng-class="{'has-error':placement_form['placement[ideal_start]'].$valid == false}">
+                  <%= f.input :ideal_start, :input_html => {:'ng-model' => 'ctrl.ideal_start', :'ng-pattern' => 'ctrl.time_pattern' } %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-sm-12">
+              <%= f.button :submit, class: "btn btn-primary", value: "Update" %>
+            </div>
+          </div>
+
+      <% end %>
+
+
+    </div>
+  </div>
+</div>
+</body>
+
