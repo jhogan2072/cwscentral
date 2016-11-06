@@ -1,0 +1,33 @@
+<body ng-app="app" ng-controller="AdminController as ctrl">
+<%= render "shared/navbar", input_name: nil %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header">
+        <%= header_text %>
+      </h2>
+      <%= simple_form_for(@org_staging) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-inputs">
+            <%= f.input :name, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :billing_address, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :city, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :state, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :zip, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :sponsor_since, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :duplicate, input_html: { checked: @org_staging.duplicate? } , wrapper_html: {class: 'col-sm-4'} %>
+          </div>
+
+          <div class="form-group col-sm-12">
+            <%= f.button :submit, class: "btn btn-primary", value: "Update" %>
+          </div>
+      <% end %>
+
+
+    </div>
+  </div>
+</div>
+</body>
+

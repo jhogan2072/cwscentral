@@ -27,10 +27,8 @@ class ContactsController < ApplicationController
     respond_to do |format|
       if @contact.save
         format.html { redirect_to contacts_url, notice: 'Contact was successfully created.' }
-        format.json { render :show, status: :created, location: contacts_url }
       else
         format.html { render :new }
-        format.json { render json: @contact.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -65,10 +63,8 @@ class ContactsController < ApplicationController
     respond_to do |format|
       if @contact.update(cp)
         format.html { redirect_to edit_contact_url, notice: 'Contact was successfully updated.' }
-        format.json { render :show, status: :ok, location: contacts_url }
       else
         format.html { render :edit }
-        format.json { render json: @contact.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -104,6 +100,60 @@ class ContactsController < ApplicationController
     if @incidents.length == 0
       render json: :no_content, status: 404
     end
+  end
+
+  def import
+    if request.method == "GET"
+      @contact_staging = ContactStaging.all.order(:last_name).order(:first_name)
+    elsif request.method == "POST"
+      ContactStaging.import(params[:file_content])
+      redirect_to import_contacts_url, notice: "Contacts imported to staging."
+    end
+  end
+
+  def commit
+    # Insert all the records in contact_stagings into contacts and contact_assignments
+    contact_list = ContactStaging.all
+
+    contact_list.each do |staging_contact|
+      if !staging_contact.duplicate
+        organization_id = Organization.where(name: staging_contact.organization_name).pluck(:id).first
+        contact_exists = Contact.where(first_name: staging_contact.first_name).where(last_name: staging_contact.last_name)
+        existing_contact_id = -1
+        if contact_exists.pluck(:id).first
+          existing_contact_id = contact_exists.pluck(:id).first
+        end
+        new_contact = Contact.new(
+            dear: staging_contact.dear,
+            first_name: staging_contact.first_name,
+            last_name: staging_contact.last_name,
+            salutation: staging_contact.salutation,
+            personal_mobile: staging_contact.personal_mobile,
+            start_date: staging_contact.start_date)
+        new_contact.save
+        new_contact_assignment = ContactAssignment.new(
+            effective_start_date: staging_contact.start_date,
+            effective_end_date: "31-DEC-9999",
+            organization_id: organization_id,
+            contact_id: existing_contact_id > 0 ? existing_contact_id : new_contact.id,
+            title: staging_contact.title,
+            department: staging_contact.department,
+            address: staging_contact.address,
+            city: staging_contact.city,
+            state: staging_contact.state,
+            zip: staging_contact.zip,
+            business_email: staging_contact.business_email,
+            office_phone: staging_contact.office_phone,
+            fax: staging_contact.fax,
+            role: staging_contact.role
+        )
+        new_contact_assignment.save
+      end
+    end
+  ensure
+    contact_list.delete_all
+
+    redirect_to import_contacts_url, notice: "Contacts imported!"
   end
 
   private

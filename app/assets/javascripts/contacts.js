@@ -13,6 +13,8 @@ angular.module('app').controller("ContactController", function($http, $timeout, 
     vm.selectedDate = "";
     vm.showCloseoutModal = showCloseoutModal;
     vm.showResultAlert = false;
+    vm.sortReverse = false;
+    vm.sortType = 'start_date';
 
     if (window.location.pathname == '/contacts') {
         getContacts();
@@ -63,4 +65,5 @@ angular.module('app').controller("ContactController", function($http, $timeout, 
     }
 
 });
+
 

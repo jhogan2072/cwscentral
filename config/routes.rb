@@ -14,8 +14,13 @@ Rails.application.routes.draw do
     end
     collection do
       get :export, defaults: { :format => :xlsx }
+      get :import
+      post :import
+      post :commit
     end
   end
+
+  resources :contact_stagings, only: [:edit, :update, :destroy]
 
   resources :contact_assignments, only: [:show, :update], :defaults => { :format => :json } do
     collection do
@@ -49,8 +54,13 @@ Rails.application.routes.draw do
     end
     collection do
       get :export, defaults: { :format => :xlsx }
+      get :import
+      post :import
+      post :commit
     end
   end
+
+  resources :org_stagings, only: [:edit, :update, :destroy]
 
   resources :placements, except: [:index, :show, :new] do
     member do

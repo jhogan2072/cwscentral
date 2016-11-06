@@ -51,7 +51,11 @@
           <ul class="dropdown-menu">
             <li><%= link_to("Users", users_url, :target => "_self") %></li>
             <li><%= link_to("Incident Categories", incident_categories_url, :target => "_self") %></li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">Import Data</li>
             <li><%= link_to("Import Students", import_students_url, :target => "_self") %></li>
+            <li><%= link_to("Import Organizations", import_organizations_url, :target => "_self") %></li>
+            <li><%= link_to("Import Contacts", import_contacts_url, :target => "_self") %></li>
             <li><%= link_to("Import Placements", import_placements_url, :target => "_self") %></li>
           </ul>
         </li>

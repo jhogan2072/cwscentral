@@ -86,6 +86,36 @@ class OrganizationsController < ApplicationController
     end
   end
 
+  def import
+    if request.method == "GET"
+      @org_staging = OrgStaging.all.order(:name)
+    elsif request.method == "POST"
+      OrgStaging.import(params[:file_content])
+      redirect_to import_organizations_url, notice: "Organizations imported to staging."
+    end
+  end
+
+  def commit
+    # Insert all the records in org_stagings into organizations
+    org_list = OrgStaging.all
+    org_list.each do |staging_org|
+      if !staging_org.duplicate
+        new_org = Organization.new(
+            name: staging_org.name,
+            billing_address: staging_org.billing_address,
+            city: staging_org.city,
+            state: staging_org.state,
+            zip: staging_org.zip,
+            sponsor_since: staging_org.sponsor_since)
+
+        new_org.save
+      end
+    end
+  ensure
+    org_list.delete_all
+
+    redirect_to import_organizations_url, notice: "Organizations imported!"
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_organization

@@ -20,4 +20,21 @@ angular.module('app').controller("AdminController", function($http, $timeout){
         $timeout(function(){vm.showResultAlert = false}, 5000);
     }
 
+})
+.directive('validCsv', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attr, ctrl) {
+            function myValidation(value) {
+                var ext = value.substring(value.lastIndexOf('.') + 1).toLowerCase();
+                if (ext.indexOf("csv") > -1) {
+                    ctrl.$setValidity('charCSV', true);
+                } else {
+                    ctrl.$setValidity('charCSV', false);
+                }
+                return value;
+            }
+            ctrl.$parsers.push(myValidation);
+        }
+    };
 });

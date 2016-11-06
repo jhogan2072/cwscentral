@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161104000222) do
+ActiveRecord::Schema.define(version: 20161105114734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,23 +32,44 @@ ActiveRecord::Schema.define(version: 20161104000222) do
     t.string   "fax"
     t.string   "role"
     t.text     "notes"
-    t.integer  "organizations_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
 
   add_index "contact_assignments", ["contact_id"], name: "index_contact_assignments_on_contact_id", using: :btree
-  add_index "contact_assignments", ["organizations_id"], name: "index_contact_assignments_on_organizations_id", using: :btree
+
+  create_table "contact_stagings", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "salutation"
+    t.string   "dear"
+    t.string   "personal_mobile"
+    t.string   "start_date"
+    t.string   "organization_name"
+    t.string   "title"
+    t.string   "department"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "business_email"
+    t.string   "office_phone"
+    t.string   "fax"
+    t.string   "role"
+    t.boolean  "duplicate"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
 
   create_table "contacts", force: :cascade do |t|
     t.string   "first_name"
-    t.string   "email"
-    t.string   "mobile"
+    t.string   "personal_email"
+    t.string   "personal_mobile"
     t.integer  "designations"
     t.date     "start_date"
     t.string   "sugarcrm_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "last_name"
     t.string   "salutation"
     t.string   "dear"
@@ -79,6 +100,18 @@ ActiveRecord::Schema.define(version: 20161104000222) do
   add_index "incidents", ["contact_assignment_id"], name: "index_incidents_on_contact_assignment_id", using: :btree
   add_index "incidents", ["incident_category_id"], name: "index_incidents_on_incident_category_id", using: :btree
   add_index "incidents", ["student_id"], name: "index_incidents_on_student_id", using: :btree
+
+  create_table "org_stagings", force: :cascade do |t|
+    t.string   "name"
+    t.string   "billing_address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "sponsor_since"
+    t.boolean  "duplicate"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name"

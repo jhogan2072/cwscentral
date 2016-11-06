@@ -1,0 +1,43 @@
+<body ng-app="app" ng-controller="AdminController as ctrl">
+<%= render "shared/navbar", input_name: nil %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <h2 class="sub-header">
+        <%= header_text %>
+      </h2>
+      <%= simple_form_for(@contact_staging) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-inputs">
+            <%= f.input :salutation, wrapper_html: { class: 'col-sm-2' } %>
+            <%= f.input :first_name, wrapper_html: { class: 'col-sm-4' } %>
+            <%= f.input :last_name, wrapper_html: { class: 'col-sm-4' } %>
+            <%= f.input :dear, wrapper_html: { class: 'col-sm-4' } %>
+            <%= f.input :personal_mobile, wrapper_html: { class: 'col-sm-2' }  %>
+            <%= f.input :organization_name, wrapper_html: { class: 'col-sm-4' }  %>
+            <%= f.input :start_date, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :title, wrapper_html: { class: 'col-sm-4' } %>
+            <%= f.input :role, wrapper_html: { class: 'col-sm-4' } %>
+            <%= f.input :address, wrapper_html: { class: 'col-sm-4' } %>
+            <%= f.input :city, wrapper_html: { class: 'col-sm-4' } %>
+            <%= f.input :state, wrapper_html: { class: 'col-sm-2' } %>
+            <%= f.input :zip, wrapper_html: { class: 'col-sm-2' } %>
+            <%= f.input :office_phone, wrapper_html: { class: 'col-sm-2' }  %>
+            <%= f.input :fax, wrapper_html: { class: 'col-sm-2' }  %>
+
+            <%= f.input :duplicate, input_html: { checked: @contact_staging.duplicate? } , wrapper_html: {class: 'col-sm-4'} %>
+          </div>
+
+          <div class="form-group col-sm-12">
+            <%= f.button :submit, class: "btn btn-primary", value: "Update" %>
+          </div>
+      <% end %>
+
+
+    </div>
+  </div>
+</div>
+</body>
+
