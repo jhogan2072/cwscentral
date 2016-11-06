@@ -1,6 +1,7 @@
 class PlacementsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_placement, only: [:edit, :update, :destroy]
+  helper_method :sort_column, :sort_direction
 
   # GET /placements
   # GET /placements.json
@@ -142,7 +143,8 @@ class PlacementsController < ApplicationController
 
   def import
     if request.method == "GET"
-      @placement_staging = PlacementStaging.all.order(:student_last_name, :student_first_name)
+      #@placement_staging = PlacementStaging.all.order(:student_last_name, :student_first_name)
+      @placement_staging = PlacementStaging.all.order("#{sort_column} #{sort_direction}")
     elsif request.method == "POST"
       PlacementStaging.import(params[:file_content])
       redirect_to import_placements_url, notice: "Placements imported to staging."
@@ -187,6 +189,19 @@ class PlacementsController < ApplicationController
   end
 
   private
+    def sortable_columns
+      ["student_last_name", "student_first_name", "contact_first_name", "contact_last_name", "organization_name", "start_date",
+      "end_date", "paid", "work_day", "student_gradelevel", "earliest_start", "latest_start", "ideal_start"]
+    end
+
+    def sort_column
+      sortable_columns.include?(params[:column]) ? params[:column] : "student_last_name"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_placement
       @placement = Placement.find(params[:id])
