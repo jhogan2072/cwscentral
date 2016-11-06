@@ -5,7 +5,6 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    #@contacts = Contact.get_assignment_info
     @contacts = Contact.display_active
   end
 
