@@ -387,7 +387,7 @@ Organization.create(name: 'Hans Kissle', billing_address: '9 Creek Brook Drive',
 Organization.create(name: 'Holy Family Hospital', billing_address: '70 East Street', city: 'Methuen', state: 'MA', zip: '01844', sponsor_since: '01-sep-2014')
 Organization.create(name: 'IMEC', billing_address: '1620 Osgood St.', city: 'N. Andover', state: 'MA', zip: '01845', sponsor_since: '')
 Organization.create(name: 'Ironstone Farms', billing_address: '450 Lowell St.', city: 'Andover', state: 'MA', zip: '01810', sponsor_since: '01-sep-2005')
-Organization.create(name: 'Johnson O''Hare', billing_address: '1 Progress Rd', city: 'Billerica', state: 'MA', zip: '01821-5731', sponsor_since: '01-sep-2009')
+Organization.create(name: 'Johnson O\'Hare', billing_address: '1 Progress Rd', city: 'Billerica', state: 'MA', zip: '01821-5731', sponsor_since: '01-sep-2009')
 Organization.create(name: 'Keurig Green Mountain, Inc.', billing_address: '53 South Avenue', city: 'Burlington', state: 'MA', zip: '01803', sponsor_since: '01-sep-2013')
 Organization.create(name: 'Kronos', billing_address: '297 Billerica Road', city: 'Chelmsford', state: 'MA', zip: '01824', sponsor_since: '')
 Organization.create(name: 'Lawrence Catholic Academy', billing_address: '101 Parker St', city: 'Lawrence', state: 'MA', zip: '01843', sponsor_since: '01-sep-2013')
