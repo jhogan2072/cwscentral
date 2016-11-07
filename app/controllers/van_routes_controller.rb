@@ -53,11 +53,9 @@ class VanRoutesController < ApplicationController
   # POST /van_routes.json
   def create
     @van_route = VanRoute.new(van_route_params)
-    @placements = @van_route.placements
 
     respond_to do |format|
       if @van_route.save
-  #      format.html { redirect_to(van_routes_url, route_date: @van_route.route_date, format: :html, notice: 'Van route was successfully created.') }
         format.html { redirect_to :controller=>'van_routes',:action=>'index',route_date: @van_route.route_date, format: :html, notice: 'Van route was successfully created.' }
         format.json { render :show, status: :created, location: @van_route }
       else
