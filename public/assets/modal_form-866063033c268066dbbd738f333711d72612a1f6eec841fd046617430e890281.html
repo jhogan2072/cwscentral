@@ -1,0 +1,38 @@
+<div class="modal-header">
+    <a href="#" class="close" data-ng-click="modalOptions.close()">x</a>
+    <h4 class="modal-title">{{modalOptions.headerText}}</h4>
+</div>
+<form ng-submit="modalOptions.submit()" name="closeAssignment">
+
+        <div class="container">
+            <div style="margin: 10px;">
+                <span>{{modalOptions.bodyText}}</span>
+            </div>
+            <div class="row">
+                <div class='col-sm-3'>
+                    <div class="form-group">
+                        <div class='input-group date' id='datetimepicker1' >
+                            <input id="closedate" type='text' class="form-control" data-ng-model="mydata.name" required>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker1').datetimepicker({format: "DD-MMM-YYYY"});
+                    });
+                    $('#datetimepicker1').on("dp.change", function() {
+                        var element = angular.element($('#datetimepicker1'));
+                        var controller = element.controller();
+                        controller.selectedDate = $("#closedate").val(); 
+                      });
+                </script>
+            </div>
+        </div>
+    <div class="modal-footer">
+        <button type="button" class="btn" data-ng-click="modalOptions.close()">{{modalOptions.closeButtonText}}</button>
+        <button type="submit" class="btn btn-primary" data-ng-click="modalOptions.ok(mydata)">{{modalOptions.actionButtonText}}</button>
+    </div>
+</form>

@@ -68377,8 +68377,6 @@ angular
     }
   ]);
 
-
-
 var app = angular.module('app', ['ui.bootstrap','ui.sortable','datetimepicker','ngResource', 'ngAnimate','ngCookies'])
     .config([
       'datetimepickerProvider',
@@ -68396,9 +68394,21 @@ function ContactService($resource) {
   return $resource('/contacts/:id.json');
 }
 
+app.factory('ContactAssignmentService', ['$resource', ContactAssignmentService]);
+function ContactAssignmentService($resource) {
+  return $resource('/contact_assignments/:collectionRoute/:id.json', null,
+      {
+        'update': {method: 'PUT', format: 'json'},
+        'reopen': {method: 'GET', isArray: false, params: {collectionRoute: 'reopen', format: 'json'}}
+      });
+}
+
 app.factory('StudentService', ['$resource', StudentService]);
 function StudentService($resource) {
-  return $resource('/students/:id.json');
+  return $resource('/students/:collectionRoute/:id.json', null,
+      {
+        'active': {method: 'GET', isArray: true, params: {collectionRoute: 'active', format: 'json'}}
+      });
 }
 
 app.factory('OrganizationService', ['$resource', OrganizationService]);
@@ -68411,7 +68421,7 @@ app.factory('VanRouteService', ['$resource', VanRouteService]);
 function VanRouteService($resource) {
   return $resource('/van_routes/:collectionRoute/:id.json', null,
       {
-        'copy': {method: 'GET', isArray: true, params: {collectionRoute: 'copy', format: 'json'}},
+        'copy': {method: 'GET', isArray: true, params: {collectionRoute: 'copy', format: 'json'}}
       });
 }
 
@@ -68431,7 +68441,8 @@ app.factory('PlacementService', ['$resource', PlacementService]);
 function PlacementService($resource) {
   return $resource('/placements/:collectionRoute/:id.json', null,
       {
-        'contacts': {method: 'GET', isArray: true, params: {collectionRoute: 'contacts'}}
+        'contacts': {method: 'GET', isArray: true, params: {collectionRoute: 'contacts'}},
+        'students': {method: 'GET', isArray: true, params: {collectionRoute: 'students'}}
       });
 }
 
@@ -68448,6 +68459,7 @@ app.directive('ngReallyClick', [function() {
     }
   }
 }]);
+
 app.service('ModalFormService', ['$modal',
     function ($modal) {
 
@@ -68455,7 +68467,7 @@ app.service('ModalFormService', ['$modal',
             backdrop: true,
             keyboard: true,
             modalFade: true,
-            templateUrl: '/assets/modal_form-f654674080731cb5dba34b7024bda72085b42b16122e9518a1798a7eb4adfd24.html'
+            templateUrl: '/assets/modal_form-866063033c268066dbbd738f333711d72612a1f6eec841fd046617430e890281.html'
         };
 
         var modalOptions = {
@@ -68500,70 +68512,39 @@ app.service('ModalFormService', ['$modal',
 
     }]
 );
-app.service('ModalDetailsService', ['$modal',
-    function ($modal) {
-
-        var modalDefaults = {
-            backdrop: true,
-            keyboard: true,
-            modalFade: true,
-            templateUrl: '/assets/modal_details-253ebc41297b513c98625eb73b54ad139169dc787725d1c19d2eaa9917ad16cd.html'
-        };
-
-        var modalOptions = {
-            closeButtonText: 'Close',
-            headerText: 'Placement Grades',
-            bodyText: 'Following are the PowerSchool grades for the clicked placement',
-            tableData: {}
-        };
-
-        this.showModal = function (customModalDefaults, customModalOptions) {
-            if (!customModalDefaults) customModalDefaults = {};
-            customModalDefaults.backdrop = 'static';
-            return this.show(customModalDefaults, customModalOptions);
-        };
-
-        this.show = function (customModalDefaults, customModalOptions) {
-            //Create temp objects to work with since we're in a singleton service
-            var tempModalDefaults = {};
-            var tempModalOptions = {};
-
-            //Map angular-ui modal custom defaults to modal defaults defined in service
-            angular.extend(tempModalDefaults, modalDefaults, customModalDefaults);
-
-            //Map modal.html $scope custom properties to defaults defined in service
-            angular.extend(tempModalOptions, modalOptions, customModalOptions);
-
-            if (!tempModalDefaults.controller) {
-                tempModalDefaults.controller = function ($scope, $modalInstance) {
-                    $scope.modalOptions = tempModalOptions;
-                    $scope.modalOptions.close = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
-                }
-            }
-
-            return $modal.open(tempModalDefaults).result;
-        };
-
-    }]
-);
-angular.module('app').controller("ContactController", function($http, $timeout, ContactService){
+angular.module('app').controller("ContactController", function($http, $timeout, $window, ModalFormService,
+                                                               ContactService, ContactAssignmentService){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
+    vm.closeAssignment = closeAssignment;
     vm.contacts = [];
     vm.displayAlert = displayAlert;
     vm.getContacts = getContacts;
     vm.isSuccess = true;
     vm.page = 'organizations';
+    vm.reopenContact = reopenContact;
+    vm.selectedDate = "";
+    vm.showCloseoutModal = showCloseoutModal;
     vm.showResultAlert = false;
+    vm.sortReverse = false;
+    vm.sortType = 'start_date';
 
-    getContacts();
+    if (window.location.pathname == '/contacts') {
+        getContacts();
+    }
     ////////////
 
     function alertShowHide(isShown) {
         vm[isShown] = !vm[isShown];
+    }
+
+    function closeAssignment(contactAssignmentId, closeDate) {
+        var ca = ContactAssignmentService.get({id:contactAssignmentId});
+        ca.effective_end_date = closeDate;
+        ContactAssignmentService.update({ id:contactAssignmentId }, ca);
+        vm.displayAlert(true,"The contact assignment was successfully closed.");
+        $window.location.reload();
     }
 
     function displayAlert (isSuccess, message) {
@@ -68577,9 +68558,30 @@ angular.module('app').controller("ContactController", function($http, $timeout, 
         vm.contacts = ContactService.query();
     }
 
+    function reopenContact(contactId) {
+        var ca = ContactAssignmentService.reopen({contact_id:contactId});
+        vm.displayAlert(true,"The contact assignment was successfully updated.");
+        $window.location.reload();
+    }
+
+    function showCloseoutModal(contactAssignmentId) {
+        var modalOptions = {
+            closeButtonText: 'Cancel',
+            actionButtonText: 'Save',
+            headerText: 'Close out contact',
+            bodyText: 'Choose a last day for the contact.',
+            formLabel: 'End Date:'
+        };
+
+        ModalFormService.showModal({}, modalOptions).then(function (result) {
+            vm.closeAssignment(contactAssignmentId, vm.selectedDate);
+        });
+    }
+
 });
 
-angular.module('app').controller("DriverController", function($http, $timeout, $location, $window, $cookies, ModalFormService, ModalDetailsService){
+
+angular.module('app').controller("DriverController", function($http, $timeout, $location, $window){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
@@ -68774,7 +68776,10 @@ angular.module('app').controller("OrgController", function($http, $timeout, Orga
     vm.page = 'organizations';
     vm.showResultAlert = false;
 
-    getOrganizations();
+    if (window.location.pathname == '/organizations') {
+        getOrganizations();
+    }
+
     ////////////
 
     function alertShowHide(isShown) {
@@ -68794,10 +68799,11 @@ angular.module('app').controller("OrgController", function($http, $timeout, Orga
 
 });
 angular.module('app').controller("PlacementController", function($http, $timeout, $location, ModalFormService,
-                                                                 ModalDetailsService, PlacementService, $q){
+                                                                 PlacementService, $q){
     var vm = this;
     vm.alertShowHide = alertShowHide;
-    vm.alertText = "Hello, World";
+    vm.alertText = "";
+    vm.attendanceDate = "";
     vm.contactId = -1;
     vm.contactName = "";
     vm.contacts = [];
@@ -68819,6 +68825,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.page = 'placements';
     vm.removeElement = removeElement;
     vm.searchInput = '';
+    vm.selectedClasses = {};
     vm.selectedRow = null;
     vm.selectedContact = -1;
     vm.selectedOrg = -1;
@@ -68826,14 +68833,12 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.setClickedContact = setClickedContact;
     vm.setClickedOrg = setClickedOrg;
     vm.setClickedStudent = setClickedStudent;
-    vm.showGradesModal = showGradesModal;
     vm.showOrganizationDetails = showOrganizationDetails;
     vm.showResultAlert = false;
     vm.sortReverse = false;
     vm.sortType = 'start_date';
     vm.studentPlacements = [];
     vm.studentCount = 0;
-    vm.studentFullName = "";
     vm.studentId = -1;
     vm.students = [];
     vm.studentSearchInput = '';
@@ -68843,7 +68848,11 @@ angular.module('app').controller("PlacementController", function($http, $timeout
 
     var absUrl = $location.absUrl();
     if (absUrl.indexOf('/placements/students') > -1) {
-        getStudents();
+        if (window.location.search.substring(1)) {
+            getStudents(window.location.search.substring(1).split('=')[1]);
+        } else {
+            getStudents();
+        }
     } else if (absUrl.indexOf('/placements/organizations') > -1) {
         getOrganizations();
     } else if (absUrl.indexOf('/placements/contacts') > -1) {
@@ -68947,17 +68956,25 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         });
     }
 
-    function getStudents() {
-        $http.get('/placements/students.json').
-        success(function(data, status, headers, config) {
-            // this callback will be called asynchronously
-            // when the response is available
-            angular.forEach(data, function(student) {
-                vm.students.push(student);
-            });
-        }).
-        error(function(data, status, headers, config) {
-            vm.displayAlert(false,"There was an unexpected error.  Could not retrieve students.");
+    function getStudents(studentId) {
+        vm.students = PlacementService.students(function(data) {
+            // success handler
+            if (studentId) {
+                $q.all([
+                    vm.students.$promise
+                ]).then(function() {
+                    //CODE AFTER RESOURCES ARE LOADED
+                    var i = 0;
+                    angular.forEach(vm.students, function(student) {
+                        if (window.location.search.substring(1).split('=')[1] == student.id) {
+                            setClickedStudent(i, student.id);
+                        }
+                        i++;
+                    });
+                });
+            }
+        }, function(response) {
+            vm.displayAlert(false, "There was an unexpected error.  Could not retrieve students.  The HTTP return code was " + response.status);
         });
     }
 
@@ -68985,26 +69002,13 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         vm.getStudentPlacements(org_id, vm.ORG_TYPE);
     }
 
-    function setClickedStudent(indexSelectedStudent, student_name, student_id) {
+    function setClickedStudent(indexSelectedStudent, student_id) {
         vm.selectedRow = null;
         vm.truncateStyle = {};
         vm.selectedStudent = indexSelectedStudent;
-        vm.studentFullName = student_name;
         vm.studentId = student_id
         vm.searchInput = '';
         vm.getStudentPlacements(student_id, vm.STUDENT_TYPE);
-    }
-
-    function showGradesModal(organization_name, placement_id) {
-        var grade_data = getGradeData(vm.studentId, placement_id);
-        var modalOptions    = {
-            closeButtonText: 'Close',
-            headerText: 'Student Grades',
-            bodyText: 'Following are the PowerSchool grades for ' + organization_name,
-            tableData: grade_data
-        };
-        ModalDetailsService.showModal({}, modalOptions).then(function () {
-        });
     }
 
     function showOrganizationDetails(indexSelectedObject, placement_id) {
@@ -69026,7 +69030,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     }
 
 });
-angular.module('app').controller("StudentController", function($http, $timeout, StudentService){
+angular.module('app').controller("StudentController", function($http, $timeout, $location, StudentService){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
@@ -69037,7 +69041,12 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     vm.showResultAlert = false;
     vm.students = [];
 
-    getStudents();
+    var absUrl = $location.absUrl();
+    if (absUrl.indexOf('/students/active') > -1) {
+        getActiveStudents();
+    } else if (window.location.pathname == '/students') {
+        getStudents();
+    }
     ////////////
 
     function alertShowHide(isShown) {
@@ -69054,6 +69063,11 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     function getStudents() {
         vm.students = StudentService.query();
     }
+
+    function getActiveStudents() {
+        vm.students = StudentService.active();
+    }
+
 });
 angular.module('app').controller("VanRouteController", function($http, $timeout, $location, $window, VanRouteService){
     var vm = this;
@@ -69203,6 +69217,23 @@ angular.module('app').controller("AdminController", function($http, $timeout){
         $timeout(function(){vm.showResultAlert = false}, 5000);
     }
 
+})
+.directive('validCsv', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attr, ctrl) {
+            function myValidation(value) {
+                var ext = value.substring(value.lastIndexOf('.') + 1).toLowerCase();
+                if (ext.indexOf("csv") > -1) {
+                    ctrl.$setValidity('charCSV', true);
+                } else {
+                    ctrl.$setValidity('charCSV', false);
+                }
+                return value;
+            }
+            ctrl.$parsers.push(myValidation);
+        }
+    };
 });
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
