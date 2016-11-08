@@ -1,16 +1,11 @@
 class DriversController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_driver, only: [:show, :edit, :update, :destroy]
+  before_action :set_driver, only: [:edit, :update, :destroy]
 
   # GET /drivers
   # GET /drivers.json
   def index
-    @drivers = Driver.all
-  end
-
-  # GET /drivers/1
-  # GET /drivers/1.json
-  def show
+    @drivers = Driver.all.order(:name)
   end
 
   # GET /drivers/new
@@ -29,11 +24,10 @@ class DriversController < ApplicationController
 
     respond_to do |format|
       if @driver.save
-        format.html { redirect_to @driver, notice: 'Driver was successfully created.' }
-        format.json { render :show, status: :created, location: @driver }
+        flash[:notice] = 'Driver was successfully created.'
+        format.html { redirect_to action: "index" }
       else
         format.html { render :new }
-        format.json { render json: @driver.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -43,11 +37,10 @@ class DriversController < ApplicationController
   def update
     respond_to do |format|
       if @driver.update(driver_params)
-        format.html { redirect_to @driver, notice: 'Driver was successfully updated.' }
-        format.json { render :show, status: :ok, location: @driver }
+        flash[:notice] = 'Driver was successfully updated.'
+        format.html { redirect_to action: "index" }
       else
         format.html { render :edit }
-        format.json { render json: @driver.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -57,8 +50,8 @@ class DriversController < ApplicationController
   def destroy
     @driver.destroy
     respond_to do |format|
-      format.html { redirect_to drivers_url, notice: 'Driver was successfully deleted.' }
-      format.json { head :no_content }
+      flash[:notice] = 'Driver was successfully deleted.'
+      format.html { redirect_to drivers_url }
     end
   end
 
@@ -70,6 +63,6 @@ class DriversController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def driver_params
-    params.require(:driver).permit(:name, :plate_number, :vin, :make, :model_year, :last_oil_change)
+    params.require(:driver).permit(:name)
   end
 end

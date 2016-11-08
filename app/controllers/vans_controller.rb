@@ -5,7 +5,7 @@ class VansController < ApplicationController
   # GET /vans
   # GET /vans.json
   def index
-    @vans = Van.all
+    @vans = Van.all.order(:name)
   end
 
   # GET /vans/1
@@ -29,7 +29,8 @@ class VansController < ApplicationController
 
     respond_to do |format|
       if @van.save
-        format.html { redirect_to action: "index", notice: 'Van was successfully created.' }
+        flash[:notice] = 'Van was successfully created.'
+        format.html { redirect_to action: "index" }
         format.json { render :index, status: :created }
       else
         format.html { render :new }
@@ -43,7 +44,8 @@ class VansController < ApplicationController
   def update
     respond_to do |format|
       if @van.update(van_params)
-        format.html { redirect_to action: "index", notice: 'Van was successfully updated.' }
+        flash[:notice] = 'Van was successfully updated.'
+        format.html { redirect_to action: "index" }
         format.json { render :index, status: :ok }
       else
         format.html { render :edit }
@@ -57,7 +59,8 @@ class VansController < ApplicationController
   def destroy
     @van.destroy
     respond_to do |format|
-      format.html { redirect_to vans_url, notice: 'Van was successfully destroyed.' }
+      flash[:notice] = 'Van was successfully deleted.'
+      format.html { redirect_to vans_url }
       format.json { head :no_content }
     end
   end
@@ -78,6 +81,6 @@ class VansController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def van_params
-    params.require(:van).permit(:name, :plate_number, :vin, :make, :model_year, :last_oil_change)
+    params.require(:van).permit(:name, :plate_number, :vin, :make, :model_year, :last_oil_change, :capacity)
   end
 end
