@@ -92,7 +92,8 @@ class VanRoutesController < ApplicationController
   def export
     @route_export = VanRoute.joins(:driver, :van, route_stops: {placement: [:student, [{contact_assignment: :contact}]]})
                         .includes(:driver, :van, route_stops: {placement: [:student, [{contact_assignment: :contact}]]})
-                        .where("van_routes.id = ?", params[:id]).first
+                        .where("van_routes.id = ?", params[:id]).order("route_stops.am_order")
+                        .order("contact_assignments.organization_id").first
     respond_to do |format|
       format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename=' + @route_export.name + '.xlsx'}
     end

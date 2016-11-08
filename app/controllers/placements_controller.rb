@@ -15,7 +15,10 @@ class PlacementsController < ApplicationController
 
   def export_attendance
     grade_level = []
-    date_param = params["route_date"].sub! 'Sept', 'Sep'
+    date_param = params["route_date"]
+    if params["route_date"].include? 'Sept'
+      date_param = params["route_date"].sub! 'Sept', 'Sep'
+    end
     @route_date = DateTime.strptime(date_param, '%d-%b-%Y')
     params["selected_class"].each do |selection|
       if selection[1] != "0"

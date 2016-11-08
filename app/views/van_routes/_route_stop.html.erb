@@ -7,5 +7,5 @@
                                    :as => :autocomplete, :id_element => '#' + 1234567.to_s, label: false %>
     <%= f.hidden_field :placement_id, :id => 1234567 %>
   </td>
-  <td style="text-align: center; vertical-align: middle"><%= f.check_box :_destroy, "ng-model" => "ctrl.chk[" + 1234567.to_s + "]", "ng-change" => "ctrl.incrementDeletes(" + 1234567.to_s + ")"  %></td>
+  <td style="text-align: center; vertical-align: middle"><%= f.check_box :_destroy  %></td>
 </tr>

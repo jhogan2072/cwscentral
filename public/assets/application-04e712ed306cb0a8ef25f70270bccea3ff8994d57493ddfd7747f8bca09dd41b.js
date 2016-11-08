@@ -69081,7 +69081,6 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.displayAlert = displayAlert;
     vm.exportAll = exportAll;
     vm.getRoutes = getRoutes;
-    vm.incrementDeletes = incrementDeletes;
     vm.isSuccess = true;
     vm.page = 'routes';
     vm.removeElement = removeElement;
@@ -69158,13 +69157,6 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
             vm.copyFromDate = date_string;
             $('#dt1').val(date_string).change();
         }
-    }
-
-    function incrementDeletes(object_id) {
-        if (vm.chk[object_id])
-            vm.deletesChecked += 1;
-        else
-            vm.deletesChecked -= 1;
     }
 
     function removeElement(array, index){
