@@ -4,7 +4,9 @@ wb.styles do |style|
   wb.add_worksheet(name: "Organizations") do |sheet|
     sheet.add_row ["Name", "Billing Address", "City", "State", "Zip Code", "Sponsor Since"], :style => title_cell
     @organizations.each do |organization|
-      sheet.add_row [organization.name, organization.billing_address, organization.city, organization.state, organization.zip, organization.sponsor_since]
+      sheet.add_row [organization.name, organization.billing_address, organization.city,
+                     organization.state, organization.zip, organization.sponsor_since],
+                    :types => [nil, nil, nil, nil, :string, nil]
     end
   end
 end
