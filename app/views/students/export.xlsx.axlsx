@@ -10,6 +10,7 @@ wb.styles do |style|
     sheet.add_row
     sheet.add_row ["Name:", @student.full_name], :style => [heading_syle, normal_style]
     sheet.add_row ["Mobile Phone:", @student.mobile_phone], :style => [heading_syle, normal_style]
+    sheet.add_row ["Class:", @student.classof], :style => [heading_syle, normal_style]
     sheet.add_row
     sheet.add_row
     sheet.add_row ["Skills:", @student.skills], :style => [heading_syle, normal_style]

@@ -112,18 +112,20 @@ class StudentsController < ApplicationController
     # Insert all the records in students_stagings into students
     student_list = StudentsStaging.all
     student_list.each do |staging_student|
-      if !staging_student.duplicate
-        new_student = Student.new(
-            last_name: staging_student.last_name,
-            first_name: staging_student.first_name,
-            middle_name: staging_student.middle_name,
-            mobile_phone: staging_student.mobile_phone,
-            skills: staging_student.skills,
-            goals: staging_student.goals,
-            active: staging_student.active)
-
-        new_student.save
-      end
+      mystudent = Student.where(last_name: staging_student.last_name).where(first_name: staging_student.first_name).first
+      mystudent.update_attributes(classof: staging_student.classof)
+      # if !staging_student.duplicate
+      #   new_student = Student.new(
+      #       last_name: staging_student.last_name,
+      #       first_name: staging_student.first_name,
+      #       middle_name: staging_student.middle_name,
+      #       mobile_phone: staging_student.mobile_phone,
+      #       skills: staging_student.skills,
+      #       goals: staging_student.goals,
+      #       active: staging_student.active)
+      #
+      #   new_student.save
+      # end
     end
     ensure
       student_list.delete_all
@@ -139,7 +141,8 @@ class StudentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def student_params
-    params.require(:student).permit(:first_name, :last_name, :middle_name, :mobile_phone, :skills, :goals, :active)
+    params.require(:student).permit(:first_name, :last_name, :middle_name, :mobile_phone, :classof, :leave_reason,
+                                    :skills, :goals, :active)
   end
 end
 

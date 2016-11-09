@@ -4,9 +4,10 @@ wb.styles do |style|
   heading_syle = style.add_style :b => true, :sz => 16
   normal_style = style.add_style :b => false, :sz => 14
   wb.add_worksheet(name: "Students") do |sheet|
-    sheet.add_row ["First Name", "Last Name", "Mobile Phone", "Skills", "Goals", "Active"], :style => heading_syle
+    sheet.add_row ["First Name", "Last Name", "Mobile Phone", "Class", "Skills", "Goals", "Active"], :style => heading_syle
     @students.each do |student|
-      sheet.add_row [student.first_name, student.last_name, student.mobile_phone, student.skills, student.goals, student.active], :style => normal_style
+      sheet.add_row [student.first_name, student.last_name, student.mobile_phone, student.classof, student.skills,
+                     student.goals, student.active], :style => normal_style
     end
   end
 end

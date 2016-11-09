@@ -26,7 +26,7 @@ class StudentsStagingsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def students_staging_params
-    params.require(:students_staging).permit(:first_name, :last_name, :middle_name, :skills, :goals, :active, :duplicate)
+    params.require(:students_staging).permit(:first_name, :last_name, :middle_name, :classof, :skills, :goals, :active, :duplicate)
   end
 
 end
