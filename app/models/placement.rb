@@ -2,7 +2,7 @@ class Placement < ActiveRecord::Base
   belongs_to :student
   belongs_to :contact_assignment
   delegate :contact, :to => :contact_assignment
-  has_many :route_stops
+  has_many :route_stops, dependent: :destroy
 
   def self.grade_names
     {
