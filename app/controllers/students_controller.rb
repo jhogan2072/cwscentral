@@ -112,20 +112,20 @@ class StudentsController < ApplicationController
     # Insert all the records in students_stagings into students
     student_list = StudentsStaging.all
     student_list.each do |staging_student|
-      mystudent = Student.where(last_name: staging_student.last_name).where(first_name: staging_student.first_name).first
-      mystudent.update_attributes(classof: staging_student.classof)
-      # if !staging_student.duplicate
-      #   new_student = Student.new(
-      #       last_name: staging_student.last_name,
-      #       first_name: staging_student.first_name,
-      #       middle_name: staging_student.middle_name,
-      #       mobile_phone: staging_student.mobile_phone,
-      #       skills: staging_student.skills,
-      #       goals: staging_student.goals,
-      #       active: staging_student.active)
-      #
-      #   new_student.save
-      # end
+      #mystudent = Student.where(last_name: staging_student.last_name).where(first_name: staging_student.first_name).first
+      #mystudent.update_attributes(classof: staging_student.classof)
+      if !staging_student.duplicate
+        new_student = Student.new(
+            last_name: staging_student.last_name,
+            first_name: staging_student.first_name,
+            middle_name: staging_student.middle_name,
+            mobile_phone: staging_student.mobile_phone,
+            skills: staging_student.skills,
+            goals: staging_student.goals,
+            active: staging_student.active)
+
+        new_student.save
+      end
     end
     ensure
       student_list.delete_all

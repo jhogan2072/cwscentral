@@ -1,7 +1,6 @@
 class Student < ActiveRecord::Base
   has_many :placements, dependent: :destroy
   has_many :incidents, dependent: :destroy
-  has_and_belongs_to_many :route_stops
   #scope :active_students => {where(active: true)}
   #scope :red, -> { where(color: 'red') }
 
