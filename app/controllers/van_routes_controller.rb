@@ -138,6 +138,7 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def van_route_params
-    params.require(:van_route).permit(:id, :name, :route_date, :van_id, :driver_id, route_stops_attributes: [:id, :am_order, :pm_order, :placement_id, :_destroy])
+    params.require(:van_route).permit(:id, :name, :route_date, :van_id, :driver_id, :check_in_time,
+                                      route_stops_attributes: [:id, :am_order, :pm_order, :placement_id, :notes, :_destroy])
   end
 end

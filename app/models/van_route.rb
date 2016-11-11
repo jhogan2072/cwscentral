@@ -25,7 +25,6 @@ class VanRoute < ActiveRecord::Base
     routes = VanRoute.where(route_date: copy_from_date)
     routes.each do |route|
       route.clone_with_associations(copy_to_date)
-#      VanRoute.create(name: route.name, am_pm: route.am_pm, route_date: copy_to_date, van_id: route.van_id, driver_id: route.driver_id)
     end
   end
 

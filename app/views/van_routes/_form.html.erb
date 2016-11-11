@@ -63,13 +63,14 @@
             </div>
           </div>
           <div class="row">
-          <fieldset class="col-md-10">
+          <fieldset class="col-md-12">
             <legend>Route Stops</legend>
             <table class="detail_route_rows">
               <tr>
                 <th class="col-md-1 text-center">AM Order</th>
                 <th class="col-md-1 text-center">PM Order</th>
                 <th class="col-md-6">Placement</th>
+                <th class="col-md-3">Notes</th>
                 <th class="col-md-1" style="text-align: center; vertical-align: middle">Delete</th>
               </tr>
               <%= f.simple_fields_for :route_stops do |rs_form| %>

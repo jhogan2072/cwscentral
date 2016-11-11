@@ -37,7 +37,7 @@ wb.styles do |s|
                      route_stop.placement.student_gradelevel.to_s + "th/" + route_stop.placement.work_day,
                      route_stop.placement.student.first_name, route_stop.placement.student.last_name,
                      route_stop.placement.student.mobile_phone, route_stop.placement.earliest_start,
-                     route_stop.placement.latest_start, route_stop.placement.ideal_start, nil, nil, nil],
+                     route_stop.placement.latest_start, route_stop.placement.ideal_start, nil, nil, route_stop.notes],
                     :style => [route_bold, normal_cell, normal_cell, normal_cell, normal_cell, normal_cell, normal_cell, normal_cell, normal_cell, normal_cell, normal_cell,
                     normal_cell, normal_cell, normal_cell, normal_cell, normal_cell, normal_cell, normal_cell, normal_cell, normal_cell, normal_cell], :height => 45
     end
