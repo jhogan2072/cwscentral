@@ -69040,6 +69040,8 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     vm.page = 'students';
     vm.showResultAlert = false;
     vm.students = [];
+    vm.sortReverse = false;
+    vm.sortType = 'last_name';
 
     var absUrl = $location.absUrl();
     if (absUrl.indexOf('/students/active') > -1) {

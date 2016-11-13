@@ -13,19 +13,89 @@
         <table class="table table-striped">
           <thead>
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Mobile Phone</th>
-            <th>Class</th>
-            <th>Skills</th>
-            <th>Goals</th>
-            <th>Active?</th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'first_name'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                First Name
+                <span ng-show="ctrl.sortType == 'first_name' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'first_name' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'last_name'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                Last Name
+                <span ng-show="ctrl.sortType == 'last_name' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'last_name' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'mobile_phone'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                Mobile Phone
+                <span ng-show="ctrl.sortType == 'mobile_phone' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'mobile_phone' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'classof'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                Class
+                <span ng-show="ctrl.sortType == 'classof' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'classof' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'skills'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                Skills
+                <span ng-show="ctrl.sortType == 'skills' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'skills' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'goals'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                Goals
+                <span ng-show="ctrl.sortType == 'goals' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'goals' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'active'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                Active?
+                <span ng-show="ctrl.sortType == 'active' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'active' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
             <th colspan="3"></th>
           </tr>
           </thead>
 
           <tbody>
-          <tr ng-repeat="student in ctrl.students | filter:ctrl.searchInput">
+          <tr ng-repeat="student in ctrl.students | orderBy:ctrl.sortType:ctrl.sortReverse | filter:ctrl.searchInput">
             <td>{{ student.first_name }}</td>
             <td>{{ student.last_name }}</td>
             <td>{{ student.mobile_phone }}</td>
