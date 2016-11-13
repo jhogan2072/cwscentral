@@ -72,7 +72,7 @@ class Placement < ActiveRecord::Base
   end
 
   def mobile
-    contact_assignment.contact.mobile
+    contact_assignment.contact.personal_mobile
   end
 
   def office_phone

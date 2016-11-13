@@ -154,26 +154,6 @@ a:link.white-link, a:visited.white-link {
     margin-top: 0;
 }
 
-
-/*
- * Placeholder dashboard ideas
- */
-
-.placeholders {
-    margin-bottom: 30px;
-    text-align: center;
-}
-.placeholders h4 {
-    margin-bottom: 0;
-}
-.placeholder {
-    margin-bottom: 20px;
-}
-.placeholder img {
-    display: inline-block;
-    border-radius: 50%;
-}
-
 div[contentEditable] {
     cursor: pointer;
     background-color: white;
@@ -259,15 +239,6 @@ td > input[type=checkbox] {
     line-height: 34px;
 }
 
-#adv_srch_link {
-    line-height: 50px;
-    float:right;
-    color:#9d9d9d;
-}
-#adv_srch_link:hover {
-    color:#fff;
-    text-decoration: none;
-}
 .delete_object:hover {
     cursor: pointer;
 }
@@ -290,4 +261,10 @@ th > a:hover {
 
 th > a:active {
     color: #333333;
+}
+.form-control.less-padding
+{
+    padding-left: 9px;
+    padding-right: 9px;
+    text-align:center;
 }
