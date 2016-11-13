@@ -12,8 +12,7 @@ class VanRoute < ActiveRecord::Base
     new_van_route.route_date = copy_to_date
 
     self.route_stops.each do |route_stop|
-      new_route_stop = route_stop.clone
-      new_route_stop.placement = route_stop.placement
+      new_route_stop = route_stop.dup
       new_route_stop.save
       new_van_route.route_stops << new_route_stop
     end
