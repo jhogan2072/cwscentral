@@ -22,7 +22,9 @@ class ContactsController < ApplicationController
   # POST /contacts
   # POST /contacts.json
   def create
-    @contact = Contact.new(contact_params)
+    cp = contact_params
+    cp[:contact_assignments_attributes].values[0]["effective_end_date"] = '9999-12-31'
+    @contact = Contact.new(cp)
 
     respond_to do |format|
       if @contact.save
