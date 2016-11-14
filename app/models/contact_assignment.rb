@@ -4,6 +4,8 @@ class ContactAssignment < ActiveRecord::Base
   has_many :incidents
   has_many :placements
   before_save :get_address_from_organization
+  validates :organization_id, presence: true
+  validates :title, presence: true
 
   def organization_name
     self.organization.name

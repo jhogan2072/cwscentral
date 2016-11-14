@@ -1,6 +1,8 @@
 class Contact < ActiveRecord::Base
   has_many :contact_assignments, :dependent => :destroy
   accepts_nested_attributes_for :contact_assignments, :allow_destroy => true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
 
   def organization_name
     contact_assignment = self.contact_assignments.where("? between contact_assignments.effective_start_date and

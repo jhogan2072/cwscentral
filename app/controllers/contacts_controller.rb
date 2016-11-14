@@ -11,6 +11,7 @@ class ContactsController < ApplicationController
   # GET /contacts/new
   def new
     @contact = Contact.new
+    @contact.contact_assignments.build
   end
 
   # GET /contacts/1/edit
@@ -163,7 +164,7 @@ class ContactsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
     def contact_params
-      params.require(:contact).permit(:salutation, :first_name, :last_name, :email, :mobile,
+      params.require(:contact).permit(:salutation, :dear, :first_name, :last_name, :personal_email, :personal_mobile,
                                       contact_assignments_attributes: [:id, :effective_start_date, :effective_end_date,
                                                                        :organization_id, :title, :role, :address,
                                                                       :city, :state, :zip, :business_email, :office_phone,
