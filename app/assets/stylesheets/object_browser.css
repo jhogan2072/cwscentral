@@ -268,3 +268,9 @@ th > a:active {
     padding-right: 9px;
     text-align:center;
 }
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 75px;
+    margin-top: -9px;
+}
