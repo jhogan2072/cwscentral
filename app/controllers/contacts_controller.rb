@@ -168,7 +168,7 @@ class ContactsController < ApplicationController
     def contact_params
       params.require(:contact).permit(:salutation, :dear, :first_name, :last_name, :personal_email, :personal_mobile,
                                       contact_assignments_attributes: [:id, :effective_start_date, :effective_end_date,
-                                                                       :organization_id, :title, :role, :address,
+                                                                       :organization_id, :title, :department, :role, :address,
                                                                       :city, :state, :zip, :business_email, :office_phone,
                                                                        :fax, :notes, :_destroy])
     end
