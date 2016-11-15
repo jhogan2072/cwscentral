@@ -109,7 +109,6 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
         vm.selectedContact = indexSelectedContact;
         vm.contactName = contact_name;
         vm.contactId = contact_id
-        vm.searchInput = '';
         vm.getIncidents(contact_id, vm.CONTACT_TYPE);
     }
 
@@ -119,7 +118,6 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
         vm.selectedOrg = indexSelectedOrg;
         vm.orgName = org_name;
         vm.orgId = org_id;
-        vm.searchInput = '';
         vm.getIncidents(org_id, vm.ORG_TYPE);
     }
 
@@ -129,7 +127,6 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
         vm.selectedStudent = indexSelectedStudent;
         vm.studentFullName = student_name;
         vm.studentId = student_id;
-        vm.searchInput = '';
         vm.getIncidents(student_id, vm.STUDENT_TYPE);
     }
 

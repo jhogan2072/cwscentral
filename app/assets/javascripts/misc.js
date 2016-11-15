@@ -13,3 +13,10 @@ function remove_fields(link) {
     }
     $(link).parentsUntil("tbody").hide();
 }
+$(document).ready(function () {
+    $('.form_datetime').datetimepicker({
+        format: "DD-MMM-YYYY",
+        inline: false,
+        allowInputToggle : true
+    });
+});

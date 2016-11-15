@@ -90,7 +90,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="student_placement in ctrl.studentPlacements| orderBy:ctrl.sortType:ctrl.sortReverse | filter:ctrl.searchInput"
+  <tr ng-repeat="student_placement in ctrl.studentPlacements| orderBy:ctrl.sortType:ctrl.sortReverse"
 
       ng-class="{'selected':$index == ctrl.selectedRow}"
 

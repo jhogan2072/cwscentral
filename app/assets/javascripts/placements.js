@@ -41,7 +41,6 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.studentCount = 0;
     vm.studentId = -1;
     vm.students = [];
-    vm.studentSearchInput = '';
     vm.STUDENT_TYPE = 0;
     vm.truncateStyle = {};
     vm.time_pattern = '^([0]?[1-9]|1[0-2]):([0-5]\\d)\\s?(AM|PM|am|pm)?$';
@@ -188,7 +187,6 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         vm.selectedContact = indexSelectedContact;
         vm.contactName = contact_name;
         vm.contactId = contact_id
-        vm.searchInput = '';
         vm.getStudentPlacements(contact_id, vm.CONTACT_TYPE);
     }
 
@@ -198,7 +196,6 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         vm.selectedOrg = indexSelectedOrg;
         vm.orgName = org_name;
         vm.orgId = org_id
-        vm.searchInput = '';
         vm.getStudentPlacements(org_id, vm.ORG_TYPE);
     }
 
@@ -206,8 +203,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         vm.selectedRow = null;
         vm.truncateStyle = {};
         vm.selectedStudent = indexSelectedStudent;
-        vm.studentId = student_id
-        vm.searchInput = '';
+        vm.studentId = student_id;
         vm.getStudentPlacements(student_id, vm.STUDENT_TYPE);
     }
 

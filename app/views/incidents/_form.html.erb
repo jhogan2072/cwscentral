@@ -9,12 +9,12 @@
           <%= f.error_notification %>
 
           <div class="form-inputs">
-            <%= f.input :incident_date, wrapper_html: {class: 'col-sm-4'}  %>
+            <%= f.input :incident_date, as: :date_time_picker, wrapper_html: {class: 'col-sm-3'}, label: 'Feedback Date'  %>
             <%= f.association :contact_assignment, label_method: :current_assignment, value_method: :id, label: "Supervisor",
                               collection: ContactAssignment.for_student(student_id), include_blank: false, wrapper_html: {class: 'col-sm-4'}  %>
             <%= f.input :incident_category_id, collection: IncidentCategory.all,:value_method => :id,label_method: :category,
-                        :include_blank => false,
-                        wrapper_html: {class: 'col-sm-4'}  %>
+                        :include_blank => false, label: 'Feedback Category',
+                        wrapper_html: {class: 'col-sm-5'}  %>
             <%= f.input :description, wrapper_html: {class: 'col-sm-4'}  %>
             <%= f.input :student_id, as: :hidden %>
           </div>
