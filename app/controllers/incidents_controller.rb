@@ -57,11 +57,9 @@ class IncidentsController < ApplicationController
 
     respond_to do |format|
       if @incident.save
-        format.html { redirect_to :back, notice: 'Incident was successfully created.' }
-        format.json { render :show, status: :created, location: @incident }
+        format.html { redirect_to students_incidents_url, notice: 'Incident was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @incident.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -71,7 +69,7 @@ class IncidentsController < ApplicationController
   def update
     respond_to do |format|
       if @incident.update(incident_params)
-        format.html { redirect_to edit_incident_url, notice: 'Incident was successfully updated.' }
+        format.html { redirect_to students_incidents_url, format: :html, notice: 'Incident was successfully updated.' }
       else
         @student = Student.find(@incident.student_id)
         format.html { render :edit }

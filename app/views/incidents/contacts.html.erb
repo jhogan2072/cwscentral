@@ -22,7 +22,7 @@
       <h2 class="sub-header">Feedback History
         <div class="pull-right">
           <a class="btn btn-primary" target="_self" ng-if="ctrl.selectedContact != -1"
-             href="/incidents/export.xlsx?contact_id={{ctrl.contacts[ctrl.selectedContact].id}}">Export</a>
+             href="/incidents/export.xlsx?contact_id={{ctrl.contactId}}">Export</a>
         </div>
       </h2>
       <div class="jumbotron" ng-if="ctrl.selectedContact == -1" style="background-color: transparent; text-align: center; padding-top:24px;">

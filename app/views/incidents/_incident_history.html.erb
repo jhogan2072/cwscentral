@@ -19,7 +19,7 @@
   <tbody>
   <tr ng-repeat="incident in ctrl.incidents"
       ng-class="{'selected':$index == ctrl.selectedRow}">
-    <td>{{ incident.incident_date | date:'yyyy-MM-dd h:mm a' }}</td>
+    <td>{{ incident.incident_date | date:'MM-dd-yyyy' }}</td>
     <% if query_type == 0 or query_type == 2 %>
         <td>{{ incident.organization_name }}</td>
     <% end %>

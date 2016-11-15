@@ -3,6 +3,7 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
     vm.contacts = [];
+    vm.contactId = -1;
     vm.CONTACT_TYPE = 2;
     vm.deleteIncident = deleteIncident;
     vm.displayAlert = displayAlert;
@@ -12,8 +13,10 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
     vm.getStudents = getStudents;
     vm.isSuccess = true;
     vm.organizations = [];
+    vm.orgId = -1;
     vm.ORG_TYPE = 1;
     vm.page = 'students';
+    vm.removeElement = removeElement;
     vm.searchInput = '';
     vm.selectedRow = null;
     vm.selectedContact = -1;
@@ -23,6 +26,7 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
     vm.setClickedOrg = setClickedOrg;
     vm.setClickedStudent = setClickedStudent;
     vm.showResultAlert = false;
+    vm.studentId = -1;
     vm.students = [];
     vm.STUDENT_TYPE = 0;
 
@@ -99,8 +103,13 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
     function getOrganizations () {
         vm.organizations = IncidentService.organizations();
     }
+
     function getStudents() {
         vm.students = IncidentService.students();
+    }
+
+    function removeElement(array, index){
+        array.splice(index, 1);
     }
 
     function setClickedContact(indexSelectedContact, contact_name, contact_id) {

@@ -21,7 +21,7 @@
       <h2 class="sub-header">Placement History
         <div class="pull-right">
         <a class="btn btn-primary" target="_self" ng-if="ctrl.selectedContact != -1"
-           href="/placements/export.xls?contact_id={{ctrl.contacts[ctrl.selectedContact].id}}">Export</a>
+           href="/placements/export.xls?contact_id={{ctrl.contactId}}">Export</a>
         </div>
       </h2>
       <div class="jumbotron" ng-if="ctrl.selectedContact == -1" style="background-color: transparent; text-align: center; padding-top:24px;">
