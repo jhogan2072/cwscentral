@@ -19,7 +19,7 @@
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <%= render "shared/alert_msg" %>
-      <h2 class="sub-header">Incident History
+      <h2 class="sub-header">Feedback History
         <div class="pull-right">
           <a class="btn btn-primary ng-scope" target="_self" ng-if="ctrl.selectedStudent != -1"
              href="/incidents/new?student_id={{ctrl.students[ctrl.selectedStudent].id}}">New</a>
@@ -29,8 +29,8 @@
       </h2>
       <div class="jumbotron" ng-if="ctrl.selectedStudent == -1" style="background-color: transparent; text-align: center; padding-top:24px;">
         <h2>Select a Student</h2>
-        <p class="lead">To see a student's incident history, select the student from the list on the left.  The incident history
-          will appear on the right side of the page.  To edit an incident, click the Edit link.  To delete an incident,
+        <p class="lead">To see a student's feedback history, select the student from the list on the left.  The feedback history
+          will appear on the right side of the page.  To edit feedback, click the Edit link.  To delete feedback,
           click the trash can icon.
         </p>
       </div>

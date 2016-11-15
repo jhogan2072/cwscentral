@@ -19,7 +19,7 @@
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <%= render "shared/alert_msg" %>
-      <h2 class="sub-header">Student Incident History
+      <h2 class="sub-header">Student Feedback History
         <div class="pull-right">
         <a class="btn btn-primary" target="_self" ng-if="ctrl.selectedOrg != -1"
            href="/incidents/export.xlsx?organization_id={{ctrl.organizations[ctrl.selectedOrg].id}}">Export</a>
@@ -27,9 +27,9 @@
       </h2>
       <div class="jumbotron" ng-if="ctrl.selectedOrg == -1" style="background-color: transparent; text-align: center; padding-top:24px;">
         <h2>Select an Organization</h2>
-        <p class="lead">To see an organization's incident history, select an organization
-          from the list on the left.  The incident history will appear on this page.  To edit the details of
-          an incident, click the Edit link at the end of the relevant incident row.
+        <p class="lead">To see an organization's feedback history, select an organization
+          from the list on the left.  The feedback history will appear on this page.  To edit the details of
+          feedback, click the Edit link at the end of the relevant feedback row.
         </p>
       </div>
       <div class="table-responsive" ng-style="ctrl.truncateStyle" ng-if="ctrl.selectedOrg != -1">
