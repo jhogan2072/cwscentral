@@ -3,12 +3,13 @@ wb.styles do |style|
   title_cell = style.add_style(b: true)
 
   wb.add_worksheet(name: "Contacts") do |sheet|
-    sheet.add_row ["Organization Name", "Salutation", "First Name", "Last Name", "Title", "Role", "Date Started",
-                   "Date Departed", "Address", "City", "State", "Zip Code",
+    sheet.add_row ["Organization Name", "Salutation", "First Name", "Last Name", "Title", "Department", "Role",
+                   "Date Started", "Date Departed", "Address", "City", "State", "Zip Code",
                    "Business Email", "Personal Mobile Phone", "Office Phone", "Fax", "Notes"], :style => title_cell
     @contacts.each do |contact|
       sheet.add_row [contact.organization_name, contact.salutation, contact.first_name, contact.last_name,
-                     contact.contact_assignments.first.title, contact.contact_assignments.first.role,
+                     contact.contact_assignments.first.title, contact.contact_assignments.first.department,
+                     contact.contact_assignments.first.role,
                      contact.contact_assignments.first.effective_start_date,
                      contact.contact_assignments.first.effective_end_date == '31-Dec-9999'.to_date ? '' :
                          contact.contact_assignments.first.effective_end_date,

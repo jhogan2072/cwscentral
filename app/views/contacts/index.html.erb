@@ -77,6 +77,17 @@
                 </span>
               </a>
             </th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'end_date'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                End Date
+                <span ng-show="ctrl.sortType == 'end_date' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'end_date' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
             <th colspan="3"></th>
           </tr>
           </thead>
@@ -84,11 +95,12 @@
           <tbody>
             <tr ng-repeat="contact in ctrl.contacts| orderBy:ctrl.sortType:ctrl.sortReverse | filter:ctrl.searchInput">
               <td><a target="_self" ng-href="/placements/contacts?sid={{contact.id}}">{{ contact.last_name }}</a></td>
-              <td class="col-md-2">{{ contact.first_name }}</td>
-              <td class="col-md-2">{{ contact.business_email }}</td>
+              <td class="col-md-1">{{ contact.first_name }}</td>
+              <td class="col-md-1">{{ contact.business_email }}</td>
               <td class="col-md-2">{{ contact.office_phone }}</td>
-              <td class="col-md-4">{{ contact.organization_name }}</td>
-              <td class="col-md-4">{{ contact.active_since }}</td>
+              <td class="col-md-3">{{ contact.organization_name }}</td>
+              <td class="col-md-2">{{ contact.active_since }}</td>
+              <td class="col-md-2">{{ contact.end_date }}</td>
               <td><a target="_self" ng-href="/contacts/{{contact.id}}/edit">Edit</a></td>
               <td><a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/contacts/{{contact.id}}">Delete</a></td>
             </tr>
