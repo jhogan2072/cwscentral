@@ -30,7 +30,7 @@ angular.module('app').controller("ContactController", function($http, $timeout, 
         ca.effective_end_date = closeDate;
         ContactAssignmentService.update({ id:contactAssignmentId }, ca);
         vm.displayAlert(true,"The contact assignment was successfully closed.");
-        $window.location.reload();
+        $window.location.href = '/contacts';
     }
 
     function displayAlert (isSuccess, message) {
@@ -47,7 +47,7 @@ angular.module('app').controller("ContactController", function($http, $timeout, 
     function reopenContact(contactId) {
         var ca = ContactAssignmentService.reopen({contact_id:contactId});
         vm.displayAlert(true,"The contact assignment was successfully updated.");
-        $window.location.reload();
+        $window.location.href = '/contacts';
     }
 
     function showCloseoutModal(contactAssignmentId) {

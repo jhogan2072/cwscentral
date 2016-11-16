@@ -11,7 +11,7 @@ class ContactAssignmentsController < ApplicationController
   def update
     respond_to do |format|
       if @contact_assignment.update(contact_assignment_params)
-        format.html { redirect_to @contact_assignment, notice: 'Contact assignment was successfully updated.' }
+        format.html { redirect_to contacts_url, notice: 'Contact assignment was successfully updated.' }
         format.json { render :show, status: :ok, location: @contact_assignment }
       else
         format.html { render :edit }
@@ -27,7 +27,7 @@ class ContactAssignmentsController < ApplicationController
     @contact_assignment.effective_end_date = '31-dec-9999'
     respond_to do |format|
       if @contact_assignment.save
-        format.json {redirect_to @contact_assignment, notice: 'Contact assignment was successfully updated.' }
+        format.json {redirect_to contacts_url, notice: 'Contact assignment was successfully updated.' }
       else
         format.json { render json: @contact_assignment.errors, status: :unprocessable_entity }
       end
