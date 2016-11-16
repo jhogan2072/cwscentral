@@ -2,7 +2,7 @@ wb = xlsx_package.workbook
 wb.styles do |style|
   title_cell = style.add_style(b: true)
   wb.add_worksheet(name: "Incidents") do |sheet|
-    sheet.add_row ["Incident Date", "Organization Name", "Contact Name", "Category", "Description"], :style => title_cell
+    sheet.add_row ["Feedback Date", "Organization Name", "Contact Name", "Category", "Description"], :style => title_cell
     if not @incidents.nil?
       @incidents.each do |incident|
         sheet.add_row [incident.incident_date, incident.organization_name, incident.contact_name,

@@ -57,7 +57,7 @@ class IncidentsController < ApplicationController
 
     respond_to do |format|
       if @incident.save
-        format.html { redirect_to students_incidents_url, notice: 'Incident was successfully created.' }
+        format.html { redirect_to students_incidents_url, notice: 'Feedback was successfully created.' }
       else
         format.html { render :new }
       end
@@ -69,7 +69,7 @@ class IncidentsController < ApplicationController
   def update
     respond_to do |format|
       if @incident.update(incident_params)
-        format.html { redirect_to students_incidents_url, format: :html, notice: 'Incident was successfully updated.' }
+        format.html { redirect_to students_incidents_url, format: :html, notice: 'Feedback was successfully updated.' }
       else
         @student = Student.find(@incident.student_id)
         format.html { render :edit }
@@ -82,7 +82,7 @@ class IncidentsController < ApplicationController
   def destroy
     @incident.destroy
     respond_to do |format|
-      format.html { redirect_to incidents_url, notice: 'Incident was successfully destroyed.' }
+      format.html { redirect_to incidents_url, notice: 'Feedback was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -97,7 +97,7 @@ class IncidentsController < ApplicationController
     end
 
     respond_to do |format|
-      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="incidents.xlsx"'}
+      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="feedback.xlsx"'}
     end
   end
 

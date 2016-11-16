@@ -68617,6 +68617,7 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
     vm.contacts = [];
+    vm.contactId = -1;
     vm.CONTACT_TYPE = 2;
     vm.deleteIncident = deleteIncident;
     vm.displayAlert = displayAlert;
@@ -68626,8 +68627,10 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
     vm.getStudents = getStudents;
     vm.isSuccess = true;
     vm.organizations = [];
+    vm.orgId = -1;
     vm.ORG_TYPE = 1;
     vm.page = 'students';
+    vm.removeElement = removeElement;
     vm.searchInput = '';
     vm.selectedRow = null;
     vm.selectedContact = -1;
@@ -68637,6 +68640,7 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
     vm.setClickedOrg = setClickedOrg;
     vm.setClickedStudent = setClickedStudent;
     vm.showResultAlert = false;
+    vm.studentId = -1;
     vm.students = [];
     vm.STUDENT_TYPE = 0;
 
@@ -68660,9 +68664,9 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
             // success handler
             //Alert that the object was successfully deleted and delete the row
             vm.removeElement(vm.incidents, indexObjToDelete);
-            vm.displayAlert(true,"The incident was successfully deleted.");
+            vm.displayAlert(true,"The feedback was successfully deleted.");
         }, function(response) {
-            vm.displayAlert(false, "There was an error deleting the incident.  The HTTP return code was " + response.status);
+            vm.displayAlert(false, "There was an error deleting the feedback.  The HTTP return code was " + response.status);
         });
     }
 
@@ -68696,16 +68700,16 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
         error( function(data, status) {
             if (status == 404) {
                 if (listingType == vm.STUDENT_TYPE) {
-                    vm.displayAlert(false, "This student has no incidents.");
+                    vm.displayAlert(false, "This student has no feedback.");
                 } else if (listingType == vm.ORG_TYPE) {
-                    vm.displayAlert(false, "This organization has no student incidents.");
+                    vm.displayAlert(false, "This organization has no student feedback.");
                 } else {
-                    vm.displayAlert(false, "This contact has no student incidents.");
+                    vm.displayAlert(false, "This contact has no student feedback.");
                 }
                 vm.incidents = [];
             } else {
                 //put up a failure message
-                vm.displayAlert(false,"There was an retrieving student incidents. The HTTP return code was "+status);
+                vm.displayAlert(false,"There was an retrieving student feedback. The HTTP return code was "+status);
             }
         });
     }
@@ -68713,8 +68717,13 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
     function getOrganizations () {
         vm.organizations = IncidentService.organizations();
     }
+
     function getStudents() {
         vm.students = IncidentService.students();
+    }
+
+    function removeElement(array, index){
+        array.splice(index, 1);
     }
 
     function setClickedContact(indexSelectedContact, contact_name, contact_id) {

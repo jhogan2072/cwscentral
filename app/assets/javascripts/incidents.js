@@ -50,9 +50,9 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
             // success handler
             //Alert that the object was successfully deleted and delete the row
             vm.removeElement(vm.incidents, indexObjToDelete);
-            vm.displayAlert(true,"The incident was successfully deleted.");
+            vm.displayAlert(true,"The feedback was successfully deleted.");
         }, function(response) {
-            vm.displayAlert(false, "There was an error deleting the incident.  The HTTP return code was " + response.status);
+            vm.displayAlert(false, "There was an error deleting the feedback.  The HTTP return code was " + response.status);
         });
     }
 
@@ -86,16 +86,16 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
         error( function(data, status) {
             if (status == 404) {
                 if (listingType == vm.STUDENT_TYPE) {
-                    vm.displayAlert(false, "This student has no incidents.");
+                    vm.displayAlert(false, "This student has no feedback.");
                 } else if (listingType == vm.ORG_TYPE) {
-                    vm.displayAlert(false, "This organization has no student incidents.");
+                    vm.displayAlert(false, "This organization has no student feedback.");
                 } else {
-                    vm.displayAlert(false, "This contact has no student incidents.");
+                    vm.displayAlert(false, "This contact has no student feedback.");
                 }
                 vm.incidents = [];
             } else {
                 //put up a failure message
-                vm.displayAlert(false,"There was an retrieving student incidents. The HTTP return code was "+status);
+                vm.displayAlert(false,"There was an retrieving student feedback. The HTTP return code was "+status);
             }
         });
     }
