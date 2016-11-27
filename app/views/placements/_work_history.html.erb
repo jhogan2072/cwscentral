@@ -1,111 +1,45 @@
 <table class="table table-striped">
   <thead>
   <tr>
-    <th>
-      <a href="#" ng-click="ctrl.sortType = 'start_date'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
-        Start Date
-      <span ng-show="ctrl.sortType == 'start_date' && !ctrl.sortReverse" style="text-decoration: none">
-        <%= image_tag("sort_down.png", size: "14x14") %>
-      </span>
-      <span ng-show="ctrl.sortType == 'start_date' && ctrl.sortReverse">
-        <%= image_tag("sort_up.png", size: "14x14") %>
-      </span>
-      </a>
-    </th>
-    <th>
-      <a href="#" ng-click="ctrl.sortType = 'end_date'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
-        End Date
-      <span ng-show="ctrl.sortType == 'end_date' && !ctrl.sortReverse" style="text-decoration: none">
-        <%= image_tag("sort_down.png", size: "14x14") %>
-      </span>
-      <span ng-show="ctrl.sortType == 'end_date' && ctrl.sortReverse">
-        <%= image_tag("sort_up.png", size: "14x14") %>
-      </span>
-      </a>
-    </th>
     <% if query_type == 0 or query_type == 2 %>
     <th>
-      <a href="#" ng-click="ctrl.sortType = 'organization_name'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
       Organization Name
-      <span ng-show="ctrl.sortType == 'organization_name' && !ctrl.sortReverse" style="text-decoration: none">
-        <%= image_tag("sort_down.png", size: "14x14") %>
-      </span>
-      <span ng-show="ctrl.sortType == 'organization_name' && ctrl.sortReverse">
-        <%= image_tag("sort_up.png", size: "14x14") %>
-      </span>
-      </a>
     </th>
     <% end %>
     <% if query_type == 1 or query_type == 2 %>
-    <th>
-      <a href="#" ng-click="ctrl.sortType = 'student_name'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
-          Student Name
-        <span ng-show="ctrl.sortType == 'student_name' && !ctrl.sortReverse" style="text-decoration: none">
-          <%= image_tag("sort_down.png", size: "14x14") %>
-        </span>
-        <span ng-show="ctrl.sortType == 'student_name' && ctrl.sortReverse">
-          <%= image_tag("sort_up.png", size: "14x14") %>
-        </span>
-      </a>
-    </th>
+    <th>Student Name</th>
     <% end %>
     <% if (query_type != 2) %>
-    <th>
-      <a href="#" ng-click="ctrl.sortType = 'contact_name'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
-        Contact Name
-    <span ng-show="ctrl.sortType == 'contact_name' && !ctrl.sortReverse" style="text-decoration: none">
-      <%= image_tag("sort_down.png", size: "14x14") %>
-    </span>
-    <span ng-show="ctrl.sortType == 'contact_name' && ctrl.sortReverse">
-      <%= image_tag("sort_up.png", size: "14x14") %>
-    </span>
-      </a>
-    </th>
+    <th>Contact Name</th>
     <% end %>
+    <th>Start Date</th>
+    <th>End Date</th>
     <th>Paid?</th>
-    <th>
-      <a href="#" ng-click="ctrl.sortType = 'work_day'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
-        Work Day
-    <span ng-show="ctrl.sortType == 'work_day' && !ctrl.sortReverse" style="text-decoration: none">
-      <%= image_tag("sort_down.png", size: "14x14") %>
-    </span>
-    <span ng-show="ctrl.sortType == 'work_day' && ctrl.sortReverse">
-      <%= image_tag("sort_up.png", size: "14x14") %>
-    </span>
-      </a>
-    </th>
-    <th>
-      <a href="#" ng-click="ctrl.sortType = 'class'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
-        Class
-    <span ng-show="ctrl.sortType == 'class' && !ctrl.sortReverse" style="text-decoration: none">
-      <%= image_tag("sort_down.png", size: "14x14") %>
-    </span>
-    <span ng-show="ctrl.sortType == 'class' && ctrl.sortReverse">
-      <%= image_tag("sort_up.png", size: "14x14") %>
-    </span>
-      </a>
-    </th>
+    <th>Work Day</th>
+    <th>Class</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="student_placement in ctrl.studentPlacements| orderBy:ctrl.sortType:ctrl.sortReverse"
-
-      ng-class="{'selected':$index == ctrl.selectedRow}"
+  <tr ng-repeat="student_placement in ctrl.studentPlacements"
+      ng-class="{'selected':$index == ctrl.selectedRow, subrow: ctrl.studentPlacements[$index - 1].organization_name == student_placement.organization_name && ctrl.studentPlacements[$index - 1].student_gradelevel == student_placement.student_gradelevel}"
 
       ng-click="ctrl.showOrganizationDetails($index, student_placement.id)" id="{{student_placement.id}}">
-    <td>{{ student_placement.start_date }}</td>
-    <td>{{ student_placement.end_date }}</td>
     <% if query_type == 0 or query_type == 2 %>
-      <td>{{ student_placement.organization_name }}</td>
+      <td ng-class="{subrowcell: ctrl.studentPlacements[$index - 1].organization_name == student_placement.organization_name && ctrl.studentPlacements[$index - 1].student_gradelevel == student_placement.student_gradelevel}">
+        {{ student_placement.organization_name }}</td>
     <% end %>
     <% if query_type == 1 or query_type == 2 %>
       <td>{{ student_placement.student_name }}</td>
     <% end %>
     <% if (query_type != 2) %>
-      <td>{{ student_placement.contact_name }}</td>
+      <td ng-class="{subrowcell: ctrl.studentPlacements[$index - 1].organization_name == student_placement.organization_name && ctrl.studentPlacements[$index - 1].student_gradelevel == student_placement.student_gradelevel}">
+        <a ng-click="$event.stopPropagation();" title="Change supervisor and preserve history" ng-if="$index == 0" href="/placements/{{student_placement.id}}/edit_contact"><img src="<%=image_path("edit.png")%>" width="18" height="18"></a>
+        {{ student_placement.contact_name }}</td>
     <% end %>
+    <td>{{ student_placement.start_date }}</td>
+    <td>{{ student_placement.end_date }}</td>
     <td>{{ student_placement.paid }}</td>
     <td>{{ student_placement.work_day }}</td>
     <td>{{ student_placement.student_gradelevel }}</td>

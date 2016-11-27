@@ -274,3 +274,9 @@ th > a:active {
     right: 75px;
     margin-top: -9px;
 }
+.subrow {
+    color: lightgrey;
+}
+tr.subrow > td.subrowcell {
+    padding-left:20px;
+}

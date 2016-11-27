@@ -65,6 +65,8 @@ Rails.application.routes.draw do
   resources :placements, except: [:index, :show, :new] do
     member do
       get :org, :defaults => { :format => :json }
+      get :edit_contact
+      post :update_contact
     end
     collection do
       post :export_attendance, defaults: { :format => :xlsx }

@@ -37,6 +37,14 @@ contact_assignments.effective_end_date", DateTime.now.to_date)
     end
   end
 
+  def self.for_org_and_start_date(organization_id, start_date)
+    self.joins(:organization).joins(:contact)
+        .includes(:organization).includes(:contact)
+        .where("? between contact_assignments.effective_start_date and contact_assignments.effective_end_date", start_date.nil? ? DateTime.now.to_date : start_date)
+        .where("organization_id = ?", organization_id)
+        .order("contacts.last_name")
+  end
+
 private
   def get_address_from_organization
     if self.address.nil?

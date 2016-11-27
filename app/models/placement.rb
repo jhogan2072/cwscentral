@@ -87,6 +87,25 @@ class Placement < ActiveRecord::Base
     self.organization_name + ' (' + self.contact_name + ')' + ' - ' + self.student_name
   end
 
+  def replace_supervisor(placement_params)
+    # If the start date is the same as the existing start date, just update the supervisor
+    date_param = placement_params["start_date"]
+    if placement_params["start_date"].include? 'Sept'
+      date_param = placement_params["start_date"].sub! 'Sept', 'Sep'
+    end
+    new_start_date = DateTime.strptime(date_param, '%d-%b-%Y')
+
+    if new_start_date <= self.start_date
+      self.update(:contact_assignment_id => placement_params['contact_assignment_id'])
+    else
+      new_placement = self.dup
+      new_placement.start_date = new_start_date
+      new_placement.contact_assignment_id = placement_params['contact_assignment_id']
+      new_placement.save
+      self.update(:end_date => new_start_date - 1)
+    end
+  end
+
   def self.current_placements(effective_date)
     where("start_date <= ? and end_date >= ?", effective_date, effective_date)
   end
@@ -100,7 +119,7 @@ class Placement < ActiveRecord::Base
   def self.search(filtering_id=-1,query_type=-1)
     if query_type == 0
       joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
-          .where("student_id = ?", filtering_id).order("placements.start_date")
+          .where("student_id = ?", filtering_id).order("placements.student_gradelevel desc, placements.start_date desc")
     elsif query_type == 1
       joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
           .where("contact_assignments.organization_id = ?", filtering_id)

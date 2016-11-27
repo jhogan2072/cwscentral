@@ -106,13 +106,31 @@ class PlacementsController < ApplicationController
   def update
     respond_to do |format|
       if @placement.update(placement_params)
-        format.html { redirect_to :back, notice: 'Placement was successfully updated.' }
+        format.html { redirect_to students_placements_path("student_id" => params[:placement][:student_id]), notice: 'Placement was successfully updated.' }
         format.json { head :no_content, status: :created }
       else
         format.html { render :edit }
         format.json { render json: @placement.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # GET /placements/1/edit_contact
+  def edit_contact
+    @placement = Placement.find(params[:id])
+  end
+
+  # PATCH/PUT /placements/1/update_contact
+  def update_contact
+    @placement = Placement.find(params[:id])
+    respond_to do |format|
+      if @placement.replace_supervisor(placement_params)
+        format.html { redirect_to students_placements_path("student_id" => params[:placement][:student_id]), notice: 'Placement was successfully updated.' }
+      else
+        format.html { render :edit_contact}
+      end
+    end
+
   end
 
   # DELETE /placements/1
