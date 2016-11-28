@@ -6,35 +6,24 @@
         <div class="col-sm-3 col-md-2 sidebar" style="padding-top:0px">
           <ul class="nav nav-sidebar">
             <li>
-              <div style="font-weight: bold; font-size: 12pt; padding-left:20px; background-color: lightgrey; display: inline-block; width: 100%; line-height: 34px;">
-                Route Day:
-              </div>
-            </li>
-            <li>
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-12" style="margin: 0 auto; float: none">
-                    <%= f.hidden_field :route_date %>
-                    <input type='hidden' class="form-control" id="sel_date"/>
-                    <div id="datetimepicker12"></div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
               <div class="nav-heading">
-                Van and Driver
+                Van
               </div>
             </li>
-            <li>
-              <div class="col-md-10" style="margin-left:15px">
+            <li class="hasframe">
+              <div class="col-md-12">
                 <fieldset class="well" style="padding-top: 5px; padding-bottom: 5px"><legend class="the-legend">Van</legend>
                   <%= f.input :van_id,:collection => Van.all,:label => false,:value_method => :id ,:include_blank => false %>
                 </fieldset>
               </div>
             </li>
             <li>
-              <div class="col-md-10" style="margin-left:15px">
+              <div class="nav-heading">
+                Driver
+              </div>
+            </li>
+            <li class="hasframe">
+              <div class="col-md-12">
                 <fieldset class="well" style="padding-top: 5px; padding-bottom: 5px"><legend class="the-legend">Driver</legend>
                   <%= f.input :driver_id,:collection => Driver.all,:label => false,:value_method => :id ,:include_blank => false %>
                 </fieldset>
@@ -87,22 +76,4 @@
       </div>
     </div>
 <% end%>
-<script type="text/javascript">
-  // When the document is ready
-  $(document).ready(function () {
-    $('select[id*="van_route_student_ids"]').wrapAll('<div class="col-md-7">');
-    $(function () {
-      $('.chosen-select').chosen();
-    });
-    $('#datetimepicker12').datetimepicker({
-      format: "DD-MMM-YYYY",
-      inline: true,
-      defaultDate: new Date($('#van_route_route_date').val())
-    });
-    $(".day, .prev, .next, .picker-switch").click(function(event) {
-      event.preventDefault();
-      event.stopPropagation();
-    });
-  });
-</script>
 </body>

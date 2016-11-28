@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   resources :contact_stagings, only: [:edit, :update, :destroy]
 
-  resources :contact_assignments, only: [:show, :update], :defaults => { :format => :json } do
+  resources :contact_assignments, only: [:show, :index, :update], :defaults => { :format => :json } do
     collection do
       get :reopen
     end

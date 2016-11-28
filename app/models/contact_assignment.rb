@@ -11,10 +11,18 @@ class ContactAssignment < ActiveRecord::Base
     self.organization.name
   end
 
+  def contact_name
+    self.contact.name
+  end
+
   def current_assignment
     if self.contact and self.organization
       self.contact.name + ' - ' + self.organization.name
     end
+  end
+
+  def self.with_contact
+    self.joins(:contact).includes(:contact)
   end
 
   def self.for_student(student_id)

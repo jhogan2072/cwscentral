@@ -6,6 +6,19 @@ class ContactAssignmentsController < ApplicationController
   def show
   end
 
+  def index
+    organization_id = params[:organization_id]
+    start_date = params[:start_date]
+    @contact_assignments = ContactAssignment.for_org_and_start_date(organization_id, start_date)
+  end
+
+  def get_by_org
+    organization_id = params[:id]
+    @placement = ContactAssignment.for_organization(organization_id)
+    #add the data to an array for JSON formatting purposes
+    @placement_array = Array.new(1, @placement)
+  end
+
   # PATCH/PUT /contact_assignments/1
   # PATCH/PUT /contact_assignments/1.json
   def update

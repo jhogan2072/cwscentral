@@ -1,16 +1,19 @@
 angular.module('app').controller("PlacementController", function($http, $timeout, $location, ModalFormService,
-                                                                 PlacementService, $q){
+                                                                 PlacementService, ContactAssignmentService, $q){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "";
     vm.attendanceDate = "";
     vm.contactId = -1;
     vm.contactName = "";
+    vm.contactAssignments = [];
     vm.contacts = [];
     vm.CONTACT_TYPE = 2;
+    vm.currentOrgId = "";
     vm.deletePlacement = deletePlacement;
     vm.displayAlert = displayAlert;
     vm.getStudentPlacements = getStudentPlacements;
+    vm.getContactAssignments = getContactAssignments;
     vm.getContacts = getContacts;
     vm.getGradeData = getGradeData;
     vm.getOrganizations = getOrganizations;
@@ -21,10 +24,14 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.orgId = -1;
     vm.orgName = "";
     vm.orgs = [];
+    vm.placementStartDate = "";
+    vm.selectedOrg = -1;
     vm.ORG_TYPE = 1;
     vm.page = 'placements';
+    vm.placementStartDate = ''
     vm.removeElement = removeElement;
     vm.searchInput = '';
+    vm.selectedAssignment = -1;
     vm.selectedClasses = {};
     vm.selectedRow = null;
     vm.selectedContact = -1;
@@ -45,6 +52,10 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.truncateStyle = {};
     vm.time_pattern = '^([0]?[1-9]|1[0-2]):([0-5]\\d)\\s?(AM|PM|am|pm)?$';
 
+    function matchRuleShort(str, rule) {
+        return new RegExp("^" + rule.split("*").join(".*") + "$").test(str);
+    }
+
     var absUrl = $location.absUrl();
     if (absUrl.indexOf('/placements/students') > -1) {
         if (window.location.search.substring(1)) {
@@ -52,7 +63,9 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         } else {
             getStudents();
         }
-    } else if (absUrl.indexOf('/placements/organizations') > -1) {
+    } else if (absUrl.indexOf('/placements/organizations') > -1
+        || matchRuleShort(absUrl, '*/placements/*/edit')
+        || matchRuleShort(absUrl, '*/placements/add*')) {
         getOrganizations();
     } else if (absUrl.indexOf('/placements/contacts') > -1) {
         if (window.location.search.substring(1)) {
@@ -85,6 +98,23 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         $timeout(function(){vm.showResultAlert = false}, 5000);
     }
 
+    function getContactAssignments(contactAssignmentId) {
+        vm.contactAssignments = [];
+        ContactAssignmentService.query({organization_id: vm.selectedOrg, start_date: vm.placementStartDate}
+        ,function(data) {
+            // success handler
+            angular.forEach(data, function(ca) {
+                vm.contactAssignments.push(ca);
+            });
+            if (contactAssignmentId)
+                vm.selectedAssignment = parseInt(contactAssignmentId);
+            else
+                vm.selectedAssignment = vm.contactAssignments[0].id;
+        }, function(response) {
+            vm.displayAlert(false, "There was an error retrieving contact assignments.  The HTTP return code was " + response.status);
+        });
+    }
+
     function getContacts (contactId) {
         vm.contacts = PlacementService.contacts();
         if (contactId) {
@@ -115,9 +145,14 @@ angular.module('app').controller("PlacementController", function($http, $timeout
             angular.forEach(data, function(organization) {
                 vm.orgs.push(organization);
             });
+            if (vm.currentOrgId != "")
+                vm.selectedOrg = parseInt(vm.currentOrgId);
+            else
+                vm.selectedOrg = vm.orgs[0].id;
+            vm.getContactAssignments(vm.placementcontactAssignmentId);
         }).
         error(function(data, status, headers, config) {
-            vm.displayAlert(false,"There was an unexpected error.  Could not retrieve students.");
+            vm.displayAlert(false,"There was an unexpected error.  Could not retrieve organizations.");
         });
     }
 

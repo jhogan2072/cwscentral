@@ -2,6 +2,7 @@ class PlacementsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_placement, only: [:edit, :update, :destroy]
   helper_method :sort_column, :sort_direction
+  include PlacementsHelper
 
   # GET /placements
   # GET /placements.json
@@ -83,12 +84,15 @@ class PlacementsController < ApplicationController
   # GET /placements/1/edit
   def edit
     @student = @placement.student
+    @organizations = Organization.current_organizations(@placement.start_date)
   end
 
   # POST /placements
   # POST /placements.json
   def create
-    @placement = Placement.new(placement_params)
+    stripped_params = strip_number(placement_params)
+
+    @placement = Placement.new(stripped_params)
 
     respond_to do |format|
       if @placement.save
@@ -105,7 +109,9 @@ class PlacementsController < ApplicationController
   # PATCH/PUT /placements/1.json
   def update
     respond_to do |format|
-      if @placement.update(placement_params)
+      stripped_params = strip_number(placement_params)
+
+      if @placement.update(stripped_params)
         format.html { redirect_to students_placements_path("student_id" => params[:placement][:student_id]), notice: 'Placement was successfully updated.' }
         format.json { head :no_content, status: :created }
       else

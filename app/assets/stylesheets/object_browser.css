@@ -51,10 +51,11 @@ body {
     font-weight: bold;
     font-size: 12pt;
     margin-bottom: 10px;
-    padding-top:5px;
-    padding-bottom:10px;
     padding-left:20px;
-    background-color: lightgrey
+    background-color: lightgrey;
+    display: inline-block;
+    line-height: 34px;
+    width: 100%;
 }
 .the-legend {
     border-style: none;
@@ -106,6 +107,9 @@ a:link.white-link, a:visited.white-link {
     margin-right: -21px; /* 20px padding + 1px border */
     margin-bottom: 20px;
     margin-left: -20px;
+}
+.nav-sidebar > li.hasframe {
+    height: 100px;
 }
 .nav-sidebar > li > a {
     padding-right: 20px;
