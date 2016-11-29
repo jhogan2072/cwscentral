@@ -8,7 +8,7 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-12" style="margin: 0 auto; float: none" >
-                <input type="hidden" name="dp_attendance_date" id="dp_attendance_date" value={{ctrl.attendanceDate}}">
+                <input type="hidden" name="dp_attendance_date" id="dp_attendance_date" value="{{ctrl.attendanceDate.format('DD-MMM-YYYY');}}">
                 <div class="input-group" ng-model="ctrl.attendanceDate" datetimepicker options="{inline: true, format: 'DD-MMM-YYYY', defaultDate:'<%=@todays_date.strftime('%d-%b-%Y')%>'}"></div>
               </div>
             </div>
@@ -31,7 +31,7 @@
             and the grades you are interested in below.  Then click the export button at the upper right to create the workbook.
           </p>
             <div class="form-group">
-              <input type="hidden" name="route_date" id="route_date" value="{{ctrl.attendanceDate}}"/>
+              <input type="hidden" name="route_date" id="route_date" value="{{ctrl.attendanceDate.format('DD-MMM-YYYY');}}"/>
               <fieldset class="well" style="padding-top: 10px; padding-bottom: 10px; margin-top: 25px">
                 <label class="checkbox-inline lead">
                   <%= form.check_box("ninth", { style: 'height: 22px' }, 9) %> 9th

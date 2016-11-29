@@ -3,7 +3,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "";
-    vm.attendanceDate = "";
+    vm.attendanceDate;
     vm.contactId = -1;
     vm.contactName = "";
     vm.contactAssignments = [];

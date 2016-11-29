@@ -8,7 +8,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12" style="margin: 0 auto; float: none" >
-                    <input type="hidden" name="dp_route_date" id="dp_route_date" value={{ctrl.routeDate}}">
+                    <input type="hidden" name="dp_route_date" id="dp_route_date" value="{{ctrl.routeDate.format('DD-MMM-YYYY');}}">
                     <div class="input-group" ng-model="ctrl.routeDate" datetimepicker options="{inline: true, format: 'DD-MMM-YYYY', defaultDate:'<%=@todays_date.strftime('%d-%b-%Y')%>'}" ng-change="ctrl.getRoutes()"></div>
                   </div>
                 </div>
@@ -59,7 +59,7 @@
             </tr>
           </table>
           <p style="margin-top: 20px">
-            <a class="btn btn btn-primary" target="_self" href="/van_routes/new?route_date={{ctrl.routeDate}}">New Route</a>
+            <a class="btn btn btn-primary" target="_self" href="/van_routes/new?route_date={{ctrl.routeDate.format('DD-MMM-YYYY');}}">New Route</a>
           </p>
         </div>
       </div>

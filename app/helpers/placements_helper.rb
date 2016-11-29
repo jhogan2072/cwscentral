@@ -13,4 +13,11 @@ module PlacementsHelper
     params["contact_assignment_id"] = result
     return params
   end
+  def fix_sept(date_to_fix)
+    fixed_date = date_to_fix
+    if date_to_fix.include? 'Sept'
+      fixed_date = params["route_date"].sub! 'Sept', 'Sep'
+    end
+    return fixed_date
+  end
 end

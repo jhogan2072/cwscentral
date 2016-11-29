@@ -16,10 +16,8 @@ class PlacementsController < ApplicationController
 
   def export_attendance
     grade_level = []
-    date_param = params["route_date"]
-    if params["route_date"].include? 'Sept'
-      date_param = params["route_date"].sub! 'Sept', 'Sep'
-    end
+    date_param = fix_sept(params["route_date"])
+
     @route_date = DateTime.strptime(date_param, '%d-%b-%Y')
     params["selected_class"].each do |selection|
       if selection[1] != "0"
@@ -35,7 +33,13 @@ class PlacementsController < ApplicationController
       end
     end
     respond_to do |format|
-      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename=attendance-' + params["route_date"] + '.xlsx'}
+      format.xlsx {
+        if @attendance_export.length > 0
+          response.headers['Content-Disposition'] = 'attachment; filename=attendance-' + params["route_date"] + '.xlsx'
+        else
+          redirect_to attendance_placements_url, notice: 'There are no current routes or students from the selected grade(s) on the routes defined for today.'
+        end
+      }
     end
   end
 
