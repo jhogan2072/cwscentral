@@ -9,7 +9,7 @@
             <div class="row">
               <div class="col-md-12" style="margin: 0 auto; float: none" >
                 <input type="hidden" name="dp_attendance_date" id="dp_attendance_date" value={{ctrl.attendanceDate}}">
-                <div ng-model="ctrl.attendanceDate" datetimepicker datetimepicker-options="{defaultDate:'<%=@todays_date%>'}"></div>
+                <div class="input-group" ng-model="ctrl.attendanceDate" datetimepicker options="{inline: true, format: 'DD-MMM-YYYY', defaultDate:'<%=@todays_date.strftime('%d-%b-%Y')%>'}"></div>
               </div>
             </div>
           </div>
