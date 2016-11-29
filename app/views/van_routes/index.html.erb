@@ -9,7 +9,7 @@
                 <div class="row">
                   <div class="col-md-12" style="margin: 0 auto; float: none" >
                     <input type="hidden" name="dp_route_date" id="dp_route_date" value={{ctrl.routeDate}}">
-                    <div ng-model="ctrl.routeDate" datetimepicker datetimepicker-options="{defaultDate:'<%=@todays_date%>'}" ng-change="ctrl.getRoutes()"></div>
+                    <div class="input-group" ng-model="ctrl.routeDate" datetimepicker options="{inline: true, format: 'DD-MMM-YYYY', defaultDate:'<%=@todays_date.strftime('%d-%b-%Y')%>'}" ng-change="ctrl.getRoutes()"></div>
                   </div>
                 </div>
               </div>
@@ -32,16 +32,10 @@
             </p>
             <p class="col-sm-6" style="text-align:right"><a class="btn btn-lg btn-success" href="" role="button" ng-click="ctrl.copyRoutes()">Copy Routes</a></p>
             <div class="col-sm-3 form-group" style="height: 46px; position: relative">
-              <div class="input-group" style="position: absolute;
-                  top: 50%;
-                  left: 50%;
-                  height: 30px;
-                  width: 100%;
-                  margin: -15px 0 0 -50%;">
+              <div class="input-group" style="padding-top:8px;">
                 <input type="text" id="dt1" class="form-control input-sm" style="font-size: 14px"
-
                        datetimepicker
-                       datetimepicker-options="{defaultDate:'<%=@previous_school_day%>', inline: false, format: 'DD-MMM-YYYY'}"
+                       options="{defaultDate:'<%=@previous_school_day.strftime('%d-%b-%Y')%>', allowInputToggle: true, inline: false, format: 'DD-MMM-YYYY'}"
                        ng-model="ctrl.copyFromDate"/>
                 <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
               </div>

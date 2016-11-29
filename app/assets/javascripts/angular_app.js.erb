@@ -1,16 +1,6 @@
 //= depend_on_asset "modal_form.html"
 
 var app = angular.module('app', ['ui.bootstrap','ui.sortable','datetimepicker','ngResource', 'ngAnimate','ngCookies'])
-    .config([
-      'datetimepickerProvider',
-      function (datetimepickerProvider) {
-        datetimepickerProvider.setOptions({
-          locale: 'en',
-          format: "MM/DD/YYYY",
-          inline: true
-        });
-      }
-    ]);
 
 app.factory('ContactService', ['$resource', ContactService]);
 function ContactService($resource) {
