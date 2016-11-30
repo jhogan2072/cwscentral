@@ -35,7 +35,7 @@
     <% end %>
     <% if (query_type != 2) %>
       <td ng-class="{subrowcell: ctrl.isStudentsPage && ctrl.studentPlacements[$index - 1].organization_name == student_placement.organization_name && ctrl.studentPlacements[$index - 1].student_gradelevel == student_placement.student_gradelevel}">
-        <a ng-if="ctrl.isStudentsPage" ng-click="$event.stopPropagation();" title="Change supervisor and preserve history" ng-if="$index == 0" href="/placements/{{student_placement.id}}/edit_contact"><img src="<%=image_path("edit.png")%>" width="18" height="18"></a>
+        <a ng-click="$event.stopPropagation();" title="Change supervisor and preserve history" ng-if="ctrl.isStudentsPage && $index == 0" href="/placements/{{student_placement.id}}/edit_contact"><img src="<%=image_path("edit.png")%>" width="18" height="18"></a>
         {{ student_placement.contact_name }}</td>
     <% end %>
     <td>{{ student_placement.start_date }}</td>
