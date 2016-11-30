@@ -11,9 +11,9 @@
           <div class="form-inputs container-fluid">
             <div class="row">
               <div class="col-md-3">
-              <%= f.input :start_date %>
-              <%= f.input :end_date %>
-              <%= f.input :paid, input_html: { checked: @placement.paid? } %>
+                <%= f.input :start_date, as: :date_time_picker, label: 'Start Date'  %>
+                <%= f.input :end_date, as: :date_time_picker, label: 'End Date' %>
+                <%= f.input :paid, input_html: { checked: @placement.paid? } %>
               </div>
               <div class="col-md-3">
               <%= f.input :work_day, hint: "Enter a day of the week, e.g. Tuesday" %>
@@ -38,11 +38,10 @@
               <div class="col-md-3">
                 <div class="form-group select optional" ng-init="ctrl.currentOrgId='<%= @placement.organization_id %>'">
                   <label class="select optional control-label" for="placement_organization_id">Organization</label>
-                  <select class="form-control" ng-model="ctrl.selectedOrg"
-                    ng-options="org.id as org.name for org in ctrl.orgs"
-                          ng-change="ctrl.getContactAssignments();">
+                  <select class="form-control" ng-model="ctrl.selectedOrgEdit"
+                    ng-options="org.id as org.name for org in ctrl.orgList"
+                          ng-change="ctrl.getContactAssignments(<%= @placement.contact_assignment_id %>);">
                   </select>
-
                 </div>
               </div>
 

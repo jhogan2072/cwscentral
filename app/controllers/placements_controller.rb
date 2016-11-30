@@ -112,6 +112,8 @@ class PlacementsController < ApplicationController
   # PATCH/PUT /placements/1
   # PATCH/PUT /placements/1.json
   def update
+    @student = @placement.student
+    @organizations = Organization.current_organizations(@placement.start_date)
     respond_to do |format|
       stripped_params = strip_number(placement_params)
 

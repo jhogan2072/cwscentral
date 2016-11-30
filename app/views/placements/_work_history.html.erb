@@ -23,19 +23,19 @@
   </thead>
   <tbody>
   <tr ng-repeat="student_placement in ctrl.studentPlacements"
-      ng-class="{'selected':$index == ctrl.selectedRow, subrow: ctrl.studentPlacements[$index - 1].organization_name == student_placement.organization_name && ctrl.studentPlacements[$index - 1].student_gradelevel == student_placement.student_gradelevel}"
+      ng-class="{'selected':$index == ctrl.selectedRow, subrow: ctrl.isStudentsPage && ctrl.studentPlacements[$index - 1].organization_name == student_placement.organization_name && ctrl.studentPlacements[$index - 1].student_gradelevel == student_placement.student_gradelevel}"
 
       ng-click="ctrl.showOrganizationDetails($index, student_placement.id)" id="{{student_placement.id}}">
     <% if query_type == 0 or query_type == 2 %>
-      <td ng-class="{subrowcell: ctrl.studentPlacements[$index - 1].organization_name == student_placement.organization_name && ctrl.studentPlacements[$index - 1].student_gradelevel == student_placement.student_gradelevel}">
+      <td ng-class="{subrowcell: ctrl.isStudentsPage && ctrl.studentPlacements[$index - 1].organization_name == student_placement.organization_name && ctrl.studentPlacements[$index - 1].student_gradelevel == student_placement.student_gradelevel}">
         {{ student_placement.organization_name }}</td>
     <% end %>
     <% if query_type == 1 or query_type == 2 %>
       <td>{{ student_placement.student_name }}</td>
     <% end %>
     <% if (query_type != 2) %>
-      <td ng-class="{subrowcell: ctrl.studentPlacements[$index - 1].organization_name == student_placement.organization_name && ctrl.studentPlacements[$index - 1].student_gradelevel == student_placement.student_gradelevel}">
-        <a ng-click="$event.stopPropagation();" title="Change supervisor and preserve history" ng-if="$index == 0" href="/placements/{{student_placement.id}}/edit_contact"><img src="<%=image_path("edit.png")%>" width="18" height="18"></a>
+      <td ng-class="{subrowcell: ctrl.isStudentsPage && ctrl.studentPlacements[$index - 1].organization_name == student_placement.organization_name && ctrl.studentPlacements[$index - 1].student_gradelevel == student_placement.student_gradelevel}">
+        <a ng-if="ctrl.isStudentsPage" ng-click="$event.stopPropagation();" title="Change supervisor and preserve history" ng-if="$index == 0" href="/placements/{{student_placement.id}}/edit_contact"><img src="<%=image_path("edit.png")%>" width="18" height="18"></a>
         {{ student_placement.contact_name }}</td>
     <% end %>
     <td>{{ student_placement.start_date }}</td>

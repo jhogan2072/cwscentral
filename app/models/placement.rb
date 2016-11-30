@@ -3,11 +3,18 @@ class Placement < ActiveRecord::Base
   belongs_to :contact_assignment
   delegate :contact, :to => :contact_assignment
   has_many :route_stops, dependent: :destroy
-  validate :start_date_must_be_during_contact_assignment
+  validate :start_date_in_contact_assignment
+  validate :start_date_before_end_date
 
-  def start_date_must_be_during_contact_assignment
+  def start_date_in_contact_assignment
     if start_date < contact_assignment.effective_start_date or start_date > contact_assignment.effective_end_date
-      errors.add(:start_date, "must be while this supervisor was/is active.")
+      errors.add(:start_date, "Must be while this supervisor was/is active.")
+    end
+  end
+
+  def start_date_before_end_date
+    if start_date > end_date
+      errors.add(:end_date, "End Date must be later than Start Date")
     end
   end
 

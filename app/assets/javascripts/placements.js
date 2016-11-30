@@ -15,27 +15,31 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.getStudentPlacements = getStudentPlacements;
     vm.getContactAssignments = getContactAssignments;
     vm.getContacts = getContacts;
+    vm.getEditOrgList = getEditOrgList;
     vm.getGradeData = getGradeData;
     vm.getOrganizations = getOrganizations;
     vm.getStudents = getStudents;
     vm.isStudentListing = true;
     vm.isSuccess = true;
+    vm.isStudentsPage = false;
     vm.orgDetails = [];
     vm.orgId = -1;
     vm.orgName = "";
+    vm.orgList = [];
     vm.orgs = [];
     vm.placementStartDate = "";
     vm.selectedOrg = -1;
+    vm.selectedOrgEdit = -1;
     vm.ORG_TYPE = 1;
     vm.page = 'placements';
-    vm.placementStartDate = ''
+    vm.placementcontactAssignmentId = -1;
+    vm.placementStartDate = '';
     vm.removeElement = removeElement;
     vm.searchInput = '';
     vm.selectedAssignment = -1;
     vm.selectedClasses = {};
     vm.selectedRow = null;
     vm.selectedContact = -1;
-    vm.selectedOrg = -1;
     vm.selectedStudent = -1;
     vm.setClickedContact = setClickedContact;
     vm.setClickedOrg = setClickedOrg;
@@ -58,16 +62,21 @@ angular.module('app').controller("PlacementController", function($http, $timeout
 
     var absUrl = $location.absUrl();
     if (absUrl.indexOf('/placements/students') > -1) {
+        vm.isStudentsPage = true;
         if (window.location.search.substring(1)) {
             getStudents(window.location.search.substring(1).split('=')[1]);
         } else {
             getStudents();
         }
-    } else if (absUrl.indexOf('/placements/organizations') > -1
-        || matchRuleShort(absUrl, '*/placements/*/edit')
-        || matchRuleShort(absUrl, '*/placements/add*')) {
+    } else if (absUrl.indexOf('/placements/organizations') > -1) {
+        vm.isStudentsPage = false;
         getOrganizations();
+    } else if (matchRuleShort(absUrl, '*/placements/*/edit')
+    || matchRuleShort(absUrl, '*/placements/add*')) {
+        vm.isStudentsPage = false;
+        getEditOrgList();
     } else if (absUrl.indexOf('/placements/contacts') > -1) {
+        vm.isStudentsPage = false;
         if (window.location.search.substring(1)) {
             getContacts(window.location.search.substring(1).split('=')[1]);
         } else {
@@ -100,7 +109,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
 
     function getContactAssignments(contactAssignmentId) {
         vm.contactAssignments = [];
-        ContactAssignmentService.query({organization_id: vm.selectedOrg, start_date: vm.placementStartDate}
+        ContactAssignmentService.query({organization_id: vm.selectedOrgEdit, start_date: vm.placementStartDate}
         ,function(data) {
             // success handler
             angular.forEach(data, function(ca) {
@@ -133,6 +142,25 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         }
     }
 
+    function getEditOrgList() {
+        $http.get('/placements/organizations.json').
+        success(function(data, status, headers, config) {
+            // this callback will be called asynchronously
+            // when the response is available
+            angular.forEach(data, function(organization) {
+                vm.orgList.push(organization);
+            });
+            if (vm.currentOrgId != "")
+                vm.selectedOrgEdit = parseInt(vm.currentOrgId);
+            else
+                vm.selectedOrgEdit = vm.orgList[0].id;
+            vm.getContactAssignments(vm.placementcontactAssignmentId);
+        }).
+        error(function(data, status, headers, config) {
+            vm.displayAlert(false,"There was an unexpected error.  Could not retrieve organizations.");
+        });
+    }
+
     function getGradeData(){
         var gradesURL = '/students'
     }
@@ -145,11 +173,6 @@ angular.module('app').controller("PlacementController", function($http, $timeout
             angular.forEach(data, function(organization) {
                 vm.orgs.push(organization);
             });
-            if (vm.currentOrgId != "")
-                vm.selectedOrg = parseInt(vm.currentOrgId);
-            else
-                vm.selectedOrg = vm.orgs[0].id;
-            vm.getContactAssignments(vm.placementcontactAssignmentId);
         }).
         error(function(data, status, headers, config) {
             vm.displayAlert(false,"There was an unexpected error.  Could not retrieve organizations.");
