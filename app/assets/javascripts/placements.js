@@ -1,9 +1,10 @@
 angular.module('app').controller("PlacementController", function($http, $timeout, $location, ModalFormService,
-                                                                 PlacementService, ContactAssignmentService, $q){
+                                                                 PlacementService, ContactAssignmentService,
+                                                                 $anchorScroll, $q){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "";
-    vm.attendanceDate;
+    vm.attendanceDate = null;
     vm.contactId = -1;
     vm.contactName = "";
     vm.contactAssignments = [];
@@ -19,6 +20,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.getGradeData = getGradeData;
     vm.getOrganizations = getOrganizations;
     vm.getStudents = getStudents;
+    vm.goToStudent = goToStudent;
     vm.isStudentListing = true;
     vm.isSuccess = true;
     vm.isStudentsPage = false;
@@ -228,11 +230,21 @@ angular.module('app').controller("PlacementController", function($http, $timeout
                         }
                         i++;
                     });
+                    goToStudent();
                 });
             }
         }, function(response) {
             vm.displayAlert(false, "There was an unexpected error.  Could not retrieve students.  The HTTP return code was " + response.status);
         });
+    }
+
+    function goToStudent() {
+            // set the location.hash to the id of
+            // the element you wish to scroll to.
+            $location.hash('activeStudent');
+
+            // call $anchorScroll()
+            $anchorScroll();
     }
 
     function removeElement(array, index){

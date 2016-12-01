@@ -174,8 +174,7 @@ div[contentEditable]:focus {
     color: #fff;
     background-color: #428bca;
 }
-
-.table-striped > tbody > tr:hover {
+.table-striped > tbody.allowrowclick > tr:hover {
     cursor: pointer;
 }
 .btn-file {

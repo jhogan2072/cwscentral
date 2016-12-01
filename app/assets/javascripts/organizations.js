@@ -8,6 +8,8 @@ angular.module('app').controller("OrgController", function($http, $timeout, Orga
     vm.organizations = [];
     vm.page = 'organizations';
     vm.showResultAlert = false;
+    vm.sortReverse = false;
+    vm.sortType = 'name';
 
     if (window.location.pathname == '/organizations') {
         getOrganizations();

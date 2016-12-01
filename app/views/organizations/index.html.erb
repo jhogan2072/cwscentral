@@ -11,18 +11,78 @@
         <table class="table table-striped">
           <thead>
           <tr>
-            <th>Name</th>
-            <th>Billing Address</th>
-            <th>City</th>
-            <th>State</th>
-            <th>Zip</th>
-            <th>Sponsor Since</th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'name'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                Name
+                <span ng-show="ctrl.sortType == 'name' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'name' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'billing_address'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                Billing Address
+                <span ng-show="ctrl.sortType == 'billing_address' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'billing_address' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'city'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                City
+                <span ng-show="ctrl.sortType == 'city' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'city' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'state'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                State
+                <span ng-show="ctrl.sortType == 'state' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'state' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'zip'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                Zip
+                <span ng-show="ctrl.sortType == 'zip' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'zip' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
+            <th>
+              <a href="#" ng-click="ctrl.sortType = 'sponsor_since'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                Sponsor Since
+                <span ng-show="ctrl.sortType == 'sponsor_since' && !ctrl.sortReverse" style="text-decoration: none">
+                  <%= image_tag("sort_down.png", size: "14x14") %>
+                </span>
+                <span ng-show="ctrl.sortType == 'sponsor_since' && ctrl.sortReverse">
+                  <%= image_tag("sort_up.png", size: "14x14") %>
+                </span>
+              </a>
+            </th>
             <th colspan="3"></th>
           </tr>
           </thead>
 
           <tbody>
-          <tr ng-repeat="organization in ctrl.organizations| filter:ctrl.searchInput">
+          <tr ng-repeat="organization in ctrl.organizations | orderBy:ctrl.sortType:ctrl.sortReverse | filter:ctrl.searchInput">
             <td>{{ organization.name }}</td>
             <td>{{ organization.billing_address }}</td>
             <td>{{ organization.city }}</td>

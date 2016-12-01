@@ -1,4 +1,5 @@
-angular.module('app').controller("IncidentController", function($http, $timeout, $location, IncidentService){
+angular.module('app').controller("IncidentController", function($http, $timeout, $location,
+                                                                IncidentService, $anchorScroll, $q){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "Hello, World";
@@ -11,6 +12,7 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
     vm.getIncidents = getIncidents;
     vm.getOrganizations = getOrganizations;
     vm.getStudents = getStudents;
+    vm.goToStudent = goToStudent;
     vm.isSuccess = true;
     vm.organizations = [];
     vm.orgId = -1;
@@ -33,7 +35,11 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
 
     var absUrl = $location.absUrl();
     if (absUrl.indexOf('/incidents/students') > -1) {
-        getStudents();
+        if (window.location.search.substring(1)) {
+            getStudents(window.location.search.substring(1).split('=')[1]);
+        } else {
+            getStudents();
+        }
     } else if (absUrl.indexOf('/incidents/organizations') > -1) {
         getOrganizations();
     } else if (absUrl.indexOf('/incidents/contacts') > -1) {
@@ -104,8 +110,37 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
         vm.organizations = IncidentService.organizations();
     }
 
-    function getStudents() {
-        vm.students = IncidentService.students();
+    function getStudents(studentId) {
+        vm.students = IncidentService.students(function(data) {
+            // success handler
+            if (studentId) {
+                $q.all([
+                    vm.students.$promise
+                ]).then(function() {
+                    //CODE AFTER RESOURCES ARE LOADED
+                    var i = 0;
+                    angular.forEach(vm.students, function(student) {
+                        if (window.location.search.substring(1).split('=')[1] == student.id) {
+                            setClickedStudent(i, student.id);
+                        }
+                        i++;
+                    });
+                    goToStudent();
+                });
+            }
+        }, function(response) {
+            vm.displayAlert(false, "There was an unexpected error.  Could not retrieve students.  The HTTP return code was " + response.status);
+        });
+
+    }
+
+    function goToStudent() {
+        // set the location.hash to the id of
+        // the element you wish to scroll to.
+        $location.hash('activeStudent');
+
+        // call $anchorScroll()
+        $anchorScroll();
     }
 
     function removeElement(array, index){
@@ -130,11 +165,10 @@ angular.module('app').controller("IncidentController", function($http, $timeout,
         vm.getIncidents(org_id, vm.ORG_TYPE);
     }
 
-    function setClickedStudent(indexSelectedStudent, student_name, student_id) {
+    function setClickedStudent(indexSelectedStudent, student_id) {
         vm.selectedRow = null;
         vm.truncateStyle = {};
         vm.selectedStudent = indexSelectedStudent;
-        vm.studentFullName = student_name;
         vm.studentId = student_id;
         vm.getIncidents(student_id, vm.STUDENT_TYPE);
     }
