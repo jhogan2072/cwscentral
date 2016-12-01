@@ -64,7 +64,7 @@ class ContactsController < ApplicationController
     end
     respond_to do |format|
       if @contact.update(cp)
-        format.html { redirect_to edit_contact_url, notice: 'Contact was successfully updated.' }
+        format.html { redirect_to contacts_url, notice: 'Contact was successfully updated.' }
       else
         format.html { render :edit }
       end
