@@ -3,94 +3,6 @@ class ContactsController < ApplicationController
   before_action :set_contact, only: [:edit, :update, :destroy]
   include ContactsHelper
 
-  # GET /contacts
-  # GET /contacts.json
-  def index
-    @contacts = Contact.display_active
-  end
-
-  # GET /contacts/new
-  def new
-    @contact = Contact.new
-    @contact.contact_assignments.build
-  end
-
-  # GET /contacts/1/edit
-  def edit
-    @current_assignment_id = @contact.current_assignment_id
-  end
-
-  # POST /contacts
-  # POST /contacts.json
-  def create
-    cp = contact_params
-    cp[:contact_assignments_attributes].values[0]["effective_end_date"] = '9999-12-31'
-    @contact = Contact.new(cp)
-
-    respond_to do |format|
-      if @contact.save
-        format.html { redirect_to contacts_url, notice: 'Contact was successfully created.' }
-      else
-        format.html { render :new }
-      end
-    end
-  end
-
-  # PATCH/PUT /contacts/1
-  # PATCH/PUT /contacts/1.json
-  def update
-    cp = update_parameters(contact_params)
-    respond_to do |format|
-      if @contact.update(cp)
-        format.html { redirect_to contacts_url, notice: 'Contact was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
-    end
-  end
-
-  # DELETE /contacts/1
-  # DELETE /contacts/1.json
-  def destroy
-    @contact.destroy
-    respond_to do |format|
-      format.html { redirect_to contacts_url, notice: 'Contact was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
-  def export
-    @contacts = Contact.get_assignment_info
-    respond_to do |format|
-      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="all_contacts.xlsx"'}
-    end
-  end
-
-  def placements
-    #retrieve a students work history
-    @placements = Placement.search(filtering_id=params[:id], query_type=2)
-    if @placements.length == 0
-      render json: :no_content, status: 404
-    end
-  end
-
-  def incidents
-    #retrieve a students incident history
-    @incidents = Incident.search(filtering_id=params[:id], query_type=2)
-    if @incidents.length == 0
-      render json: :no_content, status: 404
-    end
-  end
-
-  def import
-    if request.method == "GET"
-      @contact_staging = ContactStaging.all.order(:last_name).order(:first_name)
-    elsif request.method == "POST"
-      ContactStaging.import(params[:file_content])
-      redirect_to import_contacts_url, notice: "Contacts imported to staging."
-    end
-  end
-
   def commit
     # Insert all the records in contact_stagings into contacts and contact_assignments
     contact_list = ContactStaging.all
@@ -134,6 +46,128 @@ class ContactsController < ApplicationController
     contact_list.delete_all
 
     redirect_to import_contacts_url, notice: "Contacts imported!"
+  end
+
+  # POST /contacts
+  # POST /contacts.json
+  def create
+    cp = contact_params
+    cp[:contact_assignments_attributes].values[0]["effective_end_date"] = '9999-12-31'
+    @contact = Contact.new(cp)
+
+    respond_to do |format|
+      if @contact.save
+        format.html { redirect_to contacts_url, notice: 'Contact was successfully created.' }
+      else
+        format.html { render :new }
+      end
+    end
+  end
+
+  # DELETE /contacts/1
+  # DELETE /contacts/1.json
+  def destroy
+    @contact.destroy
+    respond_to do |format|
+      format.html { redirect_to contacts_url, notice: 'Contact was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+  # GET /contacts/1/edit
+  def edit
+    @current_assignment_id = @contact.current_assignment_id
+  end
+
+  def export
+    @contacts = Contact.get_assignment_info
+    respond_to do |format|
+      format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename="all_contacts.xlsx"'}
+    end
+  end
+
+  def import
+    if request.method == "GET"
+      @contact_staging = ContactStaging.all.order(:last_name).order(:first_name)
+    elsif request.method == "POST"
+      ContactStaging.import(params[:file_content])
+      redirect_to import_contacts_url, notice: "Contacts imported to staging."
+    end
+  end
+
+  def incidents
+    #retrieve a students incident history
+    @incidents = Incident.search(filtering_id=params[:id], query_type=2)
+    if @incidents.length == 0
+      render json: :no_content, status: 404
+    end
+  end
+
+  # GET /contacts
+  # GET /contacts.json
+  def index
+    @contacts = Contact.display_active
+  end
+
+  def mailing_lists
+    @organizations =  Organization.all.map { |organization| [organization.name, organization.id] }
+  end
+
+  def list_export
+    days_of_week = []
+    roles = []
+    organizations = []
+    params["selected_filters"]["work_day"].each do |selection|
+      if selection != "0"
+        days_of_week << selection
+      end
+    end
+    params["selected_filters"]["roles"].each do |selection|
+      if selection != "0"
+        roles << selection
+      end
+    end
+    if params["selected_filters"]["organization_id"] != ""
+      organizations << params["selected_filters"]["organization_id"]
+    end
+    @contacts = Contact.query_contacts(days_of_week, roles, organizations)
+
+    respond_to do |format|
+      format.xlsx {
+        if @contacts.length > 0
+          response.headers['Content-Disposition'] = 'attachment; filename=mailing_list.xlsx'
+        else
+          redirect_to mailing_lists_contacts_url, notice: 'There are no contacts that meet the selected criteria.'
+        end
+      }
+    end
+  end
+
+  # GET /contacts/new
+  def new
+    @contact = Contact.new
+    @contact.contact_assignments.build
+  end
+
+  def placements
+    #retrieve a students work history
+    @placements = Placement.search(filtering_id=params[:id], query_type=2)
+    if @placements.length == 0
+      render json: :no_content, status: 404
+    end
+  end
+
+  # PATCH/PUT /contacts/1
+  # PATCH/PUT /contacts/1.json
+  def update
+    cp = update_parameters(contact_params)
+    respond_to do |format|
+      if @contact.update(cp)
+        format.html { redirect_to contacts_url, notice: 'Contact was successfully updated.' }
+      else
+        format.html { render :edit }
+      end
+    end
   end
 
   private

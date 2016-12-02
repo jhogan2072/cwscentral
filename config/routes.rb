@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       get :placements, defaults: {format: :json}
     end
     collection do
+      get :mailing_lists
+      post :list_export, defaults: { :format => :xlsx }
       get :export, defaults: { :format => :xlsx }
       get :import
       post :import

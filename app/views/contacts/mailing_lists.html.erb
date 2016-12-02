@@ -1,0 +1,51 @@
+<body ng-app="app" ng-controller="PlacementController as ctrl">
+<%= render "shared/navbar", input_name: "ctrl.searchInput" %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="main">
+      <%= render "shared/alert_msg" %>
+      <%= form_for :selected_filters, url: "list_export" do |form| %>
+          <!--<form accept-charset="UTF-8" action="export_attendance" method="post">-->
+          <h2 class="sub-header">
+            <div class="pull-right">
+              <input class="btn btn-primary" name="export" type="submit" value="Export">
+            </div>
+            Export Mailing Lists(s)
+          </h2>
+          <div class="jumbotron" style="background-color: transparent; text-align: center">
+            <p class="lead">To export an excel document with contact mailing lists, select the parameters you are
+              interested in below.  Then click the export button at the upper right to create the workbook.
+            </p>
+            <div class="form-group">
+              <fieldset class="well" style="padding-top: 10px; padding-bottom: 10px; margin-top: 25px">
+                <label class="checkbox-inline lead">
+                  <%= form.check_box("work_day", { :multiple => true, style: 'height: 22px' }, "Tuesday") %> Tuesday
+                </label>
+                <label class="checkbox-inline lead">
+                  <%= form.check_box("work_day", { :multiple => true, style: 'height: 22px' }, "Wednesday") %> Wednesday
+                </label>
+                <label class="checkbox-inline lead">
+                  <%= form.check_box("work_day", { :multiple => true, style: 'height: 22px' }, "Thursday") %> Thursday
+                </label>
+                <label class="checkbox-inline lead">
+                  <%= form.check_box("work_day", { :multiple => true, style: 'height: 22px' }, "Friday") %> Friday
+                </label>
+              </fieldset>
+              <div class="form-group">
+                <fieldset class="well" style="padding-top: 10px; padding-bottom: 10px; margin-top: 25px">
+                  <label class="checkbox-inline lead">
+                    <%= form.check_box("roles", { :multiple => true, style: 'height: 22px' }, "Supervisor") %> Supervisor
+                  </label>
+                  <label class="checkbox-inline lead">
+                    <%= form.check_box("roles", { :multiple => true, style: 'height: 22px' }, "Primary Contact") %> Primary Contact
+                  </label>
+                </fieldset>
+              <label>Organization</label>
+              <%= form.select(:organization_id, @organizations, include_blank: true) %>
+            </div>
+          </div>
+      <% end  %>
+    </div>
+  </div>
+</div>
+</body>
