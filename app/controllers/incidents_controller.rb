@@ -23,7 +23,7 @@ class IncidentsController < ApplicationController
   end
 
   def contacts
-    @contacts = Contact.active_contacts
+    @contacts = Contact.all.order(:last_name, :first_name)
     respond_to do |format|
 
       format.html # contacts_placements.html.erb

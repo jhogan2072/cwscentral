@@ -64,7 +64,9 @@ class PlacementsController < ApplicationController
   end
 
   def contacts
-    @contacts = Contact.active_contacts
+    if request.format == 'json'
+      @contacts = Contact.all.order(:last_name, :first_name)
+    end
     respond_to do |format|
 
       format.html # contacts_placements.html.erb
