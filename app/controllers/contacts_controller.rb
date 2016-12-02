@@ -1,6 +1,7 @@
 class ContactsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_contact, only: [:edit, :update, :destroy]
+  include ContactsHelper
 
   # GET /contacts
   # GET /contacts.json
@@ -38,30 +39,7 @@ class ContactsController < ApplicationController
   # PATCH/PUT /contacts/1
   # PATCH/PUT /contacts/1.json
   def update
-    new_assignment_index = -1
-    original_assignment_index = -1
-    contact_params[:contact_assignments_attributes].each_with_index  do |assignment, index|
-      if assignment[1]["effective_end_date"] == ""
-        new_assignment_index = index
-      else
-        if assignment[1]["effective_end_date"].to_s.split("-")[0] == "9999"
-          original_assignment_index = index
-        end
-      end
-    end
-    cp = contact_params
-    if new_assignment_index > -1 and original_assignment_index > -1
-      cp[:contact_assignments_attributes].values[new_assignment_index]["effective_end_date"] = "9999-12-31"
-      my_int = cp[:contact_assignments_attributes].values[new_assignment_index]["effective_start_date(3i)"].to_i - 1
-      cp[:contact_assignments_attributes].values[original_assignment_index]["effective_end_date"] =
-          cp[:contact_assignments_attributes].values[new_assignment_index]["effective_start_date(1i)"] + "-" +
-              cp[:contact_assignments_attributes].values[new_assignment_index]["effective_start_date(2i)"] + "-" +
-              my_int.to_s
-    else
-      if new_assignment_index > -1
-        cp[:contact_assignments_attributes].values[new_assignment_index]["effective_end_date"] = "9999-12-31"
-      end
-    end
+    cp = update_parameters(contact_params)
     respond_to do |format|
       if @contact.update(cp)
         format.html { redirect_to contacts_url, notice: 'Contact was successfully updated.' }

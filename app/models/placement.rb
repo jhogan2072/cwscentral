@@ -136,10 +136,10 @@ class Placement < ActiveRecord::Base
           .where("student_id = ?", filtering_id).order("placements.student_gradelevel desc, placements.start_date desc")
     elsif query_type == 1
       joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
-          .where("contact_assignments.organization_id = ?", filtering_id)
+          .where("contact_assignments.organization_id = ?", filtering_id).order("placements.student_id, placements.start_date desc")
     elsif query_type == 2
       joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
-          .includes(:student).where("contact_assignments.contact_id = ?", filtering_id)
+          .includes(:student).where("contact_assignments.contact_id = ?", filtering_id).order("placements.student_id, placements.start_date desc")
     end
   end
 
