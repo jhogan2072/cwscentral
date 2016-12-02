@@ -31,15 +31,14 @@
                   <%= form.check_box("work_day", { :multiple => true, style: 'height: 22px' }, "Friday") %> Friday
                 </label>
               </fieldset>
-              <div class="form-group">
-                <fieldset class="well" style="padding-top: 10px; padding-bottom: 10px; margin-top: 25px">
-                  <label class="checkbox-inline lead">
-                    <%= form.check_box("roles", { :multiple => true, style: 'height: 22px' }, "Supervisor") %> Supervisor
-                  </label>
-                  <label class="checkbox-inline lead">
-                    <%= form.check_box("roles", { :multiple => true, style: 'height: 22px' }, "Primary Contact") %> Primary Contact
-                  </label>
-                </fieldset>
+              <fieldset class="well" style="padding-top: 10px; padding-bottom: 10px; margin-top: 25px">
+                <label class="checkbox-inline lead">
+                  <%= form.check_box("roles", { :multiple => true, style: 'height: 22px' }, "Supervisor") %> Supervisor
+                </label>
+                <label class="checkbox-inline lead">
+                  <%= form.check_box("roles", { :multiple => true, style: 'height: 22px' }, "Primary Contact") %> Primary Contact
+                </label>
+              </fieldset>
               <label>Organization</label>
               <%= form.select(:organization_id, @organizations, include_blank: true) %>
             </div>
