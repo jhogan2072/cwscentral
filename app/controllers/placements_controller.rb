@@ -245,6 +245,6 @@ class PlacementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def placement_params
-      params.require(:placement).permit(:start_date, :end_date, :paid, :work_day, :student_gradelevel, :earliest_start, :latest_start, :ideal_start, :student_id, :contact_assignment_id)
+      params.require(:placement).permit(:start_date, :end_date, :paid, :work_day, :student_gradelevel, :earliest_start, :latest_start, :ideal_start, :student_id, :contact_assignment_id, :notes)
     end
 end

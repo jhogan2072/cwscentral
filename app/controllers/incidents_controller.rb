@@ -59,8 +59,7 @@ class IncidentsController < ApplicationController
       if @incident.save
         format.html { redirect_to students_incidents_url, notice: 'Feedback was successfully created.' }
       else
-        student_id = incident_params["student_id"]
-        @student = Student.find(student_id)
+        @student = Student.find(@incident.student_id)
         format.html { render :new }
       end
     end

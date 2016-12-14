@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table class="table table-striped" id="plcmtTable">
   <thead>
   <tr>
     <% if query_type == 0 or query_type == 2 %>
@@ -17,8 +17,9 @@
     <th>Paid?</th>
     <th>Work Day</th>
     <th>Class</th>
-    <th>Edit</th>
-    <th>Delete</th>
+    <th></th>
+    <th></th>
+    <th></th>
   </tr>
   </thead>
   <tbody class="allowrowclick">
@@ -45,9 +46,11 @@
     <td>{{ student_placement.student_gradelevel }}</td>
     <td><a ng-click="$event.stopPropagation();" href="/placements/{{student_placement.id}}/edit" target="_self"
            ng-class="{'white-link': ctrl.selectedRow != null}">Edit</a></td>
-    <td ng-click="$event.stopPropagation();"><img ng-src="<%=image_path("trash.png")%>" width="18" height="18"
-                                                  ng-really-message="Are you sure you want to delete this placement?"
-                                                  ng-really-click="ctrl.deletePlacement($index, student_placement.id);" class="delete_object"></td>
+    <td><a data-confirm="Are you sure?" rel="nofollow" data-method="delete" ng-class="{'white-link': ctrl.selectedRow != null}"
+           href="/placements/{{student_placement.id}}">Delete</a></td>
+    <td style="text-align:right; padding-left:0;padding-right:0;" ng-click="$event.stopPropagation();">
+      <img ng-src="{{student_placement.plusminus}}" width="18" height="18" ng-click="ctrl.addNotesRow($index);">
+    </td>
   </tr>
   </tbody>
 </table>

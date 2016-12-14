@@ -1,4 +1,6 @@
 //= depend_on_asset "modal_form.html"
+//= depend_on_asset "plus.png"
+//= depend_on_asset "minus.png"
 
 var app = angular.module('app', ['ui.bootstrap','ui.sortable','datetimepicker','ngResource', 'ngAnimate','ngCookies'])
 
@@ -58,6 +60,18 @@ function PlacementService($resource) {
         'students': {method: 'GET', isArray: true, params: {collectionRoute: 'students'}}
       });
 }
+
+app.factory('PlusMinus',function(){
+  return {
+
+    get_url: function(isplus) {
+      if (isplus)
+        return '<%= asset_path("plus.png") %>';
+      else
+        return '<%= asset_path("minus.png") %>';
+    }
+  }
+});
 
 app.directive('ngReallyClick', [function() {
   return {

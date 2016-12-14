@@ -1,7 +1,8 @@
 angular.module('app').controller("PlacementController", function($http, $timeout, $location, ModalFormService,
-                                                                 PlacementService, ContactAssignmentService,
+                                                                 PlacementService, ContactAssignmentService, PlusMinus,
                                                                  $anchorScroll, $q){
     var vm = this;
+    vm.addNotesRow = addNotesRow;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "";
     vm.attendanceDate = null;
@@ -24,6 +25,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.isStudentListing = true;
     vm.isSuccess = true;
     vm.isStudentsPage = false;
+    vm.notes_showing = [];
     vm.orgDetails = [];
     vm.orgId = -1;
     vm.orgName = "";
@@ -36,6 +38,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.page = 'placements';
     vm.placementcontactAssignmentId = -1;
     vm.placementStartDate = '';
+    vm.plusminus = PlusMinus.get_url(true);
     vm.removeElement = removeElement;
     vm.searchInput = '';
     vm.selectedAssignment = -1;
@@ -86,6 +89,32 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         }
     }
     ////////////
+
+    function addNotesRow(arrayIndex) {
+        var arrayLength = vm.notes_showing.length;
+        var numOpen = 0;
+        for (var i = 0; i < arrayIndex; i++) {
+            if (vm.notes_showing[i])
+                numOpen++;
+        }
+        var table = document.getElementById("plcmtTable");
+        if (vm.notes_showing[arrayIndex])
+        {
+            vm.studentPlacements[arrayIndex].plusminus = PlusMinus.get_url(true);
+            var row = table.deleteRow(arrayIndex + 2 + numOpen);
+            vm.notes_showing[arrayIndex] = false;
+        }
+        else
+        {
+            vm.notes_showing[arrayIndex] = true;
+            vm.studentPlacements[arrayIndex].plusminus = PlusMinus.get_url(false);
+            var row = table.insertRow(arrayIndex + 2 + numOpen);
+            var cell1 = row.insertCell(0);
+            cell1.colSpan = 11;
+            cell1.innerHTML = "<span style='font-weight: bold; margin-right: 25px;margin-left: 10px;'>Notes:</span>" +
+                (vm.studentPlacements[arrayIndex].notes == null ? 'No notes' : vm.studentPlacements[arrayIndex].notes);
+        }
+    }
 
     function alertShowHide(isShown) {
         vm[isShown] = !vm[isShown];
@@ -195,6 +224,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         success(function(data){
             vm.studentPlacements = [];
             angular.forEach(data, function(stud_detail) {
+                stud_detail.plusminus = PlusMinus.get_url(true);
                 vm.studentPlacements.push(stud_detail);
             });
         }).
