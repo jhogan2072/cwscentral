@@ -21,7 +21,7 @@ class VanRoutesController < ApplicationController
   # GET /van_routes.json
   def index
     if params[:route_date]
-      @todays_date = params[:route_date]
+      @todays_date = params[:route_date].to_datetime
     else
       @todays_date = DateTime.now
     end
