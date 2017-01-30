@@ -29,11 +29,9 @@ class OrganizationsController < ApplicationController
 
     respond_to do |format|
       if @organization.save
-        format.html { redirect_to @organization, notice: 'Organization was successfully created.' }
-        format.json { render :show, status: :created, location: @organization }
+        format.html { redirect_to organizations_url, notice: 'Organization was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @organization.errors, status: :unprocessable_entity }
       end
     end
   end
