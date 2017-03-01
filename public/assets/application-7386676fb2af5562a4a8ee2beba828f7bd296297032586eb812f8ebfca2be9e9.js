@@ -68526,7 +68526,7 @@ angular.module('app').controller("ContactController", function($http, $timeout, 
     vm.showCloseoutModal = showCloseoutModal;
     vm.showResultAlert = false;
     vm.sortReverse = false;
-    vm.sortType = 'start_date';
+    vm.sortType = 'organization_name';
 
     if (window.location.pathname == '/contacts') {
         getContacts();
@@ -68897,7 +68897,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.setClickedStudent = setClickedStudent;
     vm.showOrganizationDetails = showOrganizationDetails;
     vm.showResultAlert = false;
-    vm.sortReverse = false;
+    vm.sortReverse = true;
     vm.sortType = 'start_date';
     vm.studentPlacements = [];
     vm.studentCount = 0;
