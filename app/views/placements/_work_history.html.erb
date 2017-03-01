@@ -23,7 +23,7 @@
   </tr>
   </thead>
   <tbody class="allowrowclick">
-  <tr ng-repeat="student_placement in ctrl.studentPlacements"
+  <tr ng-repeat="student_placement in ctrl.studentPlacements| orderBy:ctrl.sortType:ctrl.sortReverse "
       ng-class="{'selected':$index == ctrl.selectedRow, subrow: ctrl.isStudentsPage && ctrl.studentPlacements[$index - 1].organization_name == student_placement.organization_name && ctrl.studentPlacements[$index - 1].student_gradelevel == student_placement.student_gradelevel}"
 
       ng-click="ctrl.showOrganizationDetails($index, student_placement.id)" id="{{student_placement.id}}">

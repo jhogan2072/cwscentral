@@ -14,7 +14,7 @@ angular.module('app').controller("ContactController", function($http, $timeout, 
     vm.showCloseoutModal = showCloseoutModal;
     vm.showResultAlert = false;
     vm.sortReverse = false;
-    vm.sortType = 'start_date';
+    vm.sortType = 'organization_name';
 
     if (window.location.pathname == '/contacts') {
         getContacts();

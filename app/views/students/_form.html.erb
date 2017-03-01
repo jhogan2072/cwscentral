@@ -6,9 +6,11 @@
       <%= render "shared/alert_msg" %>
       <h2 class="sub-header">
         <%= header_text %>
-        <div class="pull-right">
-          <%= link_to "Export", export_student_path(@student), class: "btn btn-primary", target: "_self" %>
-        </div>
+        <% if !new_student %>
+          <div class="pull-right">
+            <%= link_to "Export", export_student_path(@student), class: "btn btn-primary", target: "_self" %>
+          </div>
+        <% end %>
       </h2>
       <%= simple_form_for(@student) do |f| %>
           <%= f.error_notification %>

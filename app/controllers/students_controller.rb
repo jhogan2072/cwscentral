@@ -33,11 +33,9 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
-        format.html { redirect_to @student, notice: 'Student was successfully created.' }
-        format.json { render :show, status: :created, location: @student }
+        format.html { redirect_to students_url, notice: 'Student was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -59,7 +57,7 @@ class StudentsController < ApplicationController
   def destroy
     @student.destroy
     respond_to do |format|
-      format.html { redirect_to active_students_url, notice: 'Student was successfully destroyed.' }
+      format.html { redirect_to active_students_url, notice: 'Student was successfully deleted.' }
       format.json { head :no_content }
     end
   end

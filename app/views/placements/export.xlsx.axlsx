@@ -2,11 +2,11 @@ wb = xlsx_package.workbook
 wb.styles do |style|
   title_cell = style.add_style(b: true)
   wb.add_worksheet(name: "Placements") do |sheet|
-    sheet.add_row ["Start Date", "End Date", "Organization Name", "Contact Name", "Paid", "Work Day", "Class",
+    sheet.add_row ["Student Last Name", "Student First Name", "Start Date", "End Date", "Organization Name", "Contact Name", "Paid", "Work Day", "Class",
                   "Earliest Start", "Latest Start", "Ideal Start"], :style => title_cell
     if not @placements.nil?
       @placements.each do |placement|
-        sheet.add_row [placement.start_date, placement.end_date, placement.organization_name,
+        sheet.add_row [placement.student.last_name, placement.student.first_name, placement.start_date, placement.end_date, placement.organization_name,
                        placement.contact_name, placement.paid, placement.work_day, placement.student_gradelevel,
                        placement.earliest_start, placement.latest_start, placement.ideal_start]
       end

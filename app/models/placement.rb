@@ -133,13 +133,13 @@ class Placement < ActiveRecord::Base
   def self.search(filtering_id=-1,query_type=-1)
     if query_type == 0
       joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
-          .where("student_id = ?", filtering_id).order("placements.student_gradelevel desc, placements.start_date desc")
+          .includes(:student).where("student_id = ?", filtering_id).order("placements.student_gradelevel desc, placements.start_date desc")
     elsif query_type == 1
       joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
-          .where("contact_assignments.organization_id = ?", filtering_id).order("placements.student_id, placements.start_date desc")
+          .includes(:student).where("contact_assignments.organization_id = ?", filtering_id).order("placements.start_date desc, students.last_name")
     elsif query_type == 2
       joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
-          .includes(:student).where("contact_assignments.contact_id = ?", filtering_id).order("placements.student_id, placements.start_date desc")
+          .includes(:student).where("contact_assignments.contact_id = ?", filtering_id).order("placements.start_date desc, students.last_name")
     end
   end
 
