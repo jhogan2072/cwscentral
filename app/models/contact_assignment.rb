@@ -6,6 +6,8 @@ class ContactAssignment < ActiveRecord::Base
   before_save :get_address_from_organization
   validates :organization_id, presence: true
   validates :title, presence: true
+  validates :effective_start_date, presence: true
+  validate :placements_outside_dates
 
   def organization_name
     self.organization.name
@@ -54,6 +56,12 @@ contact_assignments.effective_end_date", DateTime.now.to_date)
   end
 
 private
+  def placements_outside_dates
+    if Placement.where("contact_assignment_id = ? and end_date > ?", id, effective_end_date).any?
+      errors.add(:effective_end_date, "is before the end date for at least one assignment.")
+    end
+  end
+
   def get_address_from_organization
     if self.address.nil?
       org = Organization.find(self.organization_id)
