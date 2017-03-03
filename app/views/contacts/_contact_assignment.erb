@@ -1,9 +1,9 @@
 <tr>
   <td>
     <%= f.association :organization, wrapper_html: { class: 'col-sm-4' }  %>
-    <%= f.input :effective_start_date, as: :date_time_picker, wrapper_html: {class: 'col-sm-4'} %>
+    <%= f.input :effective_start_date, wrapper_html: {class: 'col-sm-4'} %>
     <% if (!f.object.effective_end_date.nil? and f.object.effective_end_date.strftime("%Y") != '9999') %>
-      <%= f.input :effective_end_date, as: :date_time_picker, wrapper_html: {class: 'col-sm-4'} %>
+      <%= f.input :effective_end_date, wrapper_html: {class: 'col-sm-4'} %>
     <% else %>
       <%= f.input :effective_end_date, :as => :hidden %>
     <% end %>

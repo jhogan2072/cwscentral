@@ -14,7 +14,7 @@
             <%= f.input :city, wrapper_html: {class: 'col-sm-4'} %>
             <%= f.input :state, wrapper_html: {class: 'col-sm-4'} %>
             <%= f.input :zip, wrapper_html: {class: 'col-sm-4'} %>
-            <%= f.input :sponsor_since, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :sponsor_since, as: :date_time_picker, wrapper_html: {class: 'col-sm-4'} %>
           </div>
 
           <div class="form-group col-sm-12">
