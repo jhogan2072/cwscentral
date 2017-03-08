@@ -26335,7 +26335,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
       previousCompileContext.hasElementTranscludeDirective = hasElementTranscludeDirective;
 
-      // might be normal or delayed nodeLinkFn depending on if templateUrl is present
+      //   might be normal or delayed nodeLinkFn depending on if templateUrl is present
       return nodeLinkFn;
 
       ////////////////////
