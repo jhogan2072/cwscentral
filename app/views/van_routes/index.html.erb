@@ -19,8 +19,9 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <%= render "shared/alert_msg" %>
           <h2 class="sub-header">
-            <div class="pull-right" ng-if="ctrl.dailyRoutes.length > 0">
-              <a class="btn btn-primary" href="" role="button" ng-click="ctrl.exportAll()">Export All</a>
+            <div class="pull-right">
+              <a class="btn btn btn-primary" target="_self" href="/van_routes/new?route_date={{ctrl.routeDate.format('DD-MMM-YYYY');}}">New Route</a>
+              <a class="btn btn-primary" href="" role="button" ng-if="ctrl.dailyRoutes.length > 0" ng-click="ctrl.exportAll()">Export All</a>
             </div>
             Daily Routes
           </h2>
@@ -39,6 +40,7 @@
                        ng-model="ctrl.copyFromDate"/>
                 <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
               </div>
+              <div style="margin-top: 10px"><a href="#">Which days have prior routes defined?</a></div>
             </div>
           </div>
           <table ng-if="ctrl.dailyRoutes.length > 0">
@@ -59,7 +61,6 @@
             </tr>
           </table>
           <p style="margin-top: 20px">
-            <a class="btn btn btn-primary" target="_self" href="/van_routes/new?route_date={{ctrl.routeDate.format('DD-MMM-YYYY');}}">New Route</a>
           </p>
         </div>
       </div>
