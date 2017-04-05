@@ -40,7 +40,7 @@
                        ng-model="ctrl.copyFromDate"/>
                 <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
               </div>
-              <div style="margin-top: 10px"><a href="#">Which days have prior routes defined?</a></div>
+              <div style="margin-top: 10px"><a href="#" ng-click="ctrl.showRouteModal()">Which days have prior routes defined?</a></div>
             </div>
           </div>
           <table ng-if="ctrl.dailyRoutes.length > 0">

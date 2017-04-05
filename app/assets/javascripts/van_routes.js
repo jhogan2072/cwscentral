@@ -1,4 +1,4 @@
-angular.module('app').controller("VanRouteController", function($http, $timeout, $location, $window, VanRouteService){
+angular.module('app').controller("VanRouteController", function($http, $timeout, $location, $window, ModalFormService, VanRouteService){
     var vm = this;
     vm.alertShowHide = alertShowHide;
     vm.alertText = "";
@@ -17,6 +17,8 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.searchInput = '';
     vm.showResultAlert = false;
     vm.saveDelete = 'Save';
+    vm.selectedDates = [];
+    vm.showRouteModal = showRouteModal;
     vm.time_pattern = '^([0]?[1-9]|1[0-2]):([0-5]\\d)\\s?(AM|PM|am|pm)?$';
 
     Number.prototype.mod = function(n) {
@@ -91,5 +93,30 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     function removeElement(array, index){
         array.splice(index, 1);
     }
+
+    function showRouteModal() {
+        vm.selectedDates.push('04/05/2017');
+        vm.selectedDates.push('04/06/2017');
+        vm.selectedDates.push('04/08/2017');
+
+        var my_string = "";
+        for (var i=0; i < vm.selectedDates.length; i++) {
+            my_string = my_string + 'SelectedDates[new Date(\'' + vm.selectedDates[i] + '\')] = new Date(\'' + vm.selectedDates[i] + '\').toString();\n';
+        }
+        var modalOptions = {
+            closeButtonText: 'Cancel',
+            actionButtonText: 'Save',
+            headerText: 'Select a prior route date',
+            bodyText: 'Choose from the blue numbered days with prior routes.',
+            formLabel: 'Route Date:',
+            dateArray: my_string,
+            modalType: 'routes_dates'
+        };
+
+        ModalFormService.showModal({}, modalOptions).then(function (result) {
+            alert(result);
+        });
+    }
+
 
 });

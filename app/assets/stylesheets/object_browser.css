@@ -99,6 +99,19 @@ body {
     line-height: 34px;
     margin-right: 5px;
 }
+.Highlighted a{
+/*    background-color : Green !important;
+    background-image :none !important; */
+    color: #007fff !important;
+    font-weight:bold !important;
+/*     font-size: 12pt; */
+}
+.ui-state-active {
+    border: 1px solid #003eff;
+    background: #007fff;
+    font-weight: normal;
+    color: #ffffff;
+}
 a:link.white-link, a:visited.white-link {
     color: white;
 }
@@ -218,6 +231,10 @@ td > input[type=checkbox] {
 .modal-body span {
     display:block;
     padding-bottom: 10px;
+}
+.modal-body div.ui-datepicker-title > span
+{
+    display:inline;
 }
 .animate-if.ng-enter, .animate-if.ng-leave {
     -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;

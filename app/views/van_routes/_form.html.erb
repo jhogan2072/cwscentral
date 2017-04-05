@@ -43,6 +43,7 @@
             <% end %>
           </h2>
           <div class="row" ng-init="ctrl.check_in_time='<%= @van_route.check_in_time %>'">
+            <%= f.hidden_field :route_date %>
             <%= f.input :name, label: "Route Name:", wrapper_html: { class: 'col-md-5', style: 'display: block'},
                         :label_html => { :class => "col-md-5" }, input_html: {placeholder: 'Enter a route name',
                                                                               class: 'col-md-3' }%>

@@ -87,6 +87,37 @@ app.directive('ngReallyClick', [function() {
   }
 }]);
 
+app.directive('ngDoubleDate', function(){
+  return {
+    restrict: 'EAC',
+    scope: {
+      sel_dates: '=model'
+    },
+    link: function(scope, elem, attr, ctrl) {
+      //create a new script tag and append it to the directive's element.
+      var scr = document.createElement('script');
+      var text = document.createTextNode('$(document).ready(function() {\n' +
+      'var SelectedDates = {};\n' + scope.sel_dates + ';\n' +
+      '$(\'#datepicker\').datepicker({\n' +
+        'numberOfMonths: 2,\n' +
+        'altField: "#alternate",\n' +
+        'altFormat: "yy-M-dd",\n' +
+        'beforeShowDay: function(date) {\n' +
+          'var Highlight = SelectedDates[date];\n' +
+          'if (Highlight) {\n' +
+            'return [true, "Highlighted", Highlight];\n' +
+          '}\n' +
+          'else {\n' +
+            'return [true, \'\', \'\'];\n' +
+          '}\n' +
+        '}\n' +
+      '});\n' +
+    '});');
+      scr.appendChild(text);
+      elem.append(scr);
+    }
+  }
+})
 app.service('ModalFormService', ['$modal',
     function ($modal) {
 
@@ -102,7 +133,9 @@ app.service('ModalFormService', ['$modal',
             actionButtonText: 'Create',
             headerText: 'New Student',
             bodyText: 'Enter a new student name.',
-            formLabel: 'Student Name:'
+            formLabel: 'Student Name:',
+            dateArray: [],
+            modalType: 'close_contact'
         };
 
         this.showModal = function (customModalDefaults, customModalOptions) {
@@ -121,8 +154,10 @@ app.service('ModalFormService', ['$modal',
 
             //Map modal.html $scope custom properties to defaults defined in service
             angular.extend(tempModalOptions, modalOptions, customModalOptions);
+            if (tempModalOptions.modalType == 'routes_dates')
+              tempModalDefaults.templateUrl = '<%= asset_path("past_routes.html") %>';
 
-            if (!tempModalDefaults.controller) {
+          if (!tempModalDefaults.controller) {
                 tempModalDefaults.controller = function ($scope, $modalInstance) {
                     $scope.modalOptions = tempModalOptions;
                     $scope.modalOptions.ok = function (result) {
