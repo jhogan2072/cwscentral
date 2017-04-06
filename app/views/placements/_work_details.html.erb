@@ -15,7 +15,7 @@
     </tr>
     <tr>
       <td style="font-weight: bold">Department:</td>
-      <td>{{ org_detail.contact_department }}</td>
+      <td>{{ org_detail.department }}</td>
       <td style="font-weight: bold">Office Phone:</td>
       <td>{{ org_detail.office_phone }}</td>
     </tr>
@@ -26,8 +26,8 @@
       <td>{{ org_detail.fax }}</td>
     </tr>
     <tr>
-      <td style="font-weight: bold">&nbsp;</td>
-      <td>{{ org_detail.contact_address }}</td>
+      <td style="font-weight: bold">City, State Zip:</td>
+      <td>{{ org_detail.contact_city }}, {{ org_detail.contact_state }} {{ org_detail.contact_zip }}</td>
       <td style="font-weight: bold">Earliest Start:</td>
       <td>{{ org_detail.earliest_start }}</td>
     </tr>
@@ -39,7 +39,7 @@
     </tr>
     <tr>
       <td style="font-weight: bold">Sponsor Since:</td>
-      <td>{{ org_detail.contact_sponsor_since }}</td>
+      <td>{{ org_detail.sponsor_since }}</td>
       <td style="font-weight: bold">Ideal Start:</td>
       <td>{{ org_detail.ideal_start }}</td>
     </tr>

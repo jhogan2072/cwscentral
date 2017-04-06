@@ -71565,6 +71565,7 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.displayAlert = displayAlert;
     vm.exportAll = exportAll;
     vm.getRoutes = getRoutes;
+    vm.getUrlParameter = getUrlParameter;
     vm.isSuccess = true;
     vm.page = 'routes';
     vm.prev_school_day = '';
@@ -71594,12 +71595,29 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
         if (dy + dys < 1) dys -= 2;
         this.setDate(this.getDate()+wks*7+dys);
     };
-    var myDate = new Date();
-    myDate.setHours(0,0,0,0);
-    myDate.addBusDays(-1);
+    var dtCopyFrom = new Date();
+    var dtToday = new Date();
+    var defaultDateParam = getUrlParameter('route_date');
+
+    if (typeof(defaultDateParam) != 'undefined' && defaultDateParam != '') {
+        dtCopyFrom = new Date(defaultDateParam);
+        dtCopyFrom.setTime( dtCopyFrom.getTime() + dtCopyFrom.getTimezoneOffset()*60*1000 );
+        dtToday = new Date(defaultDateParam);
+        dtToday.setTime( dtToday.getTime() + dtToday.getTimezoneOffset()*60*1000 );
+    }
+    else {
+        dtCopyFrom.setHours(0,0,0,0);
+        dtToday.setHours(0,0,0,0);
+    }
     vm.options = {
+        inline: true,
+        format: 'DD-MMM-YYYY',
+        defaultDate: moment(dtToday)
+    };
+    dtCopyFrom.addBusDays(-1);
+    vm.copy_options = {
         allowInputToggle: true,
-        defaultDate: moment(myDate),
+        defaultDate: moment(dtCopyFrom),
         inline: false,
         format: 'DD-MMM-YYYY'
     };
@@ -71652,8 +71670,26 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
             var a = moment(prev_date);
             var date_string = a.format("DD-MMM-YYYY");
             vm.copyFromDate = date_string;
+            vm.copy_options.defaultDate = a;
             $('#dt1').val(date_string).change();
         }
+    }
+
+    function getUrlParameter(param, dummyPath) {
+        var sPageURL = dummyPath || window.location.search.substring(1),
+            sURLVariables = sPageURL.split(/[&||?]/),
+            res;
+
+        for (var i = 0; i < sURLVariables.length; i += 1) {
+            var paramName = sURLVariables[i],
+                sParameterName = (paramName || '').split('=');
+
+            if (sParameterName[0] === param) {
+                res = sParameterName[1];
+            }
+        }
+
+        return res;
     }
 
     function removeElement(array, index){

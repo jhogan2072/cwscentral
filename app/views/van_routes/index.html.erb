@@ -9,7 +9,7 @@
                 <div class="row">
                   <div class="col-md-12" style="margin: 0 auto; float: none" >
                     <input type="hidden" name="dp_route_date" id="dp_route_date" value="{{ctrl.routeDate.format('DD-MMM-YYYY');}}">
-                    <div class="input-group" ng-model="ctrl.routeDate" datetimepicker options="{inline: true, format: 'DD-MMM-YYYY'}" ng-change="ctrl.getRoutes()"></div>
+                    <div class="input-group" ng-model="ctrl.routeDate" datetimepicker options="ctrl.options" ng-change="ctrl.getRoutes()"></div>
                   </div>
                 </div>
               </div>
@@ -36,7 +36,7 @@
             <div class="col-sm-3 form-group" style="height: 46px; position: relative">
               <div class="input-group" style="padding-top:8px;">
                 <input type="text" id="dt1" class="form-control input-sm" style="font-size: 14px"
-                       datetimepicker options="ctrl.options"
+                       datetimepicker options="ctrl.copy_options"
                        ng-model="ctrl.copyFromDate"/>
                 <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
               </div>

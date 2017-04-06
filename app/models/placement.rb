@@ -61,6 +61,26 @@ class Placement < ActiveRecord::Base
     contact_assignment.organization.zip
   end
 
+  def contact_start_date
+    contact_assignment.effective_start_date
+  end
+
+  def contact_address
+    contact_assignment.address
+  end
+
+  def contact_city
+    contact_assignment.city
+  end
+
+  def contact_state
+    contact_assignment.state
+  end
+
+  def contact_zip
+    contact_assignment.zip
+  end
+
   def sponsor_since
     contact_assignment.organization.sponsor_since
   end
