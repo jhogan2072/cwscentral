@@ -5,6 +5,7 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.copyFromDate = "";
     vm.copyRoutes = copyRoutes;
     vm.dailyRoutes = {};
+    vm.datesWithRoutes = [];
     vm.deleteRoute = deleteRoute;
     vm.deletesChecked = 0;
     vm.displayAlert = displayAlert;
@@ -12,12 +13,13 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     vm.getRoutes = getRoutes;
     vm.isSuccess = true;
     vm.page = 'routes';
+    vm.prev_school_day = '';
     vm.removeElement = removeElement;
-    vm.routeDate = "";
+    vm.routeDate = '';
     vm.searchInput = '';
     vm.showResultAlert = false;
     vm.saveDelete = 'Save';
-    vm.selectedDates = [];
+    vm.selectedDate = '';
     vm.showRouteModal = showRouteModal;
     vm.time_pattern = '^([0]?[1-9]|1[0-2]):([0-5]\\d)\\s?(AM|PM|am|pm)?$';
 
@@ -38,6 +40,16 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
         if (dy + dys < 1) dys -= 2;
         this.setDate(this.getDate()+wks*7+dys);
     };
+    var myDate = new Date();
+    myDate.setHours(0,0,0,0);
+    myDate.addBusDays(-1);
+    vm.options = {
+        allowInputToggle: true,
+        defaultDate: moment(myDate),
+        inline: false,
+        format: 'DD-MMM-YYYY'
+    };
+
     ////////////
 
     function alertShowHide(isShown) {
@@ -95,13 +107,13 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     }
 
     function showRouteModal() {
-        vm.selectedDates.push('04/05/2017');
-        vm.selectedDates.push('04/06/2017');
-        vm.selectedDates.push('04/08/2017');
+        vm.datesWithRoutes.push('04/05/2017');
+        vm.datesWithRoutes.push('04/06/2017');
+        vm.datesWithRoutes.push('04/08/2017');
 
         var my_string = "";
-        for (var i=0; i < vm.selectedDates.length; i++) {
-            my_string = my_string + 'SelectedDates[new Date(\'' + vm.selectedDates[i] + '\')] = new Date(\'' + vm.selectedDates[i] + '\').toString();\n';
+        for (var i=0; i < vm.datesWithRoutes.length; i++) {
+            my_string = my_string + 'SelectedDates[new Date(\'' + vm.datesWithRoutes[i] + '\')] = new Date(\'' + vm.datesWithRoutes[i] + '\').toString();\n';
         }
         var modalOptions = {
             closeButtonText: 'Cancel',
@@ -114,7 +126,7 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
         };
 
         ModalFormService.showModal({}, modalOptions).then(function (result) {
-            alert(result);
+            vm.copyFromDate = vm.selectedDate;
         });
     }
 

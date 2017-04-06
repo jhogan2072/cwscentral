@@ -2,7 +2,7 @@
 //= depend_on_asset "plus.png"
 //= depend_on_asset "minus.png"
 
-var app = angular.module('app', ['ui.bootstrap','ui.sortable','datetimepicker','ngResource', 'ngAnimate','ngCookies'])
+var app = angular.module('app', ['ui.bootstrap','ui.sortable','ae-datetimepicker','ngResource', 'ngAnimate','ngCookies'])
 
 app.factory('ContactService', ['$resource', ContactService]);
 function ContactService($resource) {
@@ -100,8 +100,7 @@ app.directive('ngDoubleDate', function(){
       'var SelectedDates = {};\n' + scope.sel_dates + ';\n' +
       '$(\'#datepicker\').datepicker({\n' +
         'numberOfMonths: 2,\n' +
-        'altField: "#alternate",\n' +
-        'altFormat: "yy-M-dd",\n' +
+        'dateFormat: "dd-M-yy",\n' +
         'beforeShowDay: function(date) {\n' +
           'var Highlight = SelectedDates[date];\n' +
           'if (Highlight) {\n' +
@@ -111,7 +110,12 @@ app.directive('ngDoubleDate', function(){
             'return [true, \'\', \'\'];\n' +
           '}\n' +
         '}\n' +
-      '});\n' +
+      '}).on("change", function(e) {\n' +
+         'console.log("Date changed: ", e.target.value);\n' +
+         'var element = angular.element($(\'#datepicker\'));' +
+         'var controller = element.controller();\n' +
+         'controller.selectedDate = e.target.value' +
+    '});' +
     '});');
       scr.appendChild(text);
       elem.append(scr);
@@ -134,7 +138,7 @@ app.service('ModalFormService', ['$modal',
             headerText: 'New Student',
             bodyText: 'Enter a new student name.',
             formLabel: 'Student Name:',
-            dateArray: [],
+            dateArray: '',
             modalType: 'close_contact'
         };
 
@@ -161,7 +165,7 @@ app.service('ModalFormService', ['$modal',
                 tempModalDefaults.controller = function ($scope, $modalInstance) {
                     $scope.modalOptions = tempModalOptions;
                     $scope.modalOptions.ok = function (result) {
-                        $modalInstance.close(result);
+                      $modalInstance.close(result);
                     };
                     $scope.modalOptions.close = function (result) {
                         $modalInstance.dismiss('cancel');

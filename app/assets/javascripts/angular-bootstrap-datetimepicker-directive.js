@@ -1,8 +1,7 @@
 (function () {
     'use strict';
 
-    //This module comes from https://github.com/atais/angular-eonasdan-datetimepicker via the MIT license
-    var module = angular.module('datetimepicker', []);
+    var module = angular.module('ae-datetimepicker', []);
 
     module.directive('datetimepicker', [
         '$timeout',
@@ -26,12 +25,17 @@
                     }, true);
 
                     ngModel.$render = function () {
-                        if (!ngModel.$viewValue) {
-                            ngModel.$setViewValue(null);
-                        } else if (!moment.isMoment(ngModel.$viewValue)) {
-                            ngModel.$setViewValue(moment(ngModel.$viewValue));
+                        // if value is undefined/null do not do anything, unless some date was set before
+                        var currentDate = dpElement.data('DateTimePicker').date();
+                        if (!ngModel.$viewValue && currentDate) {
+                            dpElement.data('DateTimePicker').clear();
+                        } else if (ngModel.$viewValue) {
+                            // otherwise make sure it is moment object
+                            if (!moment.isMoment(ngModel.$viewValue)) {
+                                ngModel.$setViewValue(moment(ngModel.$viewValue));
+                            }
+                            dpElement.data('DateTimePicker').date(ngModel.$viewValue);
                         }
-                        dpElement.data('DateTimePicker').date(ngModel.$viewValue);
                     };
 
                     var isDateEqual = function (d1, d2) {

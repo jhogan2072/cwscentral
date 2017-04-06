@@ -9,7 +9,7 @@ gem 'rails_12factor', '0.0.3', group: :production
 gem 'angularjs-rails', '1.4.8'
 gem 'angular-ui-bootstrap-rails', '0.14.3'
 gem 'momentjs-rails', '2.11.0'
-gem 'bootstrap3-datetimepicker-rails', '4.14.30'
+gem 'bootstrap3-datetimepicker-rails', '4.17.47'
 gem 'nokogiri', '1.6.7.1'
 gem 'mini_portile2', '2.0.0'
 gem 'bundler'

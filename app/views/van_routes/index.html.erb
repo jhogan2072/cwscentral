@@ -9,7 +9,7 @@
                 <div class="row">
                   <div class="col-md-12" style="margin: 0 auto; float: none" >
                     <input type="hidden" name="dp_route_date" id="dp_route_date" value="{{ctrl.routeDate.format('DD-MMM-YYYY');}}">
-                    <div class="input-group" ng-model="ctrl.routeDate" datetimepicker options="{inline: true, format: 'DD-MMM-YYYY', defaultDate:'<%=@todays_date.strftime('%d-%b-%Y')%>'}" ng-change="ctrl.getRoutes()"></div>
+                    <div class="input-group" ng-model="ctrl.routeDate" datetimepicker options="{inline: true, format: 'DD-MMM-YYYY'}" ng-change="ctrl.getRoutes()"></div>
                   </div>
                 </div>
               </div>
@@ -31,16 +31,16 @@
               button.  To copy from a different day, click in the date box below to choose a different date. To
               add routes from scratch, click the New Route button at the lower left of the page.
             </p>
+            <input type="hidden" ng-model="prev_school_day" value="<%=@previous_school_day.strftime('%FT%R')%>"/>
             <p class="col-sm-6" style="text-align:right"><a class="btn btn-lg btn-success" href="" role="button" ng-click="ctrl.copyRoutes()">Copy Routes</a></p>
             <div class="col-sm-3 form-group" style="height: 46px; position: relative">
               <div class="input-group" style="padding-top:8px;">
                 <input type="text" id="dt1" class="form-control input-sm" style="font-size: 14px"
-                       datetimepicker
-                       options="{defaultDate:'<%=@previous_school_day.strftime('%d-%b-%Y')%>', allowInputToggle: true, inline: false, format: 'DD-MMM-YYYY'}"
+                       datetimepicker options="ctrl.options"
                        ng-model="ctrl.copyFromDate"/>
                 <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
               </div>
-              <div style="margin-top: 10px"><a href="#" ng-click="ctrl.showRouteModal()">Which days have prior routes defined?</a></div>
+              <div style="margin-top: 10px"><a href="#" ng-click="ctrl.showRouteModal();">Which days have prior routes defined?</a></div>
             </div>
           </div>
           <table ng-if="ctrl.dailyRoutes.length > 0">
