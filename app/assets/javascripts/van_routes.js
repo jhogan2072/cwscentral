@@ -90,7 +90,7 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     }
 
     function getRoutes () {
-        vm.dailyRoutes = VanRouteService.query({route_date: vm.routeDate});
+        vm.dailyRoutes = VanRouteService.query({route_date: vm.routeDate.toString()});
         if (vm.dailyRoutes.length == 0)
         {
             var prev_date = new Date(vm.routeDate);
