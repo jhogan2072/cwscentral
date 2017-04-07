@@ -116,7 +116,9 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
             // success handler
             vm.datesWithRoutes = [];
             angular.forEach(data, function(route) {
-                var a = moment(new Date(route.route_date));
+                var dtRouteDate = new Date(route.route_date);
+                dtRouteDate.setTime( dtRouteDate.getTime() + dtRouteDate.getTimezoneOffset()*60*1000 );
+                var a = moment.utc(dtRouteDate);
                 vm.datesWithRoutes.push(a.format("MM/DD/YYYY"));
             });
         }, function(response) {

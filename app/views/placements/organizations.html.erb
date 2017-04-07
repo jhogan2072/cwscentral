@@ -11,7 +11,7 @@
         </li>
         <li ng-repeat="org in ctrl.orgs | filter:ctrl.searchInput" ng-class="{'active':$index == ctrl.selectedOrg}"
             ng-click="ctrl.setClickedOrg($index, org.full_name, org.id)">
-          <a href="#">{{org.name}}</a>
+          <a href="#" ng-attr-id="{{$index == ctrl.selectedOrg && 'activeOrganization'}}">{{org.name}}</a>
 
         </li>
       </ul>

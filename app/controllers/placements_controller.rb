@@ -152,7 +152,7 @@ class PlacementsController < ApplicationController
   def destroy
     @placement.destroy
     respond_to do |format|
-      format.html { redirect_to organizations_url, status: 303, notice: 'Placement was successfully destroyed.' }
+      format.html { redirect_to :back, status: 303, notice: 'Placement was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

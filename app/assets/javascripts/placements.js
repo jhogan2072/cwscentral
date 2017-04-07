@@ -21,6 +21,8 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.getGradeData = getGradeData;
     vm.getOrganizations = getOrganizations;
     vm.getStudents = getStudents;
+    vm.goToContact = goToContact;
+    vm.goToOrganization = goToOrganization;
     vm.goToStudent = goToStudent;
     vm.isStudentListing = true;
     vm.isSuccess = true;
@@ -169,6 +171,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
                     }
                     i++;
                 });
+                goToContact();
             });
         }
     }
@@ -266,6 +269,24 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         }, function(response) {
             vm.displayAlert(false, "There was an unexpected error.  Could not retrieve students.  The HTTP return code was " + response.status);
         });
+    }
+
+    function goToContact() {
+        // set the location.hash to the id of
+        // the element you wish to scroll to.
+        $location.hash('activeContact');
+
+        // call $anchorScroll()
+        $anchorScroll();
+    }
+
+    function goToOrganization() {
+        // set the location.hash to the id of
+        // the element you wish to scroll to.
+        $location.hash('activeOrganization');
+
+        // call $anchorScroll()
+        $anchorScroll();
     }
 
     function goToStudent() {

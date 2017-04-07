@@ -11,7 +11,7 @@
         </li>
         <li ng-repeat="contact in ctrl.contacts | filter:ctrl.searchInput" ng-class="{'active':$index == ctrl.selectedContact}"
             ng-click="ctrl.setClickedContact($index, contact.name, contact.id)">
-          <a href="#">{{contact.name}}</a>
+          <a href="#" ng-attr-id="{{$index == ctrl.selectedContact && 'activeContact'}}">{{contact.name}}</a>
 
         </li>
       </ul>

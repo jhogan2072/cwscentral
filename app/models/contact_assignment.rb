@@ -58,7 +58,8 @@ contact_assignments.effective_end_date", DateTime.now.to_date)
 private
   def placements_outside_dates
     if Placement.where("contact_assignment_id = ? and end_date > ?", id, effective_end_date).any?
-      errors.add(:effective_end_date, "is before the end date for at least one assignment.")
+      errors.add(:effective_end_date, "is before the end date for at least one work assignment.  Please correct these assignments by searching for this contact on the " +
+          "Placements by Contact screen.")
     end
   end
 

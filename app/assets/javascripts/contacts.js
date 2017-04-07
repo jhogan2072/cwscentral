@@ -30,12 +30,15 @@ angular.module('app').controller("ContactController", function($http, $timeout, 
         ca.effective_end_date = closeDate;
         ContactAssignmentService.update({ id:contactAssignmentId }, ca, function(data) {
             //success
-            vm.displayAlert(true,"The contact assignment was successfully closed.");
+            vm.displayAlert(true,"The contact assignment was successfully closed.", true);
             $window.location.href = '/contacts';
         }, function(response) {
-            vm.displayAlert(false, "The contact could not be closed because he/she has student work assignments that " +
-                "extend past the close date.  Please correct these assignments by searching for this contact on the " +
-                "Placements by Contact screen.");
+            var errorString = '';
+            for (var key in response.data){
+                errorString += key + ' ' + response.data[key] + ', ';
+            }
+            errorString = errorString.slice(0, -2);
+            vm.displayAlert(false, "The contact could not be closed because of the following problems: " + errorString, false);
         });
     }
 
@@ -44,17 +47,18 @@ angular.module('app').controller("ContactController", function($http, $timeout, 
             // success handler
             //Alert that the object was successfully deleted and delete the row
             vm.removeElement(vm.studentPlacements, indexObjToDelete);
-            vm.displayAlert(true,"The placement was successfully deleted.");
+            vm.displayAlert(true,"The placement was successfully deleted.", true);
         }, function(response) {
-            vm.displayAlert(false, "There was an error deleting the placement.  The HTTP return code was " + response.status);
+            vm.displayAlert(false, "There was an error deleting the placement.  The HTTP return code was " + response.status, false);
         });
     }
 
-    function displayAlert (isSuccess, message) {
+    function displayAlert (isSuccess, message, hide) {
         vm.isSuccess = isSuccess;
         vm.alertText = message;
         vm.showResultAlert = true;
-        $timeout(function(){vm.showResultAlert = false}, 5000);
+        if (hide == true)
+            $timeout(function(){vm.showResultAlert = false}, 5000);
     }
 
     function getContacts () {
@@ -63,7 +67,7 @@ angular.module('app').controller("ContactController", function($http, $timeout, 
 
     function reopenContact(contactId) {
         var ca = ContactAssignmentService.reopen({contact_id:contactId});
-        vm.displayAlert(true,"The contact assignment was successfully updated.");
+        vm.displayAlert(true,"The contact assignment was successfully updated.", true);
         $window.location.href = '/contacts';
     }
 
