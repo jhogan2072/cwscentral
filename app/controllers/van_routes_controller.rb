@@ -130,6 +130,11 @@ class VanRoutesController < ApplicationController
     respond_with VanRoute.joins(:driver).includes(:driver, :van).where(:route_date => copy_to).to_json(:include => [:driver, :van])
   end
 
+  def prior_days
+    current_month = params[:current_month]
+    respond_with VanRoute.prior_days(current_month)
+  end
+
 private
   # Use callbacks to share common setup or constraints between actions.
   def set_van_route

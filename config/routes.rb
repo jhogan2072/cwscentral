@@ -111,6 +111,7 @@ Rails.application.routes.draw do
       get :autocomplete_placement_org_contact_student
       get :copy, :defaults => { :format => :json }
       get :export_all, defaults: { :format => :xlsx }
+      get :prior_days, :defaults => { :format => :json }
     end
   end
 

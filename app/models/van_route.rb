@@ -27,4 +27,9 @@ class VanRoute < ActiveRecord::Base
     end
   end
 
+  def self.prior_days(current_month)
+    month_num = current_month.to_i
+    where("EXTRACT(MONTH FROM route_date) between ? and ?", month_num, month_num + 1).select("route_date")
+  end
+
 end

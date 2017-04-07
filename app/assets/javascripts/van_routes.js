@@ -68,6 +68,8 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
         format: 'DD-MMM-YYYY'
     };
 
+    getPriorDays(dtCopyFrom);
+
     ////////////
 
     function alertShowHide(isShown) {
@@ -107,6 +109,21 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
         $window.location.href = '/van_routes/export_all?route_date=' + vm.routeDate;
     }
 
+    function getPriorDays(current_month) {
+        VanRouteService.prior_days({
+            current_month: current_month.getMonth()
+        },function(data) {
+            // success handler
+            vm.datesWithRoutes = [];
+            angular.forEach(data, function(route) {
+                var a = moment(new Date(route.route_date));
+                vm.datesWithRoutes.push(a.format("MM/DD/YYYY"));
+            });
+        }, function(response) {
+            vm.displayAlert(false, "There was an error retrieving past routes.  The HTTP return code was " + response.status);
+        });
+    }
+
     function getRoutes () {
         vm.dailyRoutes = VanRouteService.query({route_date: vm.routeDate.toString()});
         if (vm.dailyRoutes.length == 0)
@@ -117,7 +134,8 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
             var date_string = a.format("DD-MMM-YYYY");
             vm.copyFromDate = date_string;
             vm.copy_options.defaultDate = a;
-            $('#dt1').val(date_string).change();
+            $('#datepicker').val(date_string).change();
+            getPriorDays(prev_date);
         }
     }
 
@@ -143,10 +161,6 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     }
 
     function showRouteModal() {
-        vm.datesWithRoutes.push('04/05/2017');
-        vm.datesWithRoutes.push('04/06/2017');
-        vm.datesWithRoutes.push('04/08/2017');
-
         var my_string = "";
         for (var i=0; i < vm.datesWithRoutes.length; i++) {
             my_string = my_string + 'SelectedDates[new Date(\'' + vm.datesWithRoutes[i] + '\')] = new Date(\'' + vm.datesWithRoutes[i] + '\').toString();\n';

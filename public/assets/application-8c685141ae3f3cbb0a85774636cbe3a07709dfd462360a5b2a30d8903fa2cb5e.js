@@ -70614,7 +70614,7 @@ angular.module('ui.sortable', [])
                         } else if (ngModel.$viewValue) {
                             // otherwise make sure it is moment object
                             if (!moment.isMoment(ngModel.$viewValue)) {
-                                ngModel.$setViewValue(moment(ngModel.$viewValue));
+                                ngModel.$setViewValue(moment(ngModel.$viewValue, "DD-MMM-YYYY"));
                             }
                             dpElement.data('DateTimePicker').date(ngModel.$viewValue);
                         }
@@ -70690,7 +70690,8 @@ app.factory('VanRouteService', ['$resource', VanRouteService]);
 function VanRouteService($resource) {
   return $resource('/van_routes/:collectionRoute/:id.json', null,
       {
-        'copy': {method: 'GET', isArray: true, params: {collectionRoute: 'copy', format: 'json'}}
+        'copy': {method: 'GET', isArray: true, params: {collectionRoute: 'copy', format: 'json'}},
+        'prior_days': {method: 'GET', isArray: true, params: {collectionRoute: 'prior_days', format: 'json'}}
       });
 }
 
@@ -70813,7 +70814,7 @@ app.service('ModalFormService', ['$modal',
             //Map modal.html $scope custom properties to defaults defined in service
             angular.extend(tempModalOptions, modalOptions, customModalOptions);
             if (tempModalOptions.modalType == 'routes_dates')
-              tempModalDefaults.templateUrl = '/assets/past_routes-bb12cb93ff9526ffcb56aec9f5b4d7dd4ae7546d9dcfdb7596c9f419835669a0.html';
+              tempModalDefaults.templateUrl = '/assets/past_routes-b2bb0d4c80c5b0cd15e5e9a5330caf2507559d867df76071748c7d4855c3f763.html';
 
           if (!tempModalDefaults.controller) {
                 tempModalDefaults.controller = function ($scope, $modalInstance) {
@@ -71622,6 +71623,8 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
         format: 'DD-MMM-YYYY'
     };
 
+    getPriorDays(dtCopyFrom);
+
     ////////////
 
     function alertShowHide(isShown) {
@@ -71661,6 +71664,21 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
         $window.location.href = '/van_routes/export_all?route_date=' + vm.routeDate;
     }
 
+    function getPriorDays(current_month) {
+        VanRouteService.prior_days({
+            current_month: current_month.getMonth()
+        },function(data) {
+            // success handler
+            vm.datesWithRoutes = [];
+            angular.forEach(data, function(route) {
+                var a = moment(new Date(route.route_date));
+                vm.datesWithRoutes.push(a.format("MM/DD/YYYY"));
+            });
+        }, function(response) {
+            vm.displayAlert(false, "There was an error retrieving past routes.  The HTTP return code was " + response.status);
+        });
+    }
+
     function getRoutes () {
         vm.dailyRoutes = VanRouteService.query({route_date: vm.routeDate.toString()});
         if (vm.dailyRoutes.length == 0)
@@ -71671,7 +71689,8 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
             var date_string = a.format("DD-MMM-YYYY");
             vm.copyFromDate = date_string;
             vm.copy_options.defaultDate = a;
-            $('#dt1').val(date_string).change();
+            $('#datepicker').val(date_string).change();
+            getPriorDays(prev_date);
         }
     }
 
@@ -71697,10 +71716,6 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     }
 
     function showRouteModal() {
-        vm.datesWithRoutes.push('04/05/2017');
-        vm.datesWithRoutes.push('04/06/2017');
-        vm.datesWithRoutes.push('04/08/2017');
-
         var my_string = "";
         for (var i=0; i < vm.datesWithRoutes.length; i++) {
             my_string = my_string + 'SelectedDates[new Date(\'' + vm.datesWithRoutes[i] + '\')] = new Date(\'' + vm.datesWithRoutes[i] + '\').toString();\n';

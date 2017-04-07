@@ -32,7 +32,7 @@
                         } else if (ngModel.$viewValue) {
                             // otherwise make sure it is moment object
                             if (!moment.isMoment(ngModel.$viewValue)) {
-                                ngModel.$setViewValue(moment(ngModel.$viewValue));
+                                ngModel.$setViewValue(moment(ngModel.$viewValue, "DD-MMM-YYYY"));
                             }
                             dpElement.data('DateTimePicker').date(ngModel.$viewValue);
                         }

@@ -112,6 +112,9 @@ body {
     font-weight: normal;
     color: #ffffff;
 }
+.ui-datepicker {
+    margin: 0 auto;
+}
 a:link.white-link, a:visited.white-link {
     color: white;
 }

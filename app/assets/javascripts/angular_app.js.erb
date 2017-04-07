@@ -36,7 +36,8 @@ app.factory('VanRouteService', ['$resource', VanRouteService]);
 function VanRouteService($resource) {
   return $resource('/van_routes/:collectionRoute/:id.json', null,
       {
-        'copy': {method: 'GET', isArray: true, params: {collectionRoute: 'copy', format: 'json'}}
+        'copy': {method: 'GET', isArray: true, params: {collectionRoute: 'copy', format: 'json'}},
+        'prior_days': {method: 'GET', isArray: true, params: {collectionRoute: 'prior_days', format: 'json'}}
       });
 }
 
