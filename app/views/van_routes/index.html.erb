@@ -7,9 +7,9 @@
             <li>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-md-12" style="margin: 0 auto; float: none" >
+                  <div class="col-md-12">
                     <input type="hidden" name="dp_route_date" id="dp_route_date" value="{{ctrl.routeDate.format('DD-MMM-YYYY');}}">
-                    <div class="input-group" ng-model="ctrl.routeDate" datetimepicker options="ctrl.options" ng-change="ctrl.getRoutes()"></div>
+                    <div class="input-group" ng-model="ctrl.routeDate" datetimepicker options="ctrl.options" ng-change="ctrl.getRoutes()"  style="margin: 0 auto; float: none" ></div>
                   </div>
                 </div>
               </div>
