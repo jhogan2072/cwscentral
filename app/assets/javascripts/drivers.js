@@ -5,7 +5,7 @@ angular.module('app').controller("DriverController", function($http, $timeout, $
     vm.displayAlert = displayAlert;
     vm.isSuccess = true;
     vm.logoutUser = logoutUser;
-    vm.page = 'drivers';
+    vm.page = 'routes';
     vm.searchInput = '';
     vm.showResultAlert = false;
 

@@ -70898,7 +70898,10 @@ angular.module('app').controller("ContactController", function($http, $timeout, 
     }
 
     function getContacts () {
-        vm.contacts = ContactService.query();
+        if (window.location.search == '')
+            vm.contacts = ContactService.query();
+        else
+            vm.contacts = ContactService.query({all: true})
     }
 
     function reopenContact(contactId) {
@@ -70931,7 +70934,7 @@ angular.module('app').controller("DriverController", function($http, $timeout, $
     vm.displayAlert = displayAlert;
     vm.isSuccess = true;
     vm.logoutUser = logoutUser;
-    vm.page = 'drivers';
+    vm.page = 'routes';
     vm.searchInput = '';
     vm.showResultAlert = false;
 
@@ -71693,7 +71696,10 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     }
 
     function exportAll() {
-        $window.location.href = '/van_routes/export_all?route_date=' + vm.routeDate;
+        var js_date = new Date(vm.routeDate);
+        var m_date = moment(js_date);
+        var date_string = m_date.format("DD-MMM-YYYY");
+        $window.location.href = '/van_routes/export_all?route_date=' + date_string;
     }
 
     function getPriorDays(current_month) {
@@ -71777,7 +71783,7 @@ angular.module('app').controller("VanController", function($http, $timeout){
     vm.alertText = "Hello, World";
     vm.displayAlert = displayAlert;
     vm.isSuccess = true;
-    vm.page = 'vans';
+    vm.page = 'routes';
     vm.showResultAlert = false;
 
     ////////////

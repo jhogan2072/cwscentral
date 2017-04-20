@@ -106,7 +106,10 @@ angular.module('app').controller("VanRouteController", function($http, $timeout,
     }
 
     function exportAll() {
-        $window.location.href = '/van_routes/export_all?route_date=' + vm.routeDate;
+        var js_date = new Date(vm.routeDate);
+        var m_date = moment(js_date);
+        var date_string = m_date.format("DD-MMM-YYYY");
+        $window.location.href = '/van_routes/export_all?route_date=' + date_string;
     }
 
     function getPriorDays(current_month) {

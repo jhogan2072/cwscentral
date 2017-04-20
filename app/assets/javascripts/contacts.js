@@ -62,7 +62,10 @@ angular.module('app').controller("ContactController", function($http, $timeout, 
     }
 
     function getContacts () {
-        vm.contacts = ContactService.query();
+        if (window.location.search == '')
+            vm.contacts = ContactService.query();
+        else
+            vm.contacts = ContactService.query({all: true})
     }
 
     function reopenContact(contactId) {

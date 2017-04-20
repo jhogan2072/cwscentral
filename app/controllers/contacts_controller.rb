@@ -106,7 +106,16 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    @contacts = Contact.display_active
+    respond_to do |format|
+      format.html
+      format.json {
+        if params["all"]
+          @contacts = Contact.display_all
+        else
+          @contacts = Contact.display_active
+        end
+      }
+    end
   end
 
   def mailing_lists

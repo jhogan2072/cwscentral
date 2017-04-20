@@ -4,7 +4,7 @@ angular.module('app').controller("VanController", function($http, $timeout){
     vm.alertText = "Hello, World";
     vm.displayAlert = displayAlert;
     vm.isSuccess = true;
-    vm.page = 'vans';
+    vm.page = 'routes';
     vm.showResultAlert = false;
 
     ////////////
