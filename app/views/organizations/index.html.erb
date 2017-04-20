@@ -5,7 +5,10 @@
     <div class="col-md-12 main">
       <%= render "shared/alert_msg" %>
       <h2 class="sub-header">Organizations
-        <%= link_to "Export", export_organizations_path, class: "btn btn-primary pull-right", target: "_self" %>
+        <div class="pull-right">
+          <%= link_to "Export", export_organizations_path, class: "btn btn-primary", target: "_self" %>
+          <%= link_to 'New Organization', new_organization_path, class: "btn btn-primary", target: "_self" %>
+        </div>
       </h2>
       <div class="table-responsive" ng-style="ctrl.truncateStyle">
         <table class="table table-striped">
@@ -96,7 +99,6 @@
           </tr>
           </tbody>
         </table>
-        <%= link_to 'New Organization', new_organization_path, class: "btn btn-primary", target: "_self" %>
       </div>
     </div>
   </div>

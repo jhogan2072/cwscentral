@@ -1,6 +1,7 @@
 class OrganizationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_organization, only: [:show, :edit, :update, :destroy]
+  autocomplete :brand, :name
 
   # GET /organizations
   # GET /organizations.json
@@ -78,7 +79,12 @@ class OrganizationsController < ApplicationController
 
   def placements
     #retrieve an organizations student work history
-    @placements = Placement.search(filtering_id=params[:id], query_type=1)
+    order = params["order_by"]
+    desc = params["desc"]
+    if !order.to_s.empty? and desc == "true"
+      order = order + " desc"
+    end
+    @placements = Placement.search(filtering_id=params[:id], query_type=1, order_by=order)
     if @placements.length == 0
       render json: :no_content, status: 404
     end

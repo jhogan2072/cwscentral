@@ -7,6 +7,14 @@ Rails.application.routes.draw do
     resources :users, except: [:show]
   end
 
+  resources :merges, except: [:show, :update, :destroy, :index, :new, :edit, :create] do
+    collection do
+      get :merge_organizations
+      post :org_merge
+      get :autocomplete_organization_name
+    end
+  end
+
   resources :contacts, except: [:show] do
     member do
       get :incidents, :defaults => { :format => :json }

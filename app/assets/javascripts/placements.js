@@ -33,6 +33,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.orgName = "";
     vm.orgList = [];
     vm.orgs = [];
+    vm.placementId = -1;
     vm.placementStartDate = "";
     vm.selectedOrg = -1;
     vm.selectedOrgEdit = -1;
@@ -54,7 +55,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.showOrganizationDetails = showOrganizationDetails;
     vm.showResultAlert = false;
     vm.sortReverse = true;
-    vm.sortType = 'start_date';
+    vm.sortType = 'placements.start_date';
     vm.studentPlacements = [];
     vm.studentCount = 0;
     vm.studentId = -1;
@@ -111,6 +112,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
             vm.notes_showing[arrayIndex] = true;
             vm.studentPlacements[arrayIndex].plusminus = PlusMinus.get_url(false);
             var row = table.insertRow(arrayIndex + 2 + numOpen);
+            row.className = 'notes_row';
             var cell1 = row.insertCell(0);
             cell1.colSpan = 11;
             cell1.innerHTML = "<span style='font-weight: bold; margin-right: 25px;margin-left: 10px;'>Notes:</span>" +
@@ -219,13 +221,17 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         if (listingType == vm.STUDENT_TYPE) {
             detailsURL = '/students/' + listingId + '/placements';
         } else if (listingType == vm.ORG_TYPE) {
-            detailsURL = '/organizations/' + listingId + '/placements';
+            detailsURL = '/organizations/' + listingId + '/placements?order_by=' + vm.sortType + '&desc=' + vm.sortReverse.toString();
         } else if (listingType == vm.CONTACT_TYPE) {
             detailsURL = '/contacts/' + listingId + '/placements';
         }
         $http.get(detailsURL).
         success(function(data){
             vm.studentPlacements = [];
+            vm.notes_showing = [];
+            var blah = $('#plcmtTable tr.notes_row')
+            blah.remove();
+            //table.innerHTML = '';
             angular.forEach(data, function(stud_detail) {
                 stud_detail.plusminus = PlusMinus.get_url(true);
                 vm.studentPlacements.push(stud_detail);

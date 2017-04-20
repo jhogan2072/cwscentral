@@ -19,6 +19,7 @@ contact_assignments.effective_end_date", DateTime.now.to_date)
   def self.display_active
     joins("LEFT JOIN contact_assignments ON contacts.id = contact_assignments.contact_id LEFT JOIN organizations
           ON organizations.id = contact_assignments.organization_id").includes(contact_assignments: :organization)
+        .where("effective_end_date = '9999-12-31'")
         .order("contact_assignments.organization_id, contacts.last_name, contact_assignments.effective_end_date desc")
   end
 

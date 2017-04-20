@@ -1,0 +1,42 @@
+<body ng-app="app" ng-controller="AdminController as ctrl">
+<%= render "shared/navbar", input_name: nil %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <%= form_tag('org_merge') do %>
+      <h2 class="sub-header">Merge Organizations
+        <div class="pull-right">
+          <button type="submit" class="btn btn-primary pull-right">Merge</button>
+        </div>
+      </h2>
+      <div class="container">
+        <p class="lead">To merge two organizations, start typing the organization names in the below fields to select
+          both the organization to be merged into and the organization to be merged from. Then, click the merge button to
+          perform the merge.</p>
+
+        <div class="col-md-4 form-inputs">
+          <div class="form-group string optional incident_category_category">
+            <input type="hidden" id="org_1_id" name="org_1_id">
+            <label class="string optional control-label" for="organization_name_1">Organization 1</label>
+              <%= autocomplete_field_tag 'organization_name_1', '', autocomplete_organization_name_merges_path, :id_element => '#org_1_id', :class => "string optional form-control" %>
+              <p class="help-block">This organization will be retained after the merge, and will inherit contacts, placements, and incidents
+                from Organization 2</p>
+          </div>
+        </div>
+        <div class="col-md-4 form-inputs">
+          <div class="form-group string optional incident_category_category">
+            <input type="hidden" id="org_2_id" name="org_2_id">
+            <label class="string optional control-label" for="organization_name_2">Organization 2</label>
+              <%= autocomplete_field_tag 'organization_name_2', '', autocomplete_organization_name_merges_path, :id_element => '#org_2_id', :class => "string optional form-control" %>
+              <p class="help-block">This organization will be deleted after its contacts, placements, and incident history
+              have been migrated to Organization 1</p>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+</body>
+

@@ -150,13 +150,18 @@ class Placement < ActiveRecord::Base
                                     route_date , grade_level).order("placements.student_gradelevel")
   end
 
-  def self.search(filtering_id=-1,query_type=-1)
+  def self.search(filtering_id=-1,query_type=-1,order_by="")
     if query_type == 0
       joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
           .includes(:student).where("student_id = ?", filtering_id).order("placements.student_gradelevel desc, placements.start_date desc")
     elsif query_type == 1
+      default_order = "placements.start_date desc"
+      if order_by.to_s.empty?
+        order_by = default_order
+      end
+      order_by = order_by + ", students.last_name"
       joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
-          .includes(:student).where("contact_assignments.organization_id = ?", filtering_id).order("placements.start_date desc, students.last_name")
+          .includes(:student).where("contact_assignments.organization_id = ?", filtering_id).order(order_by)
     elsif query_type == 2
       joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])
           .includes(:student).where("contact_assignments.contact_id = ?", filtering_id).order("placements.start_date desc, students.last_name")
