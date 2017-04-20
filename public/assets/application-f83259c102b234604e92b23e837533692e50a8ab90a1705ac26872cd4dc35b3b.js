@@ -70778,8 +70778,8 @@ app.directive('ngDoubleDate', function(){
   }
 });
 
-app.service('ModalFormService', ['$modal',
-    function ($modal) {
+app.service('ModalFormService', ['$uibModal',
+    function ($uibModal) {
 
         var modalDefaults = {
             backdrop: true,
@@ -70818,18 +70818,18 @@ app.service('ModalFormService', ['$modal',
               tempModalDefaults.templateUrl = '/assets/past_routes-b2bb0d4c80c5b0cd15e5e9a5330caf2507559d867df76071748c7d4855c3f763.html';
 
           if (!tempModalDefaults.controller) {
-                tempModalDefaults.controller = function ($scope, $modalInstance) {
+                tempModalDefaults.controller = function ($scope, $uibModalInstance) {
                     $scope.modalOptions = tempModalOptions;
                     $scope.modalOptions.ok = function (result) {
-                      $modalInstance.close(result);
+                      $uibModalInstance.close(result);
                     };
                     $scope.modalOptions.close = function (result) {
-                        $modalInstance.dismiss('cancel');
+                        $uibModalInstance.dismiss('cancel');
                     };
                 }
             }
 
-            return $modal.open(tempModalDefaults).result;
+            return $uibModal.open(tempModalDefaults).result;
         };
 
     }]
@@ -71224,6 +71224,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.orgName = "";
     vm.orgList = [];
     vm.orgs = [];
+    vm.placementId = -1;
     vm.placementStartDate = "";
     vm.selectedOrg = -1;
     vm.selectedOrgEdit = -1;
@@ -71245,7 +71246,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
     vm.showOrganizationDetails = showOrganizationDetails;
     vm.showResultAlert = false;
     vm.sortReverse = true;
-    vm.sortType = 'start_date';
+    vm.sortType = 'placements.start_date';
     vm.studentPlacements = [];
     vm.studentCount = 0;
     vm.studentId = -1;
@@ -71302,6 +71303,7 @@ angular.module('app').controller("PlacementController", function($http, $timeout
             vm.notes_showing[arrayIndex] = true;
             vm.studentPlacements[arrayIndex].plusminus = PlusMinus.get_url(false);
             var row = table.insertRow(arrayIndex + 2 + numOpen);
+            row.className = 'notes_row';
             var cell1 = row.insertCell(0);
             cell1.colSpan = 11;
             cell1.innerHTML = "<span style='font-weight: bold; margin-right: 25px;margin-left: 10px;'>Notes:</span>" +
@@ -71410,13 +71412,17 @@ angular.module('app').controller("PlacementController", function($http, $timeout
         if (listingType == vm.STUDENT_TYPE) {
             detailsURL = '/students/' + listingId + '/placements';
         } else if (listingType == vm.ORG_TYPE) {
-            detailsURL = '/organizations/' + listingId + '/placements';
+            detailsURL = '/organizations/' + listingId + '/placements?order_by=' + vm.sortType + '&desc=' + vm.sortReverse.toString();
         } else if (listingType == vm.CONTACT_TYPE) {
             detailsURL = '/contacts/' + listingId + '/placements';
         }
         $http.get(detailsURL).
         success(function(data){
             vm.studentPlacements = [];
+            vm.notes_showing = [];
+            var blah = $('#plcmtTable tr.notes_row')
+            blah.remove();
+            //table.innerHTML = '';
             angular.forEach(data, function(stud_detail) {
                 stud_detail.plusminus = PlusMinus.get_url(true);
                 vm.studentPlacements.push(stud_detail);

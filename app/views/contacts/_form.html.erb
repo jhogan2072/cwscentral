@@ -35,8 +35,8 @@
 
           <div class="form-group col-sm-12">
             <p style="display:block">
-              <input type="button" value="Add New Position" class="btn btn-primary" onclick="<%=  child_link_javascript(f, :contact_assignments, '.detail_assignment_rows')%>" />
-              <button type="button" ng-if="<%= @contact.current_assignment_id %> < 0" data-ng-click="ctrl.reopenContact(<%= @contact.id %>)" class="btn btn-primary">Reopen</button>
+              <input type="button" ng-if="<%= is_edit %>" value="Add New Position" class="btn btn-primary" onclick="<%=  child_link_javascript(f, :contact_assignments, '.detail_assignment_rows')%>" />
+              <button type="button" ng-if="<%= @contact.current_assignment_id %> < 0 && <%= is_edit %>" data-ng-click="ctrl.reopenContact(<%= @contact.id %>)" class="btn btn-primary">Reopen</button>
               <%= f.submit '{{ctrl.deletesChecked > 0 ? "Delete" : "Save"}}', class: "btn btn-primary" %>
             </p>
           </div>
