@@ -5,6 +5,17 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   after_filter :set_csrf_cookie_for_ng
+  around_action :rescue_from_fk_contraint, only: [:destroy]
+
+  def rescue_from_fk_contraint
+    begin
+      yield
+    rescue ActiveRecord::InvalidForeignKey
+      flash[:error] = "Deletion failed because this object is referenced by other objects in the system.  Please " +
+          "remove these references first and try again"
+        redirect_to :back
+    end
+  end
 
   def set_csrf_cookie_for_ng
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?

@@ -124,7 +124,12 @@ Rails.application.routes.draw do
   end
 
   resources :vans, except: [:show] do
+    member do
+      get :activate
+      get :deactivate
+    end
     collection do
+      get :inactive
       get :export, defaults: { :format => :xlsx }
     end
   end

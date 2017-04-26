@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205130656) do
+ActiveRecord::Schema.define(version: 20170421223132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -248,9 +248,11 @@ ActiveRecord::Schema.define(version: 20161205130656) do
     t.string   "make"
     t.string   "model_year"
     t.string   "last_oil_change"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.integer  "capacity"
+    t.boolean  "out_of_service",       default: false
+    t.date     "expected_return_date"
   end
 
   add_foreign_key "contact_assignments", "contacts"

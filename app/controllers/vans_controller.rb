@@ -5,7 +5,12 @@ class VansController < ApplicationController
   # GET /vans
   # GET /vans.json
   def index
-    @vans = Van.all.order(:name)
+    @vans = Van.where("out_of_service = false").order(:name)
+  end
+
+  def inactive
+    @vans = Van.where("out_of_service = true").order(:name)
+    render :index
   end
 
   # GET /vans/1
@@ -54,6 +59,34 @@ class VansController < ApplicationController
     end
   end
 
+  def activate
+    @van = Van.find(params["id"])
+    respond_to do |format|
+      if @van.update_out_of_service(false)
+        flash[:notice] = 'Van was successfully activated.'
+        format.html { redirect_to action: "index" }
+      else
+        flash[:error] = 'Activation failed: ' + @van.errors
+        format.html {redirect_to :back}
+      end
+
+    end
+  end
+
+  def deactivate
+    @van = Van.find(params["id"])
+    respond_to do |format|
+      if @van.update_out_of_service(true)
+        flash[:notice] = 'Van was successfully deactivated.'
+        format.html { redirect_to action: "index" }
+      else
+        flash[:error] = 'Deactivation failed: ' + @van.errors
+        format.html {redirect_to :back}
+      end
+
+    end
+  end
+
   # DELETE /vans/1
   # DELETE /vans/1.json
   def destroy
@@ -81,6 +114,7 @@ class VansController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def van_params
-    params.require(:van).permit(:name, :plate_number, :vin, :make, :model_year, :last_oil_change, :capacity)
+    params.require(:van).permit(:name, :plate_number, :vin, :make, :model_year, :last_oil_change, :capacity,
+                                :out_of_service, :expected_return_date)
   end
 end
