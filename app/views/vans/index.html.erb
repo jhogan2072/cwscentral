@@ -5,7 +5,7 @@
     <div class="col-md-12 main">
       <%= render "shared/alert_msg" %>
       <h2 class="sub-header">
-        <% if @vans.first.out_of_service == false %>
+        <% if !@vans.first.nil? and @vans.first.out_of_service == false %>
           Active Vans
         <% else %>
           Inactive Vans
@@ -26,7 +26,7 @@
             <th>Model Year</th>
             <th>Last Oil Change</th>
             <th>Capacity</th>
-            <% if @vans.first.out_of_service == true %>
+            <% if !@vans.first.nil? and @vans.first.out_of_service == true %>
               <th>Expected Return Date</th>
             <% end %>
             <th colspan="2"></th>
