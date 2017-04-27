@@ -119,7 +119,8 @@ class ContactsController < ApplicationController
   end
 
   def mailing_lists
-    @organizations =  Organization.all.map { |organization| [organization.name, organization.id] }
+    #@organizations =  Organization.all.map { |organization| [organization.name, organization.id] }
+    @organizations = Organization.current_organizations(Date.today).map { |organization| [organization.name, organization.id] }
   end
 
   def list_export
@@ -134,6 +135,8 @@ class ContactsController < ApplicationController
     params["selected_filters"]["roles"].each do |selection|
       if selection != "0"
         roles << selection
+        roles << 'Primary Contact/Supervisor'
+        roles << 'Supervisor/Primary Contact'
       end
     end
     if params["selected_filters"]["organization_id"] != ""

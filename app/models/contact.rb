@@ -56,7 +56,7 @@ contact_assignments.effective_end_date", DateTime.now.to_date)
 
     joins(contact_assignments: :organization).joins(contact_assignments: :placements)
         .includes(contact_assignments: :organization)
-        .where("? between contact_assignments.effective_start_date and contact_assignments.effective_end_date",
+        .where("? between placements.start_date and placements.end_date",
                DateTime.now).order("contact_assignments.organization_id, contacts.last_name")
         .where(where_clause)
   end
