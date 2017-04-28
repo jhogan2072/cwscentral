@@ -137,14 +137,13 @@ class PlacementsController < ApplicationController
   # PATCH/PUT /placements/1/update_contact
   def update_contact
     @placement = Placement.find(params[:id])
-    respond_to do |format|
-      if @placement.replace_supervisor(placement_params)
-        format.html { redirect_to students_placements_path("student_id" => params[:placement][:student_id]), notice: 'Placement was successfully updated.' }
-      else
-        format.html { render :edit_contact}
-      end
+    begin
+      @placement.replace_supervisor(placement_params)
+      flash[:notice] = 'Placement was successfully updated.'
+    rescue Exception => e
+      flash[:error] = 'There was a problem creating the new supervisor record: ' + "#{e.message}"
     end
-
+    redirect_to students_placements_path("student_id" => params[:placement][:student_id])
   end
 
   # DELETE /placements/1

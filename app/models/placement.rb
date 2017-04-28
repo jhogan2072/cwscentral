@@ -14,7 +14,7 @@ class Placement < ActiveRecord::Base
 
   def start_date_before_end_date
     if start_date > end_date
-      errors.add(:end_date, "End Date must be later than Start Date")
+      errors.add(:end_date, "must be later than Start Date")
     end
   end
 
@@ -135,8 +135,19 @@ class Placement < ActiveRecord::Base
       new_placement = self.dup
       new_placement.start_date = new_start_date
       new_placement.contact_assignment_id = placement_params['contact_assignment_id']
-      new_placement.save
-      self.update(:end_date => new_start_date - 1)
+      retval = new_placement.save
+      if retval == false
+        full_error_msg = ''
+        new_placement.errors.full_messages.each_with_index do |msg, key|
+          if key > 0
+            full_error_msg += ', '
+          end
+          full_error_msg += msg
+        end
+        raise Exception.new(full_error_msg)
+      else
+        self.update(:end_date => new_start_date - 1)
+      end
     end
   end
 
