@@ -1,2 +1,46 @@
-<h1>Admin#merge_contacts</h1>
-<p>Find me in app/views/admin/merge_contacts.html.erb</p>
+<body ng-app="app" ng-controller="AdminController as ctrl">
+<%= render "shared/navbar", input_name: nil %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 main">
+      <%= render "shared/alert_msg" %>
+      <%= form_tag('contact_merge') do %>
+          <h2 class="sub-header">Merge Contacts
+            <div class="pull-right">
+              <button type="submit" class="btn btn-primary pull-right">Merge</button>
+            </div>
+          </h2>
+          <div class="container">
+            <p class="lead">To merge two contacts, start typing the contact last names in the below fields to select
+              both the contact to be merged into and the contact to be merged from.  The numbers after the names are
+              the contacts' unique identifiers in the database.  In general, the lower the number, the longer the
+              contact has been in the system. After selecting both contacts, click the merge button to
+              perform the merge.</p>
+
+            <div class="col-md-4 form-inputs">
+              <div class="form-group string optional incident_category_category">
+                <input type="hidden" id="contact_1_id" name="contact_1_id">
+                <label class="string optional control-label" for="contact_name_1">Contact 1</label>
+                <%= autocomplete_field_tag 'contact_name_1', '', autocomplete_contact_last_name_merges_path,
+                                           :display_value => :name,
+                                           :id_element => '#contact_1_id', :class => "string optional form-control" %>
+                <p class="help-block">This contact will be retained after the merge, and will inherit placements and incidents
+                  from Contact 2</p>
+              </div>
+            </div>
+            <div class="col-md-4 form-inputs">
+              <div class="form-group string optional incident_category_category">
+                <input type="hidden" id="contact_2_id" name="contact_2_id">
+                <label class="string optional control-label" for="contact_name_2">Contact 2</label>
+                <%= autocomplete_field_tag 'contact_name_2', '', autocomplete_contact_last_name_merges_path, :display_value => :name, :id_element => '#contact_2_id', :class => "string optional form-control" %>
+                <p class="help-block">This contact will be deleted after its placements and incident history
+                  have been migrated to Contact 1</p>
+              </div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+</body>
+

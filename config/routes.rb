@@ -10,8 +10,11 @@ Rails.application.routes.draw do
   resources :merges, except: [:show, :update, :destroy, :index, :new, :edit, :create] do
     collection do
       get :merge_organizations
+      get :merge_contacts
       post :org_merge
+      post :contact_merge
       get :autocomplete_organization_name
+      get :autocomplete_contact_last_name
     end
   end
 

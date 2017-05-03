@@ -43,10 +43,44 @@ contact_assignments.effective_end_date", DateTime.now.to_date)
     end
   end
 
+  def name_with_id
+    full_name = ''
+    if self.first_name.nil? then
+      full_name = self.last_name.nil? ? '' : self.last_name
+    else
+      full_name = self.last_name.nil? ? self.first_name : self.first_name + ' ' + self.last_name
+    end
+    full_name += ' (' + id.to_s + ')'
+  end
+
   def organization_name
     contact_assignment = self.contact_assignments.where("? between contact_assignments.effective_start_date and
 contact_assignments.effective_end_date", DateTime.now.to_date)
     contact_assignment.first.organization.name
+  end
+
+  def self.merge_contacts(contact_1_id, contact_2_id)
+    contact1 = find(contact_1_id)
+    contact2 = find(contact_2_id)
+    if contact1.nil? || contact2.nil?
+      raise Exception.new('One or both of the contacts were not recognized')
+    end
+
+    begin
+      contact2.contact_assignments.each do |ca|
+        new_ca = contact1.contact_assignments.new(ca.attributes)
+        ca.placements.each do |placement|
+          new_ca.placements.new(placement.attributes)
+          placement.delete
+        end
+        ca.delete
+        new_ca.save
+      end
+      retval = contact2.delete
+      barker = retval
+    rescue => e
+      raise Exception.new("#{e.message}")
+    end
   end
 
   def self.query_contacts(days_of_week, roles, organizations)
