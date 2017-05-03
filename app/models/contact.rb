@@ -76,8 +76,7 @@ contact_assignments.effective_end_date", DateTime.now.to_date)
         ca.delete
         new_ca.save
       end
-      retval = contact2.delete
-      barker = retval
+      contact2.delete
     rescue => e
       raise Exception.new("#{e.message}")
     end
