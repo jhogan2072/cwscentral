@@ -15,7 +15,7 @@
             <%= f.input :middle_name, wrapper_html: {class: 'col-sm-4'} %>
             <%= f.input :last_name, wrapper_html: {class: 'col-sm-4'} %>
             <%= f.input :mobile_phone, wrapper_html: {class: 'col-sm-4'} %>
-            <%= f.input :class, wrapper_html: {class: 'col-sm-4'} %>
+            <%= f.input :classof, label: "Class Of", wrapper_html: {class: 'col-sm-4'} %>
             <%= f.input :skills, label: "Skills/Interests", wrapper_html: {class: 'col-sm-4'}, as: :text %>
             <%= f.input :goals, wrapper_html: {class: 'col-sm-4'}, as: :text %>
             <%= f.input :active, input_html: { checked: @students_staging.active? } , wrapper_html: {class: 'col-sm-4'} %>
