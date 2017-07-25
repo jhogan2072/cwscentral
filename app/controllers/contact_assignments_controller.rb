@@ -55,7 +55,9 @@ class ContactAssignmentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def contact_assignment_params
-    params.require(:contact_assignment).permit(:effective_start_date, :effective_end_date, :title, :address, :city, :state, :zip, :business_email, :office_phone, :fax, :organization_id, :contact_id)
+    params.require(:contact_assignment).permit(:effective_start_date, :effective_end_date, :title, :address, :city,
+                                               :state, :zip, :business_email, :office_phone, :fax,
+                                               :organization_id, :contact_id, :cc_days)
   end
 
 end

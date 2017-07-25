@@ -156,6 +156,10 @@ a:link.white-link, a:visited.white-link {
     font-size: 14px;
     color: white;
 }
+span.checkbox {
+    display:inline-block;
+    padding-left: 10px;
+}
 
 /*
  * Main content

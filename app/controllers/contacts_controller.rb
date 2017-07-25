@@ -77,6 +77,10 @@ class ContactsController < ApplicationController
   # GET /contacts/1/edit
   def edit
     @current_assignment_id = @contact.current_assignment_id
+    # cc_days_array = ContactAssignment.get_day_array(@contact.contact_assignments)
+    # @contact.contact_assignments.each_with_index do |assignment, index|
+    #   assignment.cc_days = cc_days_array[index]
+    # end
   end
 
   def export
@@ -142,7 +146,7 @@ class ContactsController < ApplicationController
     if params["selected_filters"]["organization_id"] != ""
       organizations << params["selected_filters"]["organization_id"]
     end
-    @contacts = Contact.query_contacts(days_of_week, roles, organizations)
+    @contacts = Contact.mailing_list(days_of_week, roles, organizations)
 
     respond_to do |format|
       format.xlsx {
@@ -194,6 +198,6 @@ class ContactsController < ApplicationController
                                       contact_assignments_attributes: [:id, :effective_start_date, :effective_end_date,
                                                                        :organization_id, :title, :department, :role, :address,
                                                                       :city, :state, :zip, :business_email, :office_phone,
-                                                                       :fax, :notes, :_destroy])
+                                                                       :fax, :notes, {:cc_days => []}, :_destroy])
     end
 end

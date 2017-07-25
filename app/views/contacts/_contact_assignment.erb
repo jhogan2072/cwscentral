@@ -18,6 +18,7 @@
     <%= f.input :office_phone, wrapper_html: { class: 'col-sm-2' }  %>
     <%= f.input :fax, wrapper_html: { class: 'col-sm-2' }  %>
     <%= f.input :notes, wrapper_html: { class: 'col-sm-3' } %>
+    <%= f.input :cc_days, as: :check_boxes, collection: [['Tue', 2], ['Wed', 4], ['Thu', 8], ['Fri', 16]], wrapper_html: { class: 'col-sm-4'}, label: "CC Days: " %>
     <%= f.input :_destroy, as: :boolean, label: "Delete", boolean_style: :nested, wrapper_html: { class: 'col-sm-1'}, label_html: {style: 'font-weight: bold'} %>
   </td>
 </tr>

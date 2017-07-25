@@ -9,6 +9,22 @@ class ContactAssignment < ActiveRecord::Base
   validates :effective_start_date, presence: true
   validate :placements_outside_dates
 
+  WEEKDAYS = {'MONDAY' => 1, 'TUESDAY' => 2, 'WEDNESDAY' => 4, 'THURSDAY' => 8, 'FRIDAY' => 16, 'SATURDAY' => 32, 'SUNDAY' => 64}
+
+  # setter
+  def cc_days=(value_array)
+    days_value = 0
+    value_array.each do |day_value|
+      days_value += day_value.to_i
+    end
+    write_attribute(:cc_days, days_value)
+  end
+
+  # getter
+  def cc_days
+    get_day_array(self[:cc_days].nil? ? 0 : self[:cc_days])
+  end
+
   def organization_name
     self.organization.name
   end
@@ -56,6 +72,18 @@ contact_assignments.effective_end_date", DateTime.now.to_date)
   end
 
 private
+  def get_day_array(value)
+    retval = []
+    retval << WEEKDAYS['MONDAY'] if value & WEEKDAYS['MONDAY'] != 0
+    retval << WEEKDAYS['TUESDAY'] if value & WEEKDAYS['TUESDAY'] != 0
+    retval << WEEKDAYS['WEDNESDAY'] if value & WEEKDAYS['WEDNESDAY'] != 0
+    retval << WEEKDAYS['THURSDAY'] if value & WEEKDAYS['THURSDAY'] != 0
+    retval << WEEKDAYS['FRIDAY'] if value & WEEKDAYS['FRIDAY'] != 0
+    retval << WEEKDAYS['SATURDAY'] if value & WEEKDAYS['SATURDAY'] != 0
+    retval << WEEKDAYS['SUNDAY'] if value & WEEKDAYS['SUNDAY'] != 0
+    return retval
+  end
+
   def placements_outside_dates
     if Placement.where("contact_assignment_id = ? and end_date > ?", id, effective_end_date).any?
       errors.add(:effective_end_date, "is before the end date for at least one work assignment.  Please correct these assignments by searching for this contact on the " +

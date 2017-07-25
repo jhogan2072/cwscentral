@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421223132) do
+ActiveRecord::Schema.define(version: 20170503170909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20170421223132) do
     t.text     "notes"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
+    t.integer  "cc_days"
   end
 
   add_index "contact_assignments", ["contact_id"], name: "index_contact_assignments_on_contact_id", using: :btree

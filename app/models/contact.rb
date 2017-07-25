@@ -36,7 +36,7 @@ contact_assignments.effective_end_date", DateTime.now.to_date)
   end
 
   def name
-    if self.first_name.nil? then
+    if self.first_name.nil?
       self.last_name.nil? ? '' : self.last_name
     else
       self.last_name.nil? ? self.first_name : self.first_name + ' ' + self.last_name
@@ -45,7 +45,7 @@ contact_assignments.effective_end_date", DateTime.now.to_date)
 
   def name_with_id
     full_name = ''
-    if self.first_name.nil? then
+    if self.first_name.nil?
       full_name = self.last_name.nil? ? '' : self.last_name
     else
       full_name = self.last_name.nil? ? self.first_name : self.first_name + ' ' + self.last_name
@@ -93,4 +93,26 @@ contact_assignments.effective_end_date", DateTime.now.to_date)
                DateTime.now).order("contact_assignments.organization_id, contacts.last_name")
         .where(where_clause)
   end
+
+  def self.query_cc(days_of_week, organizations)
+    where_string = ''
+    days_of_week.each do |day|
+      where_string = "coalesce(contact_assignments.cc_days,0) & " + ContactAssignment::WEEKDAYS[day.upcase].to_s + " >0 or "
+    end
+    where_string = where_string.chomp(' or ')
+    where_clause = where_string +  (organizations.empty? ? '' : " and organizations.id in (" + organizations.map {|str| "#{str}"}.join(',') + ")")
+
+    joins(contact_assignments: :organization)
+        .includes(contact_assignments: :organization)
+        .where(where_clause).order("contact_assignments.organization_id, contacts.last_name")
+  end
+
+  def self.mailing_list(days_of_week, roles, organizations)
+    if self.query_contacts(days_of_week, roles, organizations).length >0
+      (self.query_contacts(days_of_week, roles, organizations) + self.query_cc(days_of_week, organizations))
+    else
+      self.query_cc(days_of_week, organizations)
+    end
+  end
+
 end
