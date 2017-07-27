@@ -7,17 +7,6 @@ Rails.application.routes.draw do
     resources :users, except: [:show]
   end
 
-  resources :merges, except: [:show, :update, :destroy, :index, :new, :edit, :create] do
-    collection do
-      get :merge_organizations
-      get :merge_contacts
-      post :org_merge
-      post :contact_merge
-      get :autocomplete_organization_name
-      get :autocomplete_contact_last_name
-    end
-  end
-
   resources :contacts, except: [:show] do
     member do
       get :incidents, :defaults => { :format => :json }
@@ -49,14 +38,25 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :incident_categories, except: [:show]
-
   resources :incidents, except: [:index, :show] do
     collection do
       get :students
       get :organizations
       get :contacts
       get :export, defaults: { :format => :xlsx }
+    end
+  end
+
+  resources :incident_categories, except: [:show]
+
+  resources :merges, except: [:show, :update, :destroy, :index, :new, :edit, :create] do
+    collection do
+      get :merge_organizations
+      get :merge_contacts
+      post :org_merge
+      post :contact_merge
+      get :autocomplete_organization_name
+      get :autocomplete_contact_last_name
     end
   end
 
@@ -105,6 +105,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :active
+      get :delete_staging
       get :export_all, defaults: {:format => :xlsx }
       get :import
       post :import

@@ -101,12 +101,16 @@ class StudentsController < ApplicationController
     end
   end
 
+  def delete_staging
+    student_list = StudentsStaging.all
+    student_list.delete_all
+    redirect_to import_students_url, notice: "Staged students deleted"
+  end
+
   def commit
     # Insert all the records in students_stagings into students
     student_list = StudentsStaging.all
     student_list.each do |staging_student|
-      #mystudent = Student.where(last_name: staging_student.last_name).where(first_name: staging_student.first_name).first
-      #mystudent.update_attributes(classof: staging_student.classof)
       if !staging_student.duplicate
         new_student = Student.new(
             last_name: staging_student.last_name,
