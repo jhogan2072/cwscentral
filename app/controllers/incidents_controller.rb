@@ -71,7 +71,6 @@ class IncidentsController < ApplicationController
     respond_to do |format|
       if @incident.update(incident_params)
         format.html { redirect_to students_incidents_url("student_id" => params[:incident][:student_id]), notice: 'Feedback was successfully updated.' }
-        #format.html { redirect_to students_incidents_url, format: :html, notice: 'Feedback was successfully updated.' }
       else
         @student = Student.find(@incident.student_id)
         format.html { render :edit }

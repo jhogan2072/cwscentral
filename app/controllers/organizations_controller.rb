@@ -97,6 +97,9 @@ class OrganizationsController < ApplicationController
       OrgStaging.import(params[:file_content])
       redirect_to import_organizations_url, notice: "Organizations imported to staging."
     end
+  rescue ActiveRecord::UnknownAttributeError => e
+    redirect_to import_organizations_url, notice: "The CSV contained unexpected fields. Please ensure the fields in the CSV match " +
+        "those specified in the documentation for organizations."
   end
 
   def commit

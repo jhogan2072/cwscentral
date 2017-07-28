@@ -184,6 +184,9 @@ class PlacementsController < ApplicationController
       PlacementStaging.import(params[:file_content])
       redirect_to import_placements_url, notice: "Placements imported to staging."
     end
+  rescue ActiveRecord::UnknownAttributeError => e
+    redirect_to import_placements_url, notice: "The CSV contained unexpected fields. Please ensure the fields in the CSV match " +
+        "those specified in the documentation for placements."
   end
 
   def commit

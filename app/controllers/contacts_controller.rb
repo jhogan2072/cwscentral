@@ -97,6 +97,9 @@ class ContactsController < ApplicationController
       ContactStaging.import(params[:file_content])
       redirect_to import_contacts_url, notice: "Contacts imported to staging."
     end
+  rescue ActiveRecord::UnknownAttributeError => e
+    redirect_to import_contacts_url, notice: "The CSV contained unexpected fields. Please ensure the fields in the CSV match " +
+        "those specified in the documentation for contacts."
   end
 
   def incidents

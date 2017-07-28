@@ -99,6 +99,9 @@ class StudentsController < ApplicationController
       StudentsStaging.import(params[:file_content])
       redirect_to import_students_url, notice: "Students imported to staging."
     end
+  rescue ActiveRecord::UnknownAttributeError => e
+    redirect_to import_students_url, notice: "The CSV contained unexpected fields. Please ensure the fields in the CSV match " +
+    "those specified in the documentation for students."
   end
 
   def delete_staging
