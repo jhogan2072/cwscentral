@@ -130,6 +130,21 @@ class StudentsController < ApplicationController
     redirect_to import_students_url, notice: "Students imported!"
   end
 
+  def graduate
+    if request.method == "GET"
+      @students = Student.where("classof = ?", Date.today.year).order("last_name")
+    elsif request.method == "POST"
+      graduates = params[:graduates]
+      unless graduates.nil?
+        graduates.each do |student_id|
+          graduate = Student.find(student_id)
+          graduate.active = false
+          graduate.save
+        end
+      end
+      redirect_to graduate_students_path, notice: "Selected students set to inactive status."
+    end  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_student

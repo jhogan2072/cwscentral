@@ -1,0 +1,54 @@
+<body ng-app="app" ng-controller="StudentController as ctrl">
+<%= render "shared/navbar", input_name: "ctrl.searchInput" %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10 main">
+      <%= render "shared/alert_msg" %>
+      <%= form_for(:student, url: graduate_students_path, html: { method: :post }) do |f| %>
+      <h2 class="sub-header">Graduate Students
+        <div class="pull-right">
+          <%= f.submit "Graduate Selected Students", class: "btn btn-primary" %>
+        </div>
+      </h2>
+      <div class="table-responsive" ng-style="ctrl.truncateStyle">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Class Of</th>
+            <th>Active?</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @students.each do |student| %>
+              <tr>
+                <td><input type="checkbox" name="graduates[]" value=<%= student.id %>></td>
+                <td><%= student.last_name %></td>
+                <td><%= student.first_name %></td>
+                <td><%= student.classof %></td>
+                <td><%= student.active %></td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script>
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+    } else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+</script>
+</body>

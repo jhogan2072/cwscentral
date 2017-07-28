@@ -107,6 +107,8 @@ Rails.application.routes.draw do
       get :active
       get :delete_staging
       get :export_all, defaults: {:format => :xlsx }
+      get :graduate
+      post :graduate
       get :import
       post :import
       post :commit
