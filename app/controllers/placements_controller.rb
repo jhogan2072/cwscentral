@@ -54,7 +54,7 @@ class PlacementsController < ApplicationController
   end
 
   def students
-    @students = Student.all.order('last_name')
+    @students = Student.where("active = true").order('last_name')
     respond_to do |format|
 
       format.html # students_placements.html.erb
