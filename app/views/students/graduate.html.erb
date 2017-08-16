@@ -2,36 +2,77 @@
 <%= render "shared/navbar", input_name: "ctrl.searchInput" %>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-10 main">
+    <div class="col-md-12 main">
       <%= render "shared/alert_msg" %>
       <%= form_for(:student, url: graduate_students_path, html: { method: :post }) do |f| %>
-      <h2 class="sub-header">Graduate Students
-        <div class="pull-right">
+      <h2 class="sub-header col-md-12=">Graduate Students
+        <div class="pull-right col-md-5">
+          <input name="year" ng-init="selectedYear=<%= @year %>" ng-model="selectedYear" type="text" value="<%= @year %>" class="col-md-1 string optional form-control" style="width:15%; margin-top: 2px; margin-right:10px">
+          <input type="button" value="Change Year" class="btn btn-primary" ng-click="ctrl.setYear(selectedYear)">
           <%= f.submit "Graduate Selected Students", class: "btn btn-primary" %>
         </div>
       </h2>
       <div class="table-responsive" ng-style="ctrl.truncateStyle">
         <table class="table table-striped">
           <thead>
-          <tr>
-            <th><input type="checkbox" id="selectAll" value="selectAll"></th>
-            <th>Last Name</th>
-            <th>First Name</th>
-            <th>Class Of</th>
-            <th>Active?</th>
-          </tr>
+            <tr>
+              <th><input type="checkbox" id="selectAll" value="selectAll"></th>
+              <th>
+                <a href="#" ng-click="ctrl.sortType = 'last_name'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                  Last Name
+                  <span ng-show="ctrl.sortType == 'last_name' && !ctrl.sortReverse" style="text-decoration: none">
+                    <%= image_tag("sort_down.png", size: "14x14") %>
+                  </span>
+                  <span ng-show="ctrl.sortType == 'last_name' && ctrl.sortReverse">
+                    <%= image_tag("sort_up.png", size: "14x14") %>
+                  </span>
+                </a>
+              </th>
+              <th>
+                <a href="#" ng-click="ctrl.sortType = 'first_name'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                  First Name
+                  <span ng-show="ctrl.sortType == 'first_name' && !ctrl.sortReverse" style="text-decoration: none">
+                    <%= image_tag("sort_down.png", size: "14x14") %>
+                  </span>
+                  <span ng-show="ctrl.sortType == 'first_name' && ctrl.sortReverse">
+                    <%= image_tag("sort_up.png", size: "14x14") %>
+                  </span>
+                </a>
+              </th>
+              <th>
+                <a href="#" ng-click="ctrl.sortType = 'classof'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                  Class Of
+                  <span ng-show="ctrl.sortType == 'classof' && !ctrl.sortReverse" style="text-decoration: none">
+                    <%= image_tag("sort_down.png", size: "14x14") %>
+                  </span>
+                  <span ng-show="ctrl.sortType == 'classof' && ctrl.sortReverse">
+                    <%= image_tag("sort_up.png", size: "14x14") %>
+                  </span>
+                </a>
+              </th>
+              <th>
+                <a href="#" ng-click="ctrl.sortType = 'active'; ctrl.sortReverse = !ctrl.sortReverse" style="text-decoration: none">
+                  Active?
+                  <span ng-show="ctrl.sortType == 'active' && !ctrl.sortReverse" style="text-decoration: none">
+                    <%= image_tag("sort_down.png", size: "14x14") %>
+                  </span>
+                  <span ng-show="ctrl.sortType == 'active' && ctrl.sortReverse">
+                    <%= image_tag("sort_up.png", size: "14x14") %>
+                  </span>
+                </a>
+              </th>
+            </tr>
           </thead>
           <tbody>
-          <% @students.each do |student| %>
-              <tr>
-                <td><input type="checkbox" name="graduates[]" value=<%= student.id %>></td>
-                <td><%= student.last_name %></td>
-                <td><%= student.first_name %></td>
-                <td><%= student.classof %></td>
-                <td><%= student.active %></td>
-              </tr>
-          <% end %>
+            <tr ng-repeat="student in ctrl.students| orderBy:ctrl.sortType:ctrl.sortReverse | filter:ctrl.searchInput">
+              <td><input type="checkbox" name="graduates[]" value="{{ student.id }}"></td>
+              <td>{{ student.last_name }}</td>
+              <td>{{ student.first_name }}</td>
+              <td>{{ student.classof }}</td>
+              <td>{{ student.active }}</td>
+            </tr>
           </tbody>
+
         </table>
       </div>
       <% end %>

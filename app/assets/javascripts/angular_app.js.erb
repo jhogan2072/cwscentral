@@ -22,7 +22,8 @@ app.factory('StudentService', ['$resource', StudentService]);
 function StudentService($resource) {
   return $resource('/students/:collectionRoute/:id.json', null,
       {
-        'active': {method: 'GET', isArray: true, params: {collectionRoute: 'active', format: 'json'}}
+        'active': {method: 'GET', isArray: true, params: {collectionRoute: 'active', format: 'json'}},
+        'graduates': {method: 'GET', isArray: true, params: {collectionRoute: 'graduate', format: 'json'}}
       });
 }
 

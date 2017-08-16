@@ -6,6 +6,7 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     vm.getStudents = getStudents;
     vm.isSuccess = true;
     vm.page = 'students';
+    vm.setYear = setYear;
     vm.showResultAlert = false;
     vm.students = [];
     vm.sortReverse = false;
@@ -14,6 +15,8 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
     var absUrl = $location.absUrl();
     if (absUrl.indexOf('/students/active') > -1) {
         getActiveStudents();
+    } else if (window.location.pathname == '/students/graduate') {
+        getGraduates();
     } else if (window.location.pathname == '/students') {
         getStudents();
     }
@@ -34,8 +37,16 @@ angular.module('app').controller("StudentController", function($http, $timeout, 
         vm.students = StudentService.query();
     }
 
+    function getGraduates() {
+        vm.students = StudentService.graduates();
+    }
+
     function getActiveStudents() {
         vm.students = StudentService.active();
+    }
+
+    function setYear(selectedYear) {
+        vm.students = StudentService.graduates({year: selectedYear});
     }
 
 });

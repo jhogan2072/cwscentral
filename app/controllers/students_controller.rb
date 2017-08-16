@@ -120,6 +120,7 @@ class StudentsController < ApplicationController
             first_name: staging_student.first_name,
             middle_name: staging_student.middle_name,
             mobile_phone: staging_student.mobile_phone,
+            classof: staging_student.classof,
             skills: staging_student.skills,
             goals: staging_student.goals,
             active: staging_student.active)
@@ -135,8 +136,10 @@ class StudentsController < ApplicationController
 
   def graduate
     if request.method == "GET"
-      @students = Student.where("classof = ?", Date.today.year).order("last_name")
+      @year = params[:year]
+      @students = Student.where("classof = ?", @year).order("last_name")
     elsif request.method == "POST"
+      year = params[:year]
       graduates = params[:graduates]
       unless graduates.nil?
         graduates.each do |student_id|
@@ -145,8 +148,9 @@ class StudentsController < ApplicationController
           graduate.save
         end
       end
-      redirect_to graduate_students_path, notice: "Selected students set to inactive status."
-    end  end
+      redirect_to graduate_students_path(:year => year), notice: "Selected students set to inactive status."
+    end
+  end
 
   private
   # Use callbacks to share common setup or constraints between actions.
@@ -157,7 +161,7 @@ class StudentsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def student_params
     params.require(:student).permit(:first_name, :last_name, :middle_name, :mobile_phone, :classof, :leave_reason,
-                                    :skills, :goals, :active)
+                                    :skills, :goals, :active, :year)
   end
 end
 

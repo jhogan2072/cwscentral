@@ -16,6 +16,12 @@ class StudentsStagingsController < ApplicationController
   end
 
   def destroy
+    @students_staging.destroy
+    respond_to do |format|
+      format.html { redirect_to import_students_url, notice: 'Student staging record was successfully deleted.' }
+      format.json { head :no_content }
+    end
+
   end
 
   private
