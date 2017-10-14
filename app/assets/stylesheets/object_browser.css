@@ -99,6 +99,10 @@ body {
     line-height: 34px;
     margin-right: 5px;
 }
+.detail_route_rows .col-md-1 {padding-right: 10px; padding-left: 10px;}
+.detail_route_rows .col-md-3 {padding-right: 10px; padding-left: 10px;}
+.detail_route_rows .col-md-5 {padding-right: 10px; padding-left: 10px;}
+.detail_route_rows .form-control {padding: 6px 5px;}
 .Highlighted a{
 /*    background-color : Green !important;
     background-image :none !important; */

@@ -1,12 +1,14 @@
 <tr>
   <td class="col-md-1"><%= f.input :am_order, label: false, input_html: {class: 'less-padding'} %></td>
   <td class="col-md-1"><%= f.input :pm_order, label: false, input_html: {class: 'less-padding'}  %></td>
-  <td class="col-md-6"><%= f.input :placement_description,
+  <td class="col-md-5"><%= f.input :placement_description,
                                    :input_html => { :placeholder => "Start typing the organization name to select a placement" },
                                    :url => autocomplete_placement_org_contact_student_van_routes_path(:route_date=>@van_route.route_date),
                                    :as => :autocomplete, :id_element => '#' + 1234567.to_s, label: false %>
     <%= f.hidden_field :placement_id, :id => 1234567 %>
   </td>
+  <td class="col-md-1"><%= f.input :am_notes, label: false %></td>
+  <td class="col-md-1"><%= f.input :pm_notes, label: false %></td>
   <td class="col-md-3"><%= f.input :notes, label: false %></td>
   <td style="text-align: center; vertical-align: middle"><%= f.check_box :_destroy  %></td>
 </tr>

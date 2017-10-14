@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503170909) do
+ActiveRecord::Schema.define(version: 20171013112451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -173,6 +173,8 @@ ActiveRecord::Schema.define(version: 20170503170909) do
     t.datetime "updated_at",   null: false
     t.string   "pm_order"
     t.string   "notes"
+    t.string   "am_notes"
+    t.string   "pm_notes"
   end
 
   add_index "route_stops", ["placement_id"], name: "index_route_stops_on_placement_id", using: :btree
@@ -206,6 +208,11 @@ ActiveRecord::Schema.define(version: 20170503170909) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.integer  "classof"
+  end
+
+  create_table "students_van_routes", id: false, force: :cascade do |t|
+    t.integer "van_route_id", null: false
+    t.integer "student_id",   null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -255,6 +262,24 @@ ActiveRecord::Schema.define(version: 20170503170909) do
     t.boolean  "out_of_service",       default: false
     t.date     "expected_return_date"
   end
+
+  create_table "work_assignments", force: :cascade do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.boolean  "paid"
+    t.string   "work_day"
+    t.integer  "student_gradelevel"
+    t.string   "earliest_start"
+    t.string   "latest_start"
+    t.string   "ideal_start"
+    t.integer  "student_id"
+    t.integer  "contact_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "work_assignments", ["contact_id"], name: "index_work_assignments_on_contact_id", using: :btree
+  add_index "work_assignments", ["student_id"], name: "index_work_assignments_on_student_id", using: :btree
 
   add_foreign_key "contact_assignments", "contacts"
   add_foreign_key "contact_assignments", "organizations"

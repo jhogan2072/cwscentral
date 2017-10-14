@@ -26,8 +26,13 @@ class VanRoutesController < ApplicationController
       @todays_date = DateTime.now
     end
     @previous_school_day = 1.business_days.before(@todays_date.to_date)
+    begin
+      query_result = VanRoute.joins(:driver).includes(:driver, :van).where(:route_date => @todays_date).order("van_routes.name::int").to_json(:include => [:driver, :van])
+    rescue ActiveRecord::StatementInvalid => e
+      query_result = VanRoute.joins(:driver).includes(:driver, :van).where(:route_date => @todays_date).to_json(:include => [:driver, :van])
+    end
 
-    respond_with VanRoute.joins(:driver).includes(:driver, :van).where(:route_date => @todays_date).to_json(:include => [:driver, :van])
+    respond_with query_result
   end
 
   # GET /van_routes/1
@@ -100,7 +105,12 @@ class VanRoutesController < ApplicationController
   end
 
   def export_all
-    all_routes = VanRoute.where("route_date = ?", params[:route_date])
+    begin
+      all_routes = VanRoute.where("route_date = ?", params[:route_date]).order("van_routes.name::int")
+    rescue ActiveRecord::StatementInvalid => e
+      all_routes = VanRoute.where("route_date = ?", params[:route_date])
+    end
+
     @route_export = []
     all_routes.each do |route|
       route_info = VanRoute.joins(:driver, :van, route_stops: {placement: [:student, [{contact_assignment: :contact}]]})
@@ -144,6 +154,6 @@ private
   # Never trust parameters from the scary internet, only allow the white list through.
   def van_route_params
     params.require(:van_route).permit(:id, :name, :route_date, :van_id, :driver_id, :check_in_time,
-                                      route_stops_attributes: [:id, :am_order, :pm_order, :placement_id, :notes, :_destroy])
+                                      route_stops_attributes: [:id, :am_order, :pm_order, :placement_id, :am_notes, :pm_notes, :notes, :_destroy])
   end
 end

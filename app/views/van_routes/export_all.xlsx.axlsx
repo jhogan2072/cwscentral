@@ -5,13 +5,12 @@ wb.styles do |s|
   route_bold = s.add_style :b => true, :sz => 22, :alignment => {:horizontal => :center}, :border => { :style => :thin, :color => "00" }
   big_bold_date = s.add_style :b => true, :sz => 24, :format_code => 'dddd mmmm d, yyyy', :alignment => {:horizontal => :left}
   small_bold = s.add_style :b => true, :sz => 14, :border => { :style => :thin, :color => "00" }
-  normal_cell = s.add_style :sz => 14, :border => { :style => :thin, :color => "00" }
+  normal_cell = s.add_style :sz => 14, :border => { :style => :thin, :color => "00" }, :alignment => {:wrap_text => true}
   driver_notes = s.add_style :b => false, :sz => 48, :alignment => {:vertical => :center}, :border => { :style => :thin, :color => "00", :edges => [:left]}
   behavior_spanish = s.add_style :b => false, :sz => 24, :border => { :style => :thin, :color => "00", :edges => [:left]}
   behavior = s.add_style :b => false, :sz => 28, :border => { :style => :thin, :color => "00", :edges => [:left]}
   number = s.add_style :sz => 36, :alignment => {:horizontal => :center}
   rating = s.add_style :sz => 22, :alignment => {:horizontal => :center}
-  rating_right = s.add_style :sz => 22, :alignment => {:horizontal => :center}, :border => { :style => :thin, :color => "00", :edges => [:right]}
   underline = s.add_style :border => { :style => :thin, :color => "00", :edges => [:bottom]}
   underline_with_left = s.add_style :border => { :style => :thin, :color => "00", :edges => [:left, :bottom]}
   underline_with_right = s.add_style :border => { :style => :thin, :color => "00", :edges => [:right, :bottom]}
@@ -24,9 +23,10 @@ wb.styles do |s|
   index = 0
   @route_export.each do |route_export|
     index += 1
-    wb.add_worksheet(name: route_export.van.name + "_" + index.to_s) do |sheet|
-      sheet.add_row [nil, route_export.route_date, nil, nil, nil, "Driver: " + route_export.driver.name, nil, nil, nil, "Van: " + route_export.van.name],
-                    :style => [nil, big_bold_date, nil, nil, nil, big_bold, nil, nil, nil, big_bold]
+    setup = {:orientation => :landscape, :fit_to_width => 1, :fit_to_height => 1}
+    wb.add_worksheet(name: route_export.name + "_" + route_export.van.name, :page_setup => setup) do |sheet|
+      sheet.add_row [nil, route_export.route_date, nil, nil, nil, "Driver: " + route_export.driver.name, nil, nil, nil, nil, "Van: " + route_export.van.name],
+                    :style => [nil, big_bold_date, nil, nil, nil, big_bold, nil, nil, nil, nil, big_bold]
       sheet.merge_cells("B1:E1")
       sheet.add_row ["Rt", "AM", "PM", "Account Name", "Address", "City", "State", "Salutation", "First Name", "Last Name",
                      "Office Phone", "Grade/Work Day", "Student First Name", "Student Last Name", "Cell", "Earliest", "Latest",
@@ -41,7 +41,7 @@ wb.styles do |s|
                        route_stop.placement.contact_assignment.state, route_stop.placement.contact_assignment.contact.salutation,
                        route_stop.placement.contact_assignment.contact.first_name, route_stop.placement.contact_assignment.contact.last_name,
                        route_stop.placement.contact_assignment.office_phone,
-                       route_stop.placement.student_gradelevel.to_s + "th/" + route_stop.placement.work_day,
+                       route_stop.placement.student_gradelevel.to_s + "th/" + route_stop.placement.work_day[0..2],
                        route_stop.placement.student.first_name, route_stop.placement.student.last_name,
                        route_stop.placement.student.mobile_phone, route_stop.placement.earliest_start,
                        route_stop.placement.latest_start, route_stop.placement.ideal_start, nil, nil, route_stop.notes],
@@ -85,7 +85,7 @@ wb.styles do |s|
                                st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md, st_fb_md,
                                st_fb_md, st_fb_md, st_fb_end], :height => 29
 
-      sheet.column_widths 6.33, 4.75, 4.75, 28.5, 22.67, 14.67, 5.69, 12.59, 17.67, 17.67, 17.5, 17.82, 19.80, 19.80, 16.5, 10.35, 10.35, 10.35, 10.17, 10.17, 35.67
+      sheet.column_widths 6.33, 4.75, 4.75, 28.5, 22.67, 20.67, 5.69, 6.59, 17.67, 17.67, 17.5, 10.82, 19.80, 19.80, 16.5, 8.35, 8.35, 8.35, 10.17, 10.17, 35.67
     end
 
   end
