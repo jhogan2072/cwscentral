@@ -84,6 +84,8 @@ Rails.application.routes.draw do
     collection do
       post :export_attendance, defaults: { :format => :xlsx }
       get :attendance
+      post :export_time_cards, defaults: { :format => :xlsx }
+      get :time_cards
       get :students
       get :organizations
       get :contacts

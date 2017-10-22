@@ -1,0 +1,32 @@
+wb = xlsx_package.workbook
+wb.styles do |s|
+  s.fonts.first.name = 'Calibri'
+  heading = s.add_style :b => true, :sz => 20, :alignment => {:horizontal => :left}
+  column_heading = s.add_style :b => true, :sz => 14, :alignment => {:horizontal => :left, :wrap_text => true}, :border => { :style => :thin, :color => "00" }
+  normal_border = s.add_style :sz => 14, :border => { :style => :thin, :color => "00" }, :alignment => {:wrap_text => true}
+
+  index = 0
+  @time_cards_export.each do |time_cards_sheet|
+    index += 1
+    setup = {:orientation => :landscape, :fit_to_width => 1, :fit_to_height => 10}
+    wb.add_worksheet(name: time_cards_sheet.first.student_gradelevel.to_s + "th-" + @route_date.strftime("%a"), :page_setup => setup) do |sheet|
+      sheet.add_row ["Time Cards List: " + @route_date.strftime("%A, %B %e, %Y"), nil, nil, nil, nil, nil, nil],
+                    :style => [heading, heading, heading, heading, heading, heading, heading], :height => 31
+      sheet.add_row ["Company Name", "Supervisor First Name", "Supervisor last Name", "Supervisor Phone", "Student First Name", "Student Last Name",
+                     "Transportation Notes"],
+                    :style => [column_heading, column_heading, column_heading, column_heading, column_heading, column_heading, column_heading,], :height => 39
+      time_cards_sheet.each do |placement|
+        sheet.add_row [placement.contact_assignment.organization.name,
+                       placement.contact_assignment.contact.first_name,
+                       placement.contact_assignment.contact.last_name,
+                       placement.contact_assignment.contact.personal_mobile,
+                       placement.student.first_name,
+                       placement.student.last_name,
+                       placement.route_stops.first.notes],
+                      :style => [normal_border, normal_border, normal_border, normal_border, normal_border, normal_border, normal_border], :height => 40
+      end
+
+      sheet.column_widths 30, 20, 20, 20, 20, 20, 30
+    end
+  end
+end

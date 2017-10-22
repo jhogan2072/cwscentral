@@ -3,15 +3,12 @@
     <div class="navbar-header">
       <ul class="nav navbar-left navbar-nav">
         <li><%= image_tag("logo2.png", size: "75x50") %></li>
-        <li><span style="font-size:x-large" class="<%= 'extra-padding' if not current_user.admin? %>">NDCR Work Study</span></li>
+        <li><span style="font-size:x-large" class="<%= 'extra-padding' if not current_user.admin? %>">Work Study</span></li>
       </ul>
       <ul class="nav navbar-nav">
         <li ng-class="{'active':ctrl.page == 'placements'}">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Placements<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><%= link_to("Attendance", attendance_placements_url, :target => "_self")%></li>
-            <li role="separator" class="divider"></li>
-            <li class="dropdown-header">Placement Details</li>
             <li><%= link_to("By Student", students_placements_url, :target => "_self")%></li>
             <li><%= link_to("By Organization", organizations_placements_url, :target => "_self") %></li>
             <li><%= link_to("By Contact", contacts_placements_url, :target => "_self") %></li>
@@ -35,6 +32,7 @@
           <ul class="dropdown-menu">
             <li></li>
             <li><%= link_to("Manage Organizations", organizations_url, :target => "_self") %></li>
+            <li role="separator" class="divider"></li>
             <li class="dropdown-header">Contacts</li>
             <li><%= link_to("Active Contacts", contacts_url, :target => "_self") %></li>
             <li><%= link_to("All Contacts", contacts_url(:all=> true), :target => "_self") %></li>
@@ -44,10 +42,18 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transportation<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><%= link_to("Van Routes", van_routes_url, :target => "_self") %></li>
+            <li role="separator" class="divider"></li>
             <li class="dropdown-header">Vans and Drivers</li>
             <li><%= link_to("Vans (Active)", vans_url, :target => "_self") %></li>
             <li><%= link_to("Vans (Inactive)", inactive_vans_url, :target => "_self") %></li>
             <li><%= link_to("Drivers", drivers_url, :target => "_self") %></li>
+          </ul>
+        </li>
+        <li ng-class="{'active':ctrl.page == 'reports'}">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to("Attendance", attendance_placements_url, :target => "_self")%></li>
+            <li><%= link_to("Time Cards", time_cards_placements_url, :target => "_self") %></li>
           </ul>
         </li>
         <% if current_user.admin? %>

@@ -161,6 +161,14 @@ class Placement < ActiveRecord::Base
                                     route_date , grade_level).order("placements.student_gradelevel")
   end
 
+  def self.time_cards(route_date, grade_level)
+    joins(contact_assignment: :organization).joins(contact_assignment: :contact).joins(:student).joins(route_stops: :van_route)
+        .includes(:student)
+        .includes(contact_assignment: :contact)
+        .includes(route_stops: :van_route).where("van_routes.route_date = ? and placements.student_gradelevel = ?",
+                                                 route_date , grade_level).order("placements.student_gradelevel")
+  end
+
   def self.search(filtering_id=-1,query_type=-1,order_by="")
     if query_type == 0
       joins(contact_assignment: [:organization, :contact]).includes(contact_assignment: [:organization, :contact])

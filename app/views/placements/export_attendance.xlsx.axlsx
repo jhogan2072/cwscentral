@@ -11,7 +11,8 @@ wb.styles do |s|
   index = 0
   @attendance_export.each do |attendance_sheet|
     index += 1
-    wb.add_worksheet(name: attendance_sheet.first.student_gradelevel.to_s + "th-" + @route_date.strftime("%a")) do |sheet|
+    setup = {:orientation => :landscape, :fit_to_width => 1, :fit_to_height => 10}
+    wb.add_worksheet(name: attendance_sheet.first.student_gradelevel.to_s + "th-" + @route_date.strftime("%a"), :page_setup => setup) do |sheet|
       sheet.add_row [@grade_names[attendance_sheet.first.student_gradelevel] + " Attendance", nil, nil, nil, nil, nil],
                     :style => [heading_noborder, nil, nil, nil, nil, nil], :height => 31
       sheet.merge_cells("A1:F1")

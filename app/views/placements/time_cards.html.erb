@@ -8,8 +8,8 @@
           <div class="form-group">
             <div class="row">
               <div class="col-md-12" style="margin: 0 auto; float: none" >
-                <input type="hidden" name="dp_attendance_date" id="dp_attendance_date" value="{{ctrl.attendanceDate.format('DD-MMM-YYYY');}}">
-                <div class="input-group" ng-model="ctrl.attendanceDate" datetimepicker options="{inline: true, format: 'DD-MMM-YYYY'}"></div>
+                <input type="hidden" name="dp_time_cards_date" id="dp_time_cards_date" value="{{ctrl.time_cardsDate.format('DD-MMM-YYYY');}}">
+                <div class="input-group" ng-model="ctrl.time_cardsDate" datetimepicker options="{inline: true, format: 'DD-MMM-YYYY'}"></div>
               </div>
             </div>
           </div>
@@ -18,20 +18,20 @@
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <%= render "shared/alert_msg" %>
-      <%= form_for :selected_class, url: "export_attendance" do |form| %>
-      <!--<form accept-charset="UTF-8" action="export_attendance" method="post">-->
-        <h2 class="sub-header">
-          <div class="pull-right">
-            <input class="btn btn-primary" name="export" type="submit" value="Export">
-          </div>
-          Export Attendance Sheet(s)
-        </h2>
-        <div class="jumbotron" style="background-color: transparent; text-align: center">
-          <p class="lead">To export an excel document with today's attendance sheet (or sheets), select the date on the left
-            and the grades you are interested in below.  Then click the export button at the upper right to create the workbook.
-          </p>
+      <%= form_for :selected_class, url: "export_time_cards" do |form| %>
+          <!--<form accept-charset="UTF-8" action="export_time_cards" method="post">-->
+          <h2 class="sub-header">
+            <div class="pull-right">
+              <input class="btn btn-primary" name="export" type="submit" value="Export">
+            </div>
+            Export Time Cards
+          </h2>
+          <div class="jumbotron" style="background-color: transparent; text-align: center">
+            <p class="lead">To export an excel document with today's time card sheet (or sheets), select the date on the left
+              and the grades you are interested in below.  Then click the export button at the upper right to create the workbook.
+            </p>
             <div class="form-group">
-              <input type="hidden" name="route_date" id="route_date" value="{{ctrl.attendanceDate.format('DD-MMM-YYYY');}}"/>
+              <input type="hidden" name="route_date" id="route_date" value="{{ctrl.time_cardsDate.format('DD-MMM-YYYY');}}"/>
               <fieldset class="well" style="padding-top: 10px; padding-bottom: 10px; margin-top: 25px">
                 <label class="checkbox-inline lead">
                   <%= form.check_box("ninth", { style: 'height: 22px' }, 9) %> 9th
@@ -47,7 +47,7 @@
                 </label>
               </fieldset>
             </div>
-        </div>
+          </div>
       <% end  %>
     </div>
   </div>
