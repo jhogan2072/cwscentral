@@ -84,7 +84,7 @@ contact_assignments.effective_end_date", DateTime.now.to_date)
 
   def self.query_contacts(days_of_week, roles, organizations)
     where_clause = days_of_week.empty? ? '' : "placements.work_day in (" + days_of_week.map {|str| "'#{str}'"}.join(',') + ")" +
-    (roles.empty? ? '' : " and contact_assignments.role in (" + roles.map {|str| "'#{str}'"}.join(',') + ")") +
+    (roles.empty? ? " and 0 = 1" : " and contact_assignments.role in (" + roles.map {|str| "'#{str}'"}.join(',') + ")") +
     (organizations.empty? ? '' : " and organizations.id in (" + organizations.map {|str| "#{str}"}.join(',') + ")")
 
     joins(contact_assignments: :organization).joins(contact_assignments: :placements)
@@ -109,7 +109,7 @@ contact_assignments.effective_end_date", DateTime.now.to_date)
 
   def self.mailing_list(days_of_week, roles, organizations)
     if self.query_contacts(days_of_week, roles, organizations).length >0
-      (self.query_contacts(days_of_week, roles, organizations) + self.query_cc(days_of_week, organizations))
+      (self.query_contacts(days_of_week, roles, organizations) + self.query_cc(days_of_week, organizations)).uniq
     else
       self.query_cc(days_of_week, organizations)
     end
