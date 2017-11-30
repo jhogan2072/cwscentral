@@ -1,0 +1,48 @@
+<body ng-app="app" ng-controller="StudentController as ctrl">
+<%= render "shared/navbar", input_name: "ctrl.searchInput" %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="main">
+      <%= render "shared/alert_msg" %>
+      <%= form_for :selected_dates, url: "export_feedback" do |form| %>
+          <!--<form accept-charset="UTF-8" action="export_feedback" method="post">-->
+          <h2 class="sub-header">
+            <div class="pull-right">
+              <input class="btn btn-primary" name="export" type="submit" value="Export">
+            </div>
+            Generate Feedback Report
+          </h2>
+          <div class="jumbotron" style="background-color: transparent; text-align: center; padding-bottom: 0">
+            <p class="lead">To generate an excel document with student feedback over a date range, select the
+              start and end date below.  Then click the export button at the upper right to create the workbook.
+            </p>
+          </div>
+          <div class="form-inputs container-fluid">
+            <div class="row">
+              <div class="col-md-3 col-md-offset-3">
+                <div class="form-group">
+                  <div class="form-group date_time_picker optional range_start_date">
+                    <label class="date_time_picker optional control-label" for="range_start_date">Start Date</label>
+                    <div class="input-group date form_datetime">
+                      <input class="form-control input-sm" style="font-size: 14px" type="text" name="range_start_date" id="range_start_date"><span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="form-group date_time_picker optional range_end_date">
+                    <label class="date_time_picker optional control-label" for="range_end_date">End Date</label>
+                    <div class="input-group date form_datetime">
+                      <input class="form-control input-sm" style="font-size: 14px" type="text" name="range_end_date" id="range_end_date"><span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+</body>

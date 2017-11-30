@@ -53,7 +53,9 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reports<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><%= link_to("Attendance", attendance_placements_url, :target => "_self")%></li>
+            <li><%= link_to("Mailing Lists", mailing_lists_contacts_url, :target => "_self") %></li>
             <li><%= link_to("Time Cards", time_cards_placements_url, :target => "_self") %></li>
+            <li><%= link_to("Feedback", feedback_report_students_url, :target => "_self") %></li>
           </ul>
         </li>
         <% if current_user.admin? %>
@@ -62,7 +64,6 @@
           <ul class="dropdown-menu">
             <li><%= link_to("Users", users_url, :target => "_self") %></li>
             <li><%= link_to("Feedback Categories", incident_categories_url, :target => "_self") %></li>
-            <li><%= link_to("Mailing Lists", mailing_lists_contacts_url, :target => "_self") %></li>
             <li><%= link_to("Merge Organizations", merge_organizations_merges_url, :target => "_self") %></li>
             <li><%= link_to("Merge Contacts", merge_contacts_merges_url, :target => "_self") %></li>
             <li role="separator" class="divider"></li>

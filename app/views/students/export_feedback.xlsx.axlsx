@@ -1,0 +1,17 @@
+wb = xlsx_package.workbook
+wb.styles do |style|
+  style.fonts.first.name = 'Calibri'
+  heading_syle = style.add_style :b => true, :sz => 16
+  normal_style = style.add_style :b => false, :sz => 14
+  wb.add_worksheet(name: "Students") do |sheet|
+    sheet.add_row ["Organization", "Contact", "First Name", "Last Name", "Feedback Date", "Feedback"], :style => heading_syle
+    @students.each do |student|
+      sheet.add_row [student.placements.first.contact_assignment.organization.name,
+                     student.placements.first.contact_assignment.contact.name,
+                     student.first_name,
+                     student.last_name,
+                     student.incidents.first.incident_date.strftime("%d-%b-%Y"),
+                     student.incidents.first.description], :style => normal_style
+    end
+  end
+end

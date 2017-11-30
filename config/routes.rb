@@ -114,6 +114,8 @@ Rails.application.routes.draw do
       get :import
       post :import
       post :commit
+      get :feedback_report
+      post :export_feedback, defaults: { :format => :xlsx }
     end
   end
 

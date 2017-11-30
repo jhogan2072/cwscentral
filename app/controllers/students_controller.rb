@@ -1,6 +1,7 @@
 class StudentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_student, only: [:edit, :update, :destroy]
+  include PlacementsHelper
 
   # GET /students
   # GET /students.json
@@ -132,6 +133,31 @@ class StudentsController < ApplicationController
       student_list.delete_all
 
     redirect_to import_students_url, notice: "Students imported!"
+  end
+
+  def export_feedback
+    grade_level = []
+    start_date_param = fix_sept(params["range_start_date"])
+    end_date_param = fix_sept(params["range_end_date"])
+
+    #@start_date = DateTime.strptime(start_date_param, '%d-%b-%Y')
+    #@end_date = DateTime.strptime(end_date_param, '%d-%b-%Y')
+    @students = Student.feedback_report(start_date_param, end_date_param)
+    if @students.nil?
+      @students = []
+    end
+    respond_to do |format|
+      format.xlsx {
+        if @students.length > 0
+          response.headers['Content-Disposition'] = 'attachment; filename=feedback_report.xlsx'
+        else
+          redirect_to feedback_report_students_url, notice: 'There are no students with placements for selected date range.'
+        end
+      }
+    end
+  end
+
+  def feedback_report
   end
 
   def graduate
