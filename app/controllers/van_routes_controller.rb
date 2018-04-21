@@ -105,22 +105,7 @@ class VanRoutesController < ApplicationController
   end
 
   def export_all
-    begin
-      all_routes = VanRoute.where("route_date = ?", params[:route_date]).order("van_routes.name::int")
-    rescue ActiveRecord::StatementInvalid => e
-      all_routes = VanRoute.where("route_date = ?", params[:route_date])
-    end
-
-    @route_export = []
-    all_routes.each do |route|
-      route_info = VanRoute.joins(:driver, :van, route_stops: {placement: [:student, [{contact_assignment: :contact}]]})
-          .includes(:driver, :van, route_stops: {placement: [:student, [{contact_assignment: :contact}]]})
-          .where("van_routes.id = ?", route.id).order("route_stops.am_order")
-      #TODO - the above join returns null for routes without route stops, resulting in an array with nils in it
-      if not route_info.first.nil?
-        @route_export << route_info.first
-      end
-    end
+    @route_export = VanRoute.fetch_routes(params[:route_date])
     respond_to do |format|
       format.xlsx {response.headers['Content-Disposition'] = 'attachment; filename=routes-' + params[:route_date] + '.xlsx'}
     end
